@@ -1,0 +1,36 @@
+{
+  "run_id": "task-YYYYMMDD-short-name",
+  "state": "intake",
+  "attempt": 0,
+  "retry_budget": 2,
+  "last_successful_step": null,
+  "git_status_summary": "",
+  "changed_files": [],
+  "task": "",
+  "acceptance_criteria": [],
+  "scope": {
+    "allowed": [],
+    "excluded": []
+  },
+  "authority": {
+    "approved": [],
+    "requires_approval": []
+  },
+  "repository": {
+    "root": "",
+    "branch": "",
+    "worktree": "",
+    "starting_commit": ""
+  },
+  "artifacts": {
+    "brief": "",
+    "plan": "",
+    "evidence": [],
+    "handoff": ""
+  },
+  "failures": [],
+  "review_findings": [],
+  "human_waivers": [],
+  "next_action": "complete intake",
+  "updated_at": ""
+}
