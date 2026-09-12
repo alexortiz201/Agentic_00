@@ -11,11 +11,44 @@ The goal is not maximum autonomy. Make work explicit, observable, composable, an
 - **Agent:** explores, plans, implements, reviews, and repairs within declared bounds.
 - **Evidence:** determines confidence.
 
+## The two layers
+
+**The agentic layer wraps the application layer and gives it a programmatic interface.** The
+application is the product and the validation ground. The agentic layer is how work gets done to it.
+
+The move this discipline asks for: **template your engineering and teach agents to operate the
+codebase, rather than operating it yourself each time.** A fix applied by hand solves one instance. The
+same fix encoded as a workflow solves the class — and can then be inspected, gated and improved.
+
+That is also the test of where something belongs. **If deleting the agentic layer would take the
+product with it, it was built in the wrong place.**
+
+## The twelve leverage points
+
+A diagnostic checklist, not twelve services to build.
+
+**In the agent — the Core Four**, chosen per invocation: context · model · prompt · tools.
+
+**Through the agent**, built around it and reused across runs: standard output · types · docs · tests ·
+architecture · plans · templates · workflows.
+
+When a run disappoints, walk the list before reaching for a stronger model. Most failures are a
+context, contract or check problem, and **a stronger model cannot supply a check that does not exist.**
+
 ## Improve the agentic layer first
 
 Before adding infrastructure, improve context, task specificity, tool interfaces, state, feedback, and observability. Progress from focused prompt/skill → bounded role → ADW → composition only when the work warrants it. A repeated correction is a reuse signal, not a mandate for a platform. Prove a second use before claiming generality.
 
 Move down into code/data/product details when understanding or evidence is weak; return to delegation when concrete checks support it. More autonomy never expands authority.
+
+## Priming is selection, not ingestion
+
+Loading everything contradicts loading only what is relevant, and stops working at the first repository
+too large to hold.
+
+**Stop when you can name the task's entry points, its conventions and its unknowns** — not when you
+have read everything. Then **say what you did not read**, so the next actor knows where the gaps are
+rather than inheriting false coverage.
 
 ## Context by role
 

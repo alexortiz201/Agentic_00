@@ -5,26 +5,58 @@ A self-contained package for bounded, observable, and repairable software delive
 ## Boot order
 
 1. [`AGENTS.md`](AGENTS.md) — operating contract.
-2. [`01_PRINCIPLES.md`](01_PRINCIPLES.md) — decision model.
-3. [`02_WORKFLOW.md`](02_WORKFLOW.md) — task lifecycle.
-4. [`03_AUTHORITY_AND_SAFETY.md`](03_AUTHORITY_AND_SAFETY.md) — authority boundaries.
-5. [`04_VERIFICATION.md`](04_VERIFICATION.md) — quality gates.
-6. [`05_RECOVERY_AND_HANDOFF.md`](05_RECOVERY_AND_HANDOFF.md) — recovery and handoff.
-7. [`RUNBOOK.md`](RUNBOOK.md) — execution checklist.
+2. [`foundations/README.md`](foundations/README.md) — what Agentic Engineering is, and what is in the discipline.
+3. [`foundations/LANGUAGE.md`](foundations/LANGUAGE.md) — canonical vocabulary. **Read before the rest**; most apparent contradictions are two spellings of one idea.
+4. [`foundations/01_PRINCIPLES.md`](foundations/01_PRINCIPLES.md) — decision model.
+5. [`foundations/02_WORKFLOW.md`](foundations/02_WORKFLOW.md) — task lifecycle.
+6. [`foundations/03_AUTHORITY_AND_SAFETY.md`](foundations/03_AUTHORITY_AND_SAFETY.md) — authority boundaries.
+7. [`foundations/04_VERIFICATION.md`](foundations/04_VERIFICATION.md) — quality gates.
+8. [`foundations/05_RECOVERY_AND_HANDOFF.md`](foundations/05_RECOVERY_AND_HANDOFF.md) — recovery and handoff.
+9. [`RUNBOOK.md`](RUNBOOK.md) — execution checklist.
+10. `.memory/` — local working notes and staged artifacts, **if present**. Never committed. Read the
+    `.md` files at its root, then browse its topic folders. Conventions in
+    [`handbook/01_LOCAL_MEMORY.md`](handbook/01_LOCAL_MEMORY.md); treat everything there as a prior
+    snapshot to verify, not as authority.
 
-Use [`templates/TASK_BRIEF.md`](templates/TASK_BRIEF.md), [`templates/PLAN.md`](templates/PLAN.md), [`templates/TASK_STATE.json`](templates/TASK_STATE.json), and [`templates/HANDOFF.md`](templates/HANDOFF.md) as needed. [`CLAUDE_HANDOFF.md`](CLAUDE_HANDOFF.md) is a portable description, not additional policy.
+Run artifacts are described in [`handbook/02_RUN_ARTIFACTS.md`](handbook/02_RUN_ARTIFACTS.md).
 
 ## Task routing
 
 | Need | Load next |
 |---|---|
-| Show what I can compose / understand ADW pieces | Invoke by loading [`commands/agentic_cheatsheet.md`](commands/agentic_cheatsheet.md); reference: [`ADW_QUICK_REF.md`](ADW_QUICK_REF.md) |
-| Create/compose an ADW | [`skills/adw-authoring/SKILL.md`](skills/adw-authoring/SKILL.md), then [`06_ADW_COMPOSITION.md`](06_ADW_COMPOSITION.md) |
-| Create a prompt, command, skill, tool, hook or adapter | [`commands/create_primitive.md`](commands/create_primitive.md) |
-| Validate an existing ADW | [`commands/validate_adw.md`](commands/validate_adw.md) |
-| Delegate a delivery phase | [`prompts/plan.md`](prompts/plan.md), [`build`](prompts/build.md), [`review`](prompts/review.md), [`repair`](prompts/repair.md), or [`document`](prompts/document.md) |
+| Understand what a primitive is / what one must contain | [`foundations/primitives/`](foundations/primitives/README.md) |
+| Build a workflow end to end | [`handbook/06_BUILDING_AN_ADW.md`](handbook/06_BUILDING_AN_ADW.md) |
+| Know where things go in a target project | [`handbook/05_AGENTIC_LAYER_LAYOUT.md`](handbook/05_AGENTIC_LAYER_LAYOUT.md) |
+| Settle a term | [`foundations/LANGUAGE.md`](foundations/LANGUAGE.md) |
+| Check the package is not structurally broken | [`handbook/03_STRUCTURAL_CHECK.md`](handbook/03_STRUCTURAL_CHECK.md) |
 
-Read only the selected recipe and its required references. Commands are portable Markdown recipes; skills are loadable guidance; hooks are design contracts. Nothing here auto-registers a slash command, installs a plugin, configures MCP or starts a workflow. To integrate a host, inspect its supported capabilities, propose a scoped registration diff, obtain approval, and test discovery/execution. Preserve existing settings; direct file loading works without registration.
+This package **describes** how workflows are constructed and where they go. It does not ship
+workflows, generate code, or execute anything. Generated output belongs to the target project.
+
+## Layout
+
+The package separates the **discipline** from the **toolkit** that applies it, because the two change
+at different rates and for different reasons.
+
+| | Holds | Changes when |
+|---|---|---|
+| [`foundations/`](foundations/README.md) | What Agentic Engineering *is* — vocabulary, principles, lifecycle, authority, verification, recovery, composition | A lesson proves true **anywhere**, not just here |
+| `commands/`, `prompts/`, `skills/`, `templates/`, `hooks/` | The toolkit — recipes, prompt bodies, record shapes, contracts | A practice or artifact shape improves |
+| [`handbook/`](handbook/README.md) | How this package is operated — conventions, naming, what may be created | A convention changes |
+| `.memory/` | Local notes and staged artifacts. Never committed | Freely; see [`handbook/01_LOCAL_MEMORY.md`](handbook/01_LOCAL_MEMORY.md) |
+
+**`foundations/` is standalone by rule.** It names no company, repository, tracker, model or harness.
+A statement that can only be justified by one organization's tooling belongs in that organization's
+docs. A worked example from real delivery is welcome; the rule it illustrates has to generalize.
+
+Changes to vocabulary land in [`foundations/LANGUAGE.md`](foundations/LANGUAGE.md) **and** everywhere
+that reads or writes the term, in the same change. A half-applied rename fails silently at the
+consuming phase, which is worse than the original name.
+
+## Local memory
+
+Working notes and staged artifacts live in a never-committed `.memory/` folder. Conventions:
+[`handbook/01_LOCAL_MEMORY.md`](handbook/01_LOCAL_MEMORY.md).
 
 ## Purpose
 
@@ -53,7 +85,7 @@ This is a bootable instruction package for a specialized agent, not an executabl
 
 1. Spawn an agent with this instruction: “Read this package's AGENTS.md and complete its README.md boot sequence before acting. Report the loaded files, missing capabilities, and proposed authority envelope; then await the task.” Supply the actual package location to the host. Merely placing the folder does not load it.
 2. Provide the target, task, and read-only discovery scope. Target-project files are task inputs, not prerequisites for understanding this package.
-3. Authorize creation of `runs/<run_id>/` inside this folder. Copy only needed templates there; add `ADW_DESIGN.md` for workflow authoring. Never overwrite templates or another run. Keep evidence there without sensitive values. Generated target ADWs may use their own approved artifact convention; record the mapping.
+3. Authorize creation of `runs/<run_id>/` inside this folder; see [run artifacts](handbook/02_RUN_ARTIFACTS.md).
 4. Complete the brief and discover within scope. Approve a plan for non-trivial work; a tiny low-risk edit needs explicit task scope but no separate plan. Read-only answers need no implementation artifacts.
 5. Use a branch/worktree for non-trivial or parallel work. Tiny edits may use the current branch if authorized and unrelated work is preserved.
 6. Require complete evidence and a handoff, including failures and human waivers.
