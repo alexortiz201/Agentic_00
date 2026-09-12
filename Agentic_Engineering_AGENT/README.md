@@ -15,7 +15,6 @@ A self-contained package for bounded, observable, and repairable software delive
 9. 🧩 [`foundations/06_ADW_COMPOSITION.md`](foundations/06_ADW_COMPOSITION.md) -- how workflows are built and sized.
 10. 🎓 [`foundations/07_COACHING.md`](foundations/07_COACHING.md) -- only in coaching mode.
 11. 🧱 [`foundations/primitives/`](foundations/primitives/README.md) -- **what each primitive must contain when you create one.** Load the one you need, not all of them.
-12. 🏃 [`RUNBOOK.md`](RUNBOOK.md) -- the execution checklist for a task.
 
 Load 1-4 always. Beyond that, load what the task needs -- loading everything contradicts this package's own rule about context.
 

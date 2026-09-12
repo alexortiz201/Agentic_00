@@ -85,6 +85,14 @@ Add or update tests without weakening what they assert to obtain green. Do not d
 
 ## Flake adjudication
 
+### Do not create the contention you will then have to adjudicate
+
+**Do not run a full suite concurrently with browser automation, a build, or another suite.** Contention produces timeout-shaped failures that are indistinguishable from real ones in the record, and the cheapest flake to adjudicate is the one that was never created.
+
+Record system load alongside any timeout-shaped failure **at the time of the failure**. A load measurement taken afterwards, once the machine is quiet, describes a different machine than the one the run failed on, and is not evidence about that run.
+
+### Re-evaluating a failure that may not be about the code
+
 A required failure blocks. That does not weaken. But an environment-induced failure blocks forever unless the package says what the safe re-evaluation looks like, and the only other documented escape -- a human waiver -- is the wrong instrument, because nothing is being waived: the claim is that the check never measured the code.
 
 > **Environment-induced failure.** A failed required check may be re-evaluated **only** by re-running the named failing scope **in isolation**, on a quiescent machine, recording both runs. The re-run does not replace the original; both are retained. A failure may be classified `environment_suspected` only with positive evidence -- the isolated run passes **and** an independent indicator corroborates it (a differing failure set between runs, a load measurement, a timeout-shaped failure mode). One isolated pass is not evidence; it is a second sample.
