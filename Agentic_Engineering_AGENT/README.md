@@ -4,12 +4,13 @@ A self-contained package for bounded, observable, and repairable software delive
 
 ## Read these first, in this order
 
-Four files. Together they are what "understanding this tool" means; everything else is loaded because a task asked for it.
+Five files. Together they are what "understanding this tool" means; everything else is loaded because a task asked for it.
 
 1. 📜 [`AGENTS.md`](AGENTS.md) -- the operating contract. What you may do, what needs asking, and what is never granted.
 2. 🔤 [`LANGUAGE.md`](LANGUAGE.md) -- the canonical vocabulary. **Read it in full, before anything that uses it.** Every other file in this package writes these terms exactly as spelled here and **does not link back to explain them**, because by the time they are read the vocabulary is already in context. Most apparent contradictions between two documents turn out to be two spellings of one idea rather than two ideas.
-3. 🏛️ [`foundations/README.md`](foundations/README.md) -- what Agentic Engineering is, and the rule that keeps the discipline portable.
-4. 🧭 [`foundations/01_PRINCIPLES.md`](foundations/01_PRINCIPLES.md) -- the two layers, the twelve leverage points, the evidence hierarchy, and how to decide.
+3. 🏛️ [`foundations/README.md`](foundations/README.md) -- the two areas of the discipline, and the rule that keeps it portable.
+4. 📐 [`foundations/Software_Engineering/01_SDLC_SOFTWARE_DEVELOPMENT_LIFECYCLE.md`](foundations/Software_Engineering/01_SDLC_SOFTWARE_DEVELOPMENT_LIFECYCLE.md) -- **the practice underneath.** What the lifecycle is, the three actors and what each is good for, and why "loop engineering" is the wrong name for any of it. Agentic engineering is a superset of engineering; read this before assuming any of it is new.
+5. 🧭 [`foundations/Agentic_Engineering/01_PRINCIPLES.md`](foundations/Agentic_Engineering/01_PRINCIPLES.md) -- the two layers, the twelve leverage points, the evidence hierarchy, and how to decide.
 
 ## Then load what the task needs
 
@@ -17,13 +18,14 @@ Loading everything contradicts this package's own rule about context, so the res
 
 | Read | When you are about to |
 |---|---|
-| 🔄 [`foundations/02_WORKFLOW.md`](foundations/02_WORKFLOW.md) | Run a task through its lifecycle -- states, gates, repair routing |
-| 🔐 [`foundations/03_AUTHORITY_AND_SAFETY.md`](foundations/03_AUTHORITY_AND_SAFETY.md) | Discover, touch credentials, isolate work, or do anything needing approval |
-| 🔬 [`foundations/04_VERIFICATION.md`](foundations/04_VERIFICATION.md) | Check something, record evidence, or judge whether a failure is real |
-| 🛟 [`foundations/05_RECOVERY_AND_HANDOFF.md`](foundations/05_RECOVERY_AND_HANDOFF.md) | Repair, roll back, or report a result |
-| 🧩 [`foundations/06_ADW_COMPOSITION.md`](foundations/06_ADW_COMPOSITION.md) | Design or size a workflow |
-| 🎓 [`foundations/07_COACHING.md`](foundations/07_COACHING.md) | Work in `coaching` mode -- and only then |
-| 🧱 [`foundations/primitives/`](foundations/primitives/README.md) | Create a primitive. Load the one you need, not all twelve |
+| 🏗️ [`foundations/Software_Engineering/`](foundations/Software_Engineering/README.md) | Ask whether something is engineering practice rather than an agentic concern |
+| 🔄 [`foundations/Agentic_Engineering/02_WORKFLOW.md`](foundations/Agentic_Engineering/02_WORKFLOW.md) | Run a task through its lifecycle -- states, gates, repair routing |
+| 🔐 [`foundations/Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md`](foundations/Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md) | Discover, touch credentials, isolate work, or do anything needing approval |
+| 🔬 [`foundations/Agentic_Engineering/04_VERIFICATION.md`](foundations/Agentic_Engineering/04_VERIFICATION.md) | Check something, record evidence, or judge whether a failure is real |
+| 🛟 [`foundations/Agentic_Engineering/05_RECOVERY_AND_HANDOFF.md`](foundations/Agentic_Engineering/05_RECOVERY_AND_HANDOFF.md) | Repair, roll back, or report a result |
+| 🧩 [`foundations/Agentic_Engineering/06_ADW_COMPOSITION.md`](foundations/Agentic_Engineering/06_ADW_COMPOSITION.md) | Design or size a workflow |
+| 🎓 [`foundations/Agentic_Engineering/07_COACHING.md`](foundations/Agentic_Engineering/07_COACHING.md) | Work in `coaching` mode -- and only then |
+| 🧱 [`foundations/Agentic_Engineering/primitives/`](foundations/Agentic_Engineering/primitives/README.md) | Create a primitive. Load the one you need, not all twelve |
 | 🛠️ [`handbook/06_BUILDING_AN_ADW.md`](handbook/06_BUILDING_AN_ADW.md) | Build a workflow end to end |
 | 🧪 [`handbook/07_VALIDATING_A_WORKFLOW.md`](handbook/07_VALIDATING_A_WORKFLOW.md) | Check a workflow does what it claims, before trusting it |
 | 🏗️ [`handbook/05_AGENTIC_LAYER_LAYOUT.md`](handbook/05_AGENTIC_LAYER_LAYOUT.md) | Decide where something goes in a target project |
@@ -46,11 +48,12 @@ The package separates the vocabulary, the discipline, and the conventions for op
 | | Holds | Changes when |
 |---|---|---|
 | 🔤 [`LANGUAGE.md`](LANGUAGE.md) | The canonical vocabulary every other file writes to | A term is renamed -- here **and** everywhere that reads or writes it, in the same change |
-| 🏛️ [`foundations/`](foundations/README.md) | What Agentic Engineering *is* -- principles, lifecycle, authority, verification, recovery, composition | A lesson proves true **anywhere**, not just here |
+| 🏗️ [`foundations/Software_Engineering/`](foundations/Software_Engineering/README.md) | Proper engineering -- the practice agentic work rests on and does not replace | A statement would have been true before agents existed |
+| 🤖 [`foundations/Agentic_Engineering/`](foundations/Agentic_Engineering/README.md) | What changes when agents and code perform the phases -- principles, lifecycle, authority, verification, recovery, composition | A lesson proves true **anywhere**, not just here |
 | 📓 [`handbook/`](handbook/README.md) | How this package is operated -- conventions, naming, what may be created | A convention changes |
 | `.memory/` | Local notes and staged artifacts. Never committed | Freely; see [`handbook/01_LOCAL_MEMORY.md`](handbook/01_LOCAL_MEMORY.md) |
 
-**`foundations/` is standalone by rule.** It names no company, repository, tracker, model or harness, and it links to nothing outside itself -- including the vocabulary, which is why `LANGUAGE.md` is read up front rather than pointed at from the place a term is used. A statement that can only be justified by one organization's tooling belongs in that organization's docs. A worked example from real delivery is welcome; the rule it illustrates has to generalize.
+**`foundations/` is standalone by rule.** It names no company, repository, tracker, model or harness, and it reaches nothing outside itself -- including the vocabulary, which is why `LANGUAGE.md` is read up front rather than pointed at from the place a term is used. Its two areas may reference each other, and that is the point: the agentic side names the engineering practice it rests on instead of quietly reinventing it. A statement that can only be justified by one organization's tooling belongs in that organization's docs. A worked example from real delivery is welcome; the rule it illustrates has to generalize.
 
 A half-applied rename is worse than the original name, because it fails silently at the consuming phase rather than erroring where the mistake was made.
 

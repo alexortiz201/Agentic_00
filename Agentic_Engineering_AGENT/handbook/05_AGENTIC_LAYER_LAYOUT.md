@@ -1,10 +1,10 @@
 # 🏗️ Agentic layer layout
 
-Where the primitives go in a target project. [`foundations/primitives/`](../foundations/primitives/README.md) says what each must contain; this says where we put them. A project that already has a convention keeps it -- **record the mapping instead of imposing this one.**
+Where the primitives go in a target project. [`foundations/Agentic_Engineering/primitives/`](../foundations/Agentic_Engineering/primitives/README.md) says what each must contain; this says where we put them. A project that already has a convention keeps it -- **record the mapping instead of imposing this one.**
 
 ## Start here
 
-The first three directories. Do not generate more than this until something forces it -- [`foundations/06`](../foundations/06_ADW_COMPOSITION.md) has the table of what forces what.
+The first three directories. Do not generate more than this until something forces it -- [`foundations/Agentic_Engineering/06`](../foundations/Agentic_Engineering/06_ADW_COMPOSITION.md) has the table of what forces what.
 
 ```
 .claude/commands/    named, reusable prompts

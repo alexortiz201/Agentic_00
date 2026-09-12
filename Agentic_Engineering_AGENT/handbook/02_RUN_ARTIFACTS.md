@@ -13,7 +13,7 @@ runs/<run_id>/
   ...               gate and phase records, evidence, as the run produces them
 ```
 
-Write **only the records the run actually needs**. Workflow-authoring work adds a design document; defect work adds a reproduction record before build; coaching adds a session record. What each must contain is in [`foundations/primitives/`](../foundations/primitives/README.md).
+Write **only the records the run actually needs**. Workflow-authoring work adds a design document; defect work adds a reproduction record before build; coaching adds a session record. What each must contain is in [`foundations/Agentic_Engineering/primitives/`](../foundations/Agentic_Engineering/primitives/README.md).
 
 ## Rules
 

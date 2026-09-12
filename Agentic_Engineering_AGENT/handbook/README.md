@@ -6,10 +6,10 @@ This is the counterpart to [`foundations/`](../foundations/README.md), and the s
 
 | | Answers | Portable? |
 |---|---|---|
-| 🏛️ [`foundations/`](../foundations/README.md) | What Agentic Engineering **is** | Yes -- standalone by rule |
+| 🏛️ [`foundations/`](../foundations/README.md) | What engineering **is**, and what agentic engineering adds | Yes -- standalone by rule |
 | `handbook/` | How **this package** is operated | No -- specific to this package's layout |
 
-A convention that would hold for any agentic-engineering effort belongs in `foundations/`. A convention about this folder structure belongs here.
+A convention that would hold for any agentic-engineering effort belongs in `foundations/`, in the area it fits -- `Software_Engineering/` if it would have been true before agents existed, `Agentic_Engineering/` otherwise. A convention about this folder structure belongs here.
 
 | File | Covers |
 |---|---|

@@ -1,6 +1,6 @@
 # 🛠️ Building an ADW
 
-The process. Blueprints for each piece are in [`foundations/primitives/`](../foundations/primitives/README.md).
+The process. Blueprints for each piece are in [`foundations/Agentic_Engineering/primitives/`](../foundations/Agentic_Engineering/primitives/README.md).
 
 ## 1. Do it by hand first
 
