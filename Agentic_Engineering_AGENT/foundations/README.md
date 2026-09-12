@@ -17,7 +17,7 @@ Everything here is standalone: it describes how to run a bounded, observable, re
 
 That constraint is the point. Anything that touches a specific project, toolkit or filesystem layout lives outside this folder and is expected to change often. What is in here should change slowly, and only for reasons that would hold at any organization.
 
-**This folder links inward, never outward.** A file here may reference another file here, including across the two areas -- that is what lets the agentic side name the engineering practice it rests on. What it may not do is reach outside `foundations/`. The discipline names *concepts* -- a run-state record, a gate-decision record, a design document -- and whatever adopts it decides which file is which. That mapping is the adopter's business, and keeping it out is what makes this folder liftable.
+**This folder links inward, never outward.** A file here may reference another file here, including across areas -- that is what lets the agentic side name the engineering practice it rests on. What it may not do is reach outside `foundations/`. The discipline names *concepts* -- a run-state record, a gate-decision record, a design document -- and whatever adopts it decides which file is which. That mapping is the adopter's business, and keeping it out is what makes this folder liftable.
 
 The canonical vocabulary is read before any of this, from the package root. Nothing here points back at it, because by the time these files are read the spelling is already in context.
 

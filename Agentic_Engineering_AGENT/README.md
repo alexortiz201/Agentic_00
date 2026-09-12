@@ -8,7 +8,7 @@ Five files. Together they are what "understanding this tool" means; everything e
 
 1. 📜 [`AGENTS.md`](AGENTS.md) -- the operating contract. What you may do, what needs asking, and what is never granted.
 2. 🔤 [`LANGUAGE.md`](LANGUAGE.md) -- the canonical vocabulary. **Read it in full, before anything that uses it.** Every other file in this package writes these terms exactly as spelled here and **does not link back to explain them**, because by the time they are read the vocabulary is already in context. Most apparent contradictions between two documents turn out to be two spellings of one idea rather than two ideas.
-3. 🏛️ [`foundations/README.md`](foundations/README.md) -- the two areas of the discipline, and the rule that keeps it portable.
+3. 🏛️ [`foundations/README.md`](foundations/README.md) -- the four areas of the discipline, and the rule that keeps it portable.
 4. 📐 [`foundations/Software_Engineering/01_SDLC_SOFTWARE_DEVELOPMENT_LIFECYCLE.md`](foundations/Software_Engineering/01_SDLC_SOFTWARE_DEVELOPMENT_LIFECYCLE.md) -- **the practice underneath.** What the lifecycle is, the three actors and what each is good for, and why "loop engineering" is the wrong name for any of it. Agentic engineering is a superset of engineering; read this before assuming any of it is new.
 5. 🧭 [`foundations/Agentic_Engineering/01_PRINCIPLES.md`](foundations/Agentic_Engineering/01_PRINCIPLES.md) -- the two layers, the twelve leverage points, the evidence hierarchy, and how to decide.
 
