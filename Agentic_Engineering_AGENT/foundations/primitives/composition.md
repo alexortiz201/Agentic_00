@@ -1,6 +1,6 @@
 # Composition
 
-Phases in sequence. It owns exactly three things: **identity, order, and failure policy.** Nothing else — if it reaches into a phase, the boundary is wrong.
+Phases in sequence. It owns exactly three things: **identity, order, and failure policy.** Nothing else -- if it reaches into a phase, the boundary is wrong.
 
 ## Must contain
 
@@ -10,9 +10,9 @@ Phases in sequence. It owns exactly three things: **identity, order, and failure
 
 ## Failure policy is a per-phase decision
 
-The same phase failing means different things depending on what follows it. A failed verification step may be survivable before a review, and fatal before a merge. **Record the reason beside the policy** — a bare `continue` reads as an oversight a year later.
+The same phase failing means different things depending on what follows it. A failed verification step may be survivable before a review, and fatal before a merge. **Record the reason beside the policy** -- a bare `continue` reads as an oversight a year later.
 
-**A workflow started by a person may abort. A workflow started by a trigger may not** — it owes its queue a terminal status on every path, or the work is lost in a claimed state forever.
+**A workflow started by a person may abort. A workflow started by a trigger may not** -- it owes its queue a terminal status on every path, or the work is lost in a claimed state forever.
 
 ## Rules
 

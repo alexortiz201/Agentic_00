@@ -1,8 +1,8 @@
-# Artifact map — concept → where it is defined
+# Artifact map -- concept -> where it is defined
 
 `foundations/` names concepts and links to nothing. This is the mapping it leaves out.
 
-Until `v2/` exists, the **blueprint is the definition** — it says what each artifact must contain. Concrete starting files land in `v2/` and this table gains a second column when they do.
+Until `v2/` exists, the **blueprint is the definition** -- it says what each artifact must contain. Concrete starting files land in `v2/` and this table gains a second column when they do.
 
 | Concept in `foundations/` | Defined by |
 |---|---|
@@ -28,4 +28,4 @@ Until `v2/` exists, the **blueprint is the definition** — it says what each ar
 
 ## `v1/`
 
-The previous toolkit — templates, prompts, commands, skills, hooks. Kept isolated and unreferenced. Read it for prior art; do not wire anything to it.
+The previous toolkit -- templates, prompts, commands, skills, hooks. Kept isolated and unreferenced. Read it for prior art; do not wire anything to it.

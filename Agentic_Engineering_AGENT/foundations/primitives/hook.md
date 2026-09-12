@@ -11,7 +11,7 @@ Code that runs at a lifecycle event. Most **observe**. A few can **block**. Conf
 
 ## Observing and blocking are different jobs
 
-Only an event that fires **before** the action can prevent it. After-the-fact events can complain, record, and alert — the thing already happened. Know which kind you are writing, and do not describe one as the other.
+Only an event that fires **before** the action can prevent it. After-the-fact events can complain, record, and alert -- the thing already happened. Know which kind you are writing, and do not describe one as the other.
 
 ## Blocking guards fail closed
 
@@ -25,7 +25,7 @@ The blocked action is the one you most need a record of. A guard that returns be
 
 Allow only: validated run, phase and event identifiers; a timestamp; normalized in-scope file references; the operation category; the result status; and references to evidence held elsewhere.
 
-Exclude raw prompts, tool arguments and results, environment values, transcripts, and file contents. **Even a path or an identifier can be sensitive** — omit anything not approved for retention, and never let an untrusted identifier choose an output path.
+Exclude raw prompts, tool arguments and results, environment values, transcripts, and file contents. **Even a path or an identifier can be sensitive** -- omit anything not approved for retention, and never let an untrusted identifier choose an output path.
 
 Prefer a local record. Sending events anywhere else is a separate authorization with an authenticated destination and a named retention owner.
 
@@ -38,7 +38,7 @@ Prefer a local record. Sending events anywhere else is a separate authorization 
 3. A synthetic secret-bearing payload leaves no value retained or transmitted. **Never use a real secret in a fixture.**
 4. Path traversal, a symlink escape, or an untrusted identifier is rejected.
 5. Duplicate and concurrent events behave in a documented, consistent way.
-6. When the destination is unavailable, degradation is declared — **never reported as a passing gate**.
+6. When the destination is unavailable, degradation is declared -- **never reported as a passing gate**.
 7. A blocking guard prevents the action at the real boundary under denial, crash, timeout, and via an alternate tool that reaches the same effect.
 8. Invoked from a different working directory, it still resolves the correct paths.
 
@@ -46,8 +46,8 @@ Also settle before implementing: reentrancy and deduplication, concurrent writes
 
 ## A guard is not a sandbox
 
-Pattern-matching a command string stops the obvious case and nothing else — another tool, an interpreter, or trivial obfuscation goes straight past. Guards are defence in depth. **The boundary is what capability was granted in the first place**, which is a decision made before the hook runs.
+Pattern-matching a command string stops the obvious case and nothing else -- another tool, an interpreter, or trivial obfuscation goes straight past. Guards are defence in depth. **The boundary is what capability was granted in the first place**, which is a decision made before the hook runs.
 
 ## Common failure
 
-A guard that got in the way of a workflow and was deleted rather than narrowed. Guards die by convenience, not by argument — when one obstructs, change its scope and record why.
+A guard that got in the way of a workflow and was deleted rather than narrowed. Guards die by convenience, not by argument -- when one obstructs, change its scope and record why.

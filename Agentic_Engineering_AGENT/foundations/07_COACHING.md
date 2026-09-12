@@ -6,9 +6,9 @@ Coaching is one of the engagement modes. It develops an engineer's judgment; it 
 
 Six steps, in order, every session:
 
-**choose level → predict → execute → inspect → improve → teach back**
+**choose level -> predict -> execute -> inspect -> improve -> teach back**
 
-The order is the method. A prediction recorded *after* the observation measures nothing, and it is the only step that cannot be recovered later — if it is skipped, the session produced practice but no signal.
+The order is the method. A prediction recorded *after* the observation measures nothing, and it is the only step that cannot be recovered later -- if it is skipped, the session produced practice but no signal.
 
 ## Ask rather than answer
 
@@ -42,13 +42,13 @@ When an explanation sounds right but lands wrong, check whether two sides of one
 
 Roughly ordered by what each one requires the previous to be in place:
 
-problem modeling → workflow decomposition → a deterministic quality adapter → a typed handoff → an evidence-producing gate → a bounded repair loop → explicit acceptance → execution trace and observability → isolation and permissions → reuse across a second real project → extracting proven primitives → composing larger workflows
+problem modeling -> workflow decomposition -> a deterministic quality adapter -> a typed handoff -> an evidence-producing gate -> a bounded repair loop -> explicit acceptance -> execution trace and observability -> isolation and permissions -> reuse across a second real project -> extracting proven primitives -> composing larger workflows
 
 **Prefer progressively harder real work over exercises.** Reading is not the instrument, and a synthetic problem cannot produce the failure modes that teach.
 
 ## Mastery
 
-Score a named capability 0–4, **from recorded evidence only**:
+Score a named capability 0-4, **from recorded evidence only**:
 
 | | |
 |---|---|
@@ -60,10 +60,10 @@ Score a named capability 0–4, **from recorded evidence only**:
 
 The gap between 2 and 3 is diagnosis. Operating something without being able to say why it failed is a 2.
 
-**Do not inflate.** Never invent a historical score, never infer mastery from a fluent explanation or from a folder existing, and never average away weak verification or unsafe authority — one unsafe authority decision is not offset by four sound ones.
+**Do not inflate.** Never invent a historical score, never infer mastery from a fluent explanation or from a folder existing, and never average away weak verification or unsafe authority -- one unsafe authority decision is not offset by four sound ones.
 
 ## What persists
 
 A session that leaves nothing behind cannot be built on. Record: decisions and predictions; levels held and the evidence for moving; artifacts produced; failures and their root causes; **a reusable lesson or the reason not to extract one**; measured time, cost and interventions; demonstrated change in mastery; and exactly one next exercise.
 
-The fifth is the one most often skipped, and **"nothing worth extracting yet" is a complete and legitimate answer** — recording it is what keeps reuse earned rather than assumed.
+The fifth is the one most often skipped, and **"nothing worth extracting yet" is a complete and legitimate answer** -- recording it is what keeps reuse earned rather than assumed.

@@ -4,7 +4,7 @@ The process. Blueprints for each piece are in [`foundations/primitives/`](../fou
 
 ## 1. Do it by hand first
 
-Run the workflow yourself, end to end, with an agent in the terminal. Step into every node: run the check, watch the condition, do the review. **You cannot decompose a workflow you have not performed** — and the failure routes, which are most of the work, only show up when something actually fails.
+Run the workflow yourself, end to end, with an agent in the terminal. Step into every node: run the check, watch the condition, do the review. **You cannot decompose a workflow you have not performed** -- and the failure routes, which are most of the work, only show up when something actually fails.
 
 Write it out before encoding it. Any notation works.
 
@@ -18,9 +18,9 @@ Resist specializing early. Start with the smallest workflow that does something 
 
 For each step: **does this require judgment?**
 
-- **No** → deterministic code. It is faster, free, and does the same thing every time.
-- **Yes** → an agent, with a bounded prompt and a declared output contract.
-- **It already exists elsewhere** → call it, and say so at the call site.
+- **No** -> deterministic code. It is faster, free, and does the same thing every time.
+- **Yes** -> an agent, with a bounded prompt and a declared output contract.
+- **It already exists elsewhere** -> call it, and say so at the call site.
 
 The test that matters: *if I gave this step to two different people, would they produce the same result?* If yes, it is code.
 
@@ -34,18 +34,18 @@ The agent is invoked *by* the phase; the phase owns sequencing, state and gates.
 
 ## 6. Compose
 
-The composition owns identity, order, and **a failure policy per phase** — decided by what follows each one, and recorded with its reason.
+The composition owns identity, order, and **a failure policy per phase** -- decided by what follows each one, and recorded with its reason.
 
 ## 7. Prove the transitions, not just the nodes
 
-Test plan→build, build→test, and every failure route. **The transitions are where the defects are**: argument contracts that do not match, a claim that is not atomic, a timeout handler with no timeout set. A node that works in isolation tells you nothing about the handoff.
+Test plan->build, build->test, and every failure route. **The transitions are where the defects are**: argument contracts that do not match, a claim that is not atomic, a timeout handler with no timeout set. A node that works in isolation tells you nothing about the handoff.
 
 ## 8. Only then automate the start
 
 A trigger is the last step, not the first. Before adding one: claims are atomic and expire, concurrency is bounded by live work, external input is authenticated, and every path writes a terminal status.
 
-**Once a trigger owns the start, the workflow may no longer abort** — it owes its queue an outcome.
+**Once a trigger owns the start, the workflow may no longer abort** -- it owes its queue an outcome.
 
 ## Throughout
 
-**Reuse must be earned.** Build for this project. Extract a primitive on the second real use, not the first — and record what you chose not to extract, because that is the note that keeps the rule honest.
+**Reuse must be earned.** Build for this project. Extract a primitive on the second real use, not the first -- and record what you chose not to extract, because that is the note that keeps the rule honest.

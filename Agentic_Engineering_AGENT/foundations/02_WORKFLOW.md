@@ -4,30 +4,30 @@
 
 | Task | Flow |
 |---|---|
-| Read-only question | discover → answer with evidence |
-| Tiny low-risk edit | discover → implement → verify → review → handoff |
-| Feature, bug, or chore | intake → discover → plan → approve → implement → verify → review → repair → document → handoff |
-| Independent parallel work | decompose → isolate workers → verify each → integrate → full verify |
-| External/high-risk action | plan → explicit approval → one bounded action → verify → pause |
-| Create/compose an ADW | discover primitives → contract phases/gates → approve → build vertical slice → test failures → supervised walkthrough → handoff |
+| Read-only question | discover -> answer with evidence |
+| Tiny low-risk edit | discover -> implement -> verify -> review -> handoff |
+| Feature, bug, or chore | intake -> discover -> plan -> approve -> implement -> verify -> review -> repair -> document -> handoff |
+| Independent parallel work | decompose -> isolate workers -> verify each -> integrate -> full verify |
+| External/high-risk action | plan -> explicit approval -> one bounded action -> verify -> pause |
+| Create/compose an ADW | discover primitives -> contract phases/gates -> approve -> build vertical slice -> test failures -> supervised walkthrough -> handoff |
 
 ## Lifecycle
 
-Each step names the task state it holds and the gate that must pass before the next step consumes its output. Gate IDs use the `G0`–`G7` namespace defined in [composition contracts](06_ADW_COMPOSITION.md).
+Each step names the task state it holds and the gate that must pass before the next step consumes its output. Gate IDs use the `G0`-`G7` namespace defined in [composition contracts](06_ADW_COMPOSITION.md).
 
-1. **Intake** (`requested`, gate `G0`) — assign a run ID; capture outcome, scope, constraints, risks, and acceptance criteria. Declare the engagement mode (`delivery` / `coaching` / `audit` / `design`) and the entry operating level `L1`–`L5`. Clarify ambiguity.
-2. **Discovery** (`scoped`, gate `G0`) — read instructions/manifests; inspect Git state, relevant code/tests/scripts/CI, dependencies, data, and services. Mark unknowns `UNVERIFIED`. Descend a level when evidence is weak and record `descent_reason`.
-3. **Planning** (`ready`, gate `G1`) — map every criterion to changes and checks; identify files, interfaces, risks, rollback, and optional follow-up. Obtain plan approval for non-trivial work; tiny low-risk edits require explicit task scope only.
-4. **Implementation** (`building`, gate `G3`) — use a branch/worktree for non-trivial or parallel work; make the smallest coherent change; add tests; record deviations; preserve unrelated work.
-5. **Verification** (`validating`, gate `G4`) — run focused then broader checks; capture command, directory, result, exit code, scope, duration, provenance, and caveats. Required failures set `repairing` or `blocked` with `return_to` unless explicitly waived by a human; failed results remain failed.
-6. **Review** (`reviewing`, gate `G5`) — independently inspect correctness, security, regressions, maintainability, and scope. Classify every finding with a `disposition` and a `severity`; an approval that lists an unresolved `blocker` disposition is rejected.
-7. **Repair** (orthogonal to state) — use concrete failures/findings, change the hypothesis before retrying, and re-run affected checks. Re-enter the state named in `return_to`. Stop when the retry budget for that retry kind is exhausted.
-8. **Documentation** (`documenting`, gate `G6`) — update the documentation the change invalidates: interfaces, run instructions, configuration, and any recipe or README that now describes behavior that no longer exists. Record which documents were inspected and which were changed. "No documentation impact" is a finding that must be stated, not an omission.
-9. **Handoff** (`acceptance_pending` → `accepted` → `authorized_handoff`, gate `G7`) — report changes, evidence, gaps, risks, and recovery. A human accepts or requests repair. Acceptance does not authorize shipping; that is a separate human transition to `authorized_handoff`.
+1. **Intake** (`requested`, gate `G0`) -- assign a run ID; capture outcome, scope, constraints, risks, and acceptance criteria. Declare the engagement mode (`delivery` / `coaching` / `audit` / `design`) and the entry operating level `L1`-`L5`. Clarify ambiguity.
+2. **Discovery** (`scoped`, gate `G0`) -- read instructions/manifests; inspect Git state, relevant code/tests/scripts/CI, dependencies, data, and services. Mark unknowns `UNVERIFIED`. Descend a level when evidence is weak and record `descent_reason`.
+3. **Planning** (`ready`, gate `G1`) -- map every criterion to changes and checks; identify files, interfaces, risks, rollback, and optional follow-up. Obtain plan approval for non-trivial work; tiny low-risk edits require explicit task scope only.
+4. **Implementation** (`building`, gate `G3`) -- use a branch/worktree for non-trivial or parallel work; make the smallest coherent change; add tests; record deviations; preserve unrelated work.
+5. **Verification** (`validating`, gate `G4`) -- run focused then broader checks; capture command, directory, result, exit code, scope, duration, provenance, and caveats. Required failures set `repairing` or `blocked` with `return_to` unless explicitly waived by a human; failed results remain failed.
+6. **Review** (`reviewing`, gate `G5`) -- independently inspect correctness, security, regressions, maintainability, and scope. Classify every finding with a `disposition` and a `severity`; an approval that lists an unresolved `blocker` disposition is rejected.
+7. **Repair** (orthogonal to state) -- use concrete failures/findings, change the hypothesis before retrying, and re-run affected checks. Re-enter the state named in `return_to`. Stop when the retry budget for that retry kind is exhausted.
+8. **Documentation** (`documenting`, gate `G6`) -- update the documentation the change invalidates: interfaces, run instructions, configuration, and any recipe or README that now describes behavior that no longer exists. Record which documents were inspected and which were changed. "No documentation impact" is a finding that must be stated, not an omission.
+9. **Handoff** (`acceptance_pending` -> `accepted` -> `authorized_handoff`, gate `G7`) -- report changes, evidence, gaps, risks, and recovery. A human accepts or requests repair. Acceptance does not authorize shipping; that is a separate human transition to `authorized_handoff`.
 
 ### Invocation and handoff (`G2`) applies to supervised sessions, not only ADWs
 
-Every delegated invocation passes `G2` before its output is used, whether a controller issued it or you did by hand in a supervised session. Before delegating, fix the Core Four, the working directory, the allowed mutations, and the output contract. On return, validate that the result matches the invocation that was issued — same run/phase/attempt identity, same workspace, artifacts inside the authorized root — before any downstream step reads it. A subagent's report is an `asserted` claim until `G2` checks it against what it was actually asked to do; a result whose workspace does not match the one delegated is `blocked`, not a finding to interpret.
+Every delegated invocation passes `G2` before its output is used, whether a controller issued it or you did by hand in a supervised session. Before delegating, fix the Core Four, the working directory, the allowed mutations, and the output contract. On return, validate that the result matches the invocation that was issued -- same run/phase/attempt identity, same workspace, artifacts inside the authorized root -- before any downstream step reads it. A subagent's report is an `asserted` claim until `G2` checks it against what it was actually asked to do; a result whose workspace does not match the one delegated is `blocked`, not a finding to interpret.
 
 ## State
 
@@ -71,7 +71,7 @@ Record operating-level movement as it happens, not at the end: on descent write 
 
 This example is the minimum shape, not the whole record. Keep one state record per run, in a location authorized for artifact writes, without overwriting another run's. Update state after each step and before yielding; retain failure evidence. Write a temporary file then rename within the same directory where practical. Never store secrets.
 
-Normal transitions follow `requested → scoped → ready → building → validating → reviewing → documenting → acceptance_pending → accepted → authorized_handoff`. Tiny edits may skip `ready`; read-only answers stop after `scoped`. `accepted → authorized_handoff` requires a separate explicit human authorization naming the action and scope; a run may legitimately terminate at `accepted`.
+Normal transitions follow `requested -> scoped -> ready -> building -> validating -> reviewing -> documenting -> acceptance_pending -> accepted -> authorized_handoff`. Tiny edits may skip `ready`; read-only answers stop after `scoped`. `accepted -> authorized_handoff` requires a separate explicit human authorization naming the action and scope; a run may legitimately terminate at `accepted`.
 
 **Repair returns to the state responsible for the failure, not to verification.** Set `repairing` or `blocked` alongside the current state, and set `return_to` to the state whose phase produced the defect. The test is: which phase, had it been done correctly, would have prevented this failure?
 

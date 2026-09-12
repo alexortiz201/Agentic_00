@@ -2,7 +2,7 @@
 
 ## Start and discover
 
-- [ ] Declare and record the engagement mode (`delivery` / `coaching` / `audit` / `design`) and the entry operating level `L1`–`L5`.
+- [ ] Declare and record the engagement mode (`delivery` / `coaching` / `audit` / `design`) and the entry operating level `L1`-`L5`.
 - [ ] Find repository boundaries; read local instructions and manifests.
 - [ ] Inspect `git status --short --branch`; preserve unrelated work.
 - [ ] After artifact-write approval, set up `runs/<run_id>/` per [run artifacts](handbook/02_RUN_ARTIFACTS.md); complete the brief and initialize state.
@@ -32,7 +32,7 @@
 - [ ] Compare expected versus actual checks; record exact results (`passed` / `failed` / `not_run` / `error`), applicability, `source`, durations, revision, diff base, changed-file count and diff identity.
 - [ ] For new ADWs, test malformed output, missing/stale artifacts, failed gates, gates run from the wrong workspace, state corruption, leaked resources, denied actions, interruption and duplicate pickup before a supervised walkthrough.
 - [ ] Perform a separate review; record each finding's `disposition` and `severity`; repair every `blocker` and re-test, or obtain explicit human waivers with evidence and consequences.
-- [ ] Route each repair to the state named in `return_to` — the state responsible for the failure — not unconditionally back to verification.
+- [ ] Route each repair to the state named in `return_to` -- the state responsible for the failure -- not unconditionally back to verification.
 - [ ] Update documentation invalidated by the change, or state explicitly that there is none.
 - [ ] Complete the run's handoff, retaining failed results and explicit human waivers, and reporting operating-level movement and safe work remaining if blocked.
 - [ ] Ask for acceptance; do not push, merge, or deploy without a separate authorization to `authorized_handoff`.

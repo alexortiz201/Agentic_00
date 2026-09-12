@@ -16,7 +16,7 @@ Discover actual commands from project instructions, manifests, scripts, and CI.
 
 ### Order by cost within strength
 
-> **Order by cost within strength.** The ladder ranks checks by what they establish, not what they cost. Where a cheap observation can reject a build that an expensive one would also reject, run it first. In particular, a single bounded pass over the actual running product — one walk, not a matrix — belongs **before** the full regression suite. It is the cheapest check that can see integration and wiring faults, and those are exactly what levels 1–2 cannot see.
+> **Order by cost within strength.** The ladder ranks checks by what they establish, not what they cost. Where a cheap observation can reject a build that an expensive one would also reject, run it first. In particular, a single bounded pass over the actual running product -- one walk, not a matrix -- belongs **before** the full regression suite. It is the cheapest check that can see integration and wiring faults, and those are exactly what levels 1-2 cannot see.
 >
 > This does not reorder the ladder's authority: a cheap observation never substitutes for a required check. It changes what you spend first.
 
@@ -44,15 +44,15 @@ A check record that is `passed` with `source: asserted` is not a passed check; i
 
 ## Gate rules
 
-- A gate decision is `pass`, `blocked`, or `human_waived` — three values, and `human_waived` is never counted as `pass` anywhere a decision is aggregated or reported.
+- A gate decision is `pass`, `blocked`, or `human_waived` -- three values, and `human_waived` is never counted as `pass` anywhere a decision is aggregated or reported.
 - A required failure blocks `acceptance_pending` until repaired or explicitly human-waived; later steps never erase its failed result. Record waiver evidence, approver, time, scope, and accepted consequences in task state and handoff.
 - A check that did not run is `not_run`, and `not_run` on a required check blocks. There is no `skipped` status: "authorized exclusion" and "did not run" are different facts, and one status covering both is what lets a suite that never executed be read as a suite that was deliberately left out.
 - An exclusion is `applicable: false` plus a reason, and a required check may be marked inapplicable only by the same authority that could waive it.
-- “No tests found” is not proof of correctness.
-- A gate whose subject is a change must record its diff base and changed-file count and must decide `blocked` when the count is `0` — an empty diff means the gate did not find its subject. See “A gate must bind to a non-empty diff” in [composition contracts](06_ADW_COMPOSITION.md).
+- "No tests found" is not proof of correctness.
+- A gate whose subject is a change must record its diff base and changed-file count and must decide `blocked` when the count is `0` -- an empty diff means the gate did not find its subject. See "A gate must bind to a non-empty diff" in [composition contracts](06_ADW_COMPOSITION.md).
 - Review prose does not replace executable checks, and the reciprocal holds: **tests do not replace spec review, and screenshots do not replace executable tests.** Each answers a question the others cannot.
 
-**Reviewer output is advisory until an independent gate accepts it.** An approving review is a finding, not a decision — reading it as a gate result is how approval quietly becomes authorization.
+**Reviewer output is advisory until an independent gate accepts it.** An approving review is a finding, not a decision -- reading it as a gate result is how approval quietly becomes authorization.
 - Previous artifacts do not prove current correctness.
 - Configured tooling does not prove it ran.
 - Compare the full expected check set with actual results; missing, malformed, duplicate, empty, stale or contradictory results cannot pass.
@@ -61,23 +61,23 @@ A check record that is `passed` with `source: asserted` is not a passed check; i
 
 ## Verify behaviour, not description
 
-**Trace actual arguments, working directory and exit handling — not names, not a README.** A document describes intent; only the code describes behaviour. When they disagree, the document is usually the *target* and the code the *current state*, and the gap is the finding.
+**Trace actual arguments, working directory and exit handling -- not names, not a README.** A document describes intent; only the code describes behaviour. When they disagree, the document is usually the *target* and the code the *current state*, and the gap is the finding.
 
-Where a runtime is missing or an integration was never exercised, **label it unverified and say so**. **Structural checks do not prove adoption** — that every file parses and every link resolves says nothing about whether the thing runs.
+Where a runtime is missing or an integration was never exercised, **label it unverified and say so**. **Structural checks do not prove adoption** -- that every file parses and every link resolves says nothing about whether the thing runs.
 
 ## Claims that look like evidence
 
 Each of these has been mistaken for proof of work and is not:
 
-- **A zero exit code, or a success flag** — check the artifacts and the full expected check set.
+- **A zero exit code, or a success flag** -- check the artifacts and the full expected check set.
 - **A path-shaped string, a directory, a ticked checkbox, or a populated state object.**
 - **A parse error or empty result treated as "zero failures."** Choose fail-fast or collect-all explicitly, and record dependent checks as not-run.
-- **A port probe** — it is not a reservation; something else can bind between the check and the use.
-- **A tracker update, a logging hook, or a dashboard** — they observe and report. They do not grant acceptance.
+- **A port probe** -- it is not a reservation; something else can bind between the check and the use.
+- **A tracker update, a logging hook, or a dashboard** -- they observe and report. They do not grant acceptance.
 
 ## Never manufacture a pass
 
-Re-running until green is one way. **Weakening the assertion is the commoner one**, and it leaves no trace in the result — the suite is green and the record says so.
+Re-running until green is one way. **Weakening the assertion is the commoner one**, and it leaves no trace in the result -- the suite is green and the record says so.
 
 Add or update tests without weakening what they assert to obtain green. Do not delete or skip assertions, do not widen a tolerance to swallow the failure, and do not redefine acceptance so the current behaviour qualifies. A check that was changed to pass is evidence about the check, not about the code.
 
@@ -85,19 +85,19 @@ Add or update tests without weakening what they assert to obtain green. Do not d
 
 ## Flake adjudication
 
-A required failure blocks. That does not weaken. But an environment-induced failure blocks forever unless the package says what the safe re-evaluation looks like, and the only other documented escape — a human waiver — is the wrong instrument, because nothing is being waived: the claim is that the check never measured the code.
+A required failure blocks. That does not weaken. But an environment-induced failure blocks forever unless the package says what the safe re-evaluation looks like, and the only other documented escape -- a human waiver -- is the wrong instrument, because nothing is being waived: the claim is that the check never measured the code.
 
-> **Environment-induced failure.** A failed required check may be re-evaluated **only** by re-running the named failing scope **in isolation**, on a quiescent machine, recording both runs. The re-run does not replace the original; both are retained. A failure may be classified `environment_suspected` only with positive evidence — the isolated run passes **and** an independent indicator corroborates it (a differing failure set between runs, a load measurement, a timeout-shaped failure mode). One isolated pass is not evidence; it is a second sample.
+> **Environment-induced failure.** A failed required check may be re-evaluated **only** by re-running the named failing scope **in isolation**, on a quiescent machine, recording both runs. The re-run does not replace the original; both are retained. A failure may be classified `environment_suspected` only with positive evidence -- the isolated run passes **and** an independent indicator corroborates it (a differing failure set between runs, a load measurement, a timeout-shaped failure mode). One isolated pass is not evidence; it is a second sample.
 >
 > Re-running the **same** scope until it passes is manufacturing a pass. The distinguishing feature of a legitimate re-run is that it changes the *conditions*, not the *attempt*.
 
 `environment_suspected: true` is a claim about the measurement, not a result: the original `failed` record stays `failed`, both runs stay attached to it, and the classification is reported to the human rather than resolving the gate silently. A re-run that changes nothing observable about the conditions is an `invocation_retry` against the retry budget, not adjudication.
 
-The corroborating-indicator requirement is what separates this from retry-until-green. Two full-suite runs on an unchanged tree that fail *non-overlapping* sets of suites are corroboration: no single code defect explains disjoint failure sets. A second run that fails the same suite again is the opposite — it is confirmation of a real failure.
+The corroborating-indicator requirement is what separates this from retry-until-green. Two full-suite runs on an unchanged tree that fail *non-overlapping* sets of suites are corroboration: no single code defect explains disjoint failure sets. A second run that fails the same suite again is the opposite -- it is confirmation of a real failure.
 
 ## What a review inspects
 
-Correctness · regressions · authorization · input handling · data and migration safety · cleanup · concurrency · compatibility · maintainability · **changes unrelated to the task**.
+Correctness / regressions / authorization / input handling / data and migration safety / cleanup / concurrency / compatibility / maintainability / **changes unrelated to the task**.
 
 Map each acceptance criterion to code, behaviour and check evidence. **Missing required evidence is a finding, not implied success**, and the builder's claims are not evidence.
 
@@ -109,11 +109,11 @@ Inspect the final diff for criteria coverage, invalid inputs, error cleanup, inj
 
 Every finding carries **two orthogonal fields**, plus a flag:
 
-- `disposition`: `blocker` | `tech_debt` | `skippable` — machine-consumed, and the only field a gate reads.
-- `severity`: `Blocker` | `High` | `Medium` | `Low` | `Note` — human-facing, for triage and communication.
-- `risk_accepted`: `true` | `false` — set only by a human, naming who accepted what.
+- `disposition`: `blocker` | `tech_debt` | `skippable` -- machine-consumed, and the only field a gate reads.
+- `severity`: `Blocker` | `High` | `Medium` | `Low` | `Note` -- human-facing, for triage and communication.
+- `risk_accepted`: `true` | `false` -- set only by a human, naming who accepted what.
 
-A gate that has to interpret severity is a gate that can be handed a value it cannot act on. A finding that means "repair this, or have someone accept the risk in writing" is not tech debt — tech debt carries no acceptance requirement — and it is not a plain blocker either. It is `disposition: blocker` with `risk_accepted` available.
+A gate that has to interpret severity is a gate that can be handed a value it cannot act on. A finding that means "repair this, or have someone accept the risk in writing" is not tech debt -- tech debt carries no acceptance requirement -- and it is not a plain blocker either. It is `disposition: blocker` with `risk_accepted` available.
 
 | Severity | Disposition | Required handling |
 |---|---|---|
