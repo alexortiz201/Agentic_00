@@ -28,8 +28,8 @@ adws/
 specs/               machine-generated, one per task, short-lived
 ai_docs/             pinned external references + their manifest
 design/              durable design documents
-agents/<run-id>/     per-run artifacts: state record, logs, prompts, raw agent output
-trees/<run-id>/      isolated workspaces, one per run
+runs/<run_id>/     per-run artifacts: state record, logs, prompts, raw agent output
+trees/<run_id>/      isolated workspaces, one per run
 ```
 
 The last two are **generated, not authored** -- and both belong in the ignore file. A run's artifacts are evidence; a workspace is disposable.
@@ -50,7 +50,7 @@ A layout that delivers those four is a good layout. Record whichever one the tar
 ## Naming
 
 - **A composition's filename is its phase sequence**, in execution order: `adw_plan_build_test.ts`. Reading the directory tells you what workflows exist without opening anything.
-- **A spec is `<task-type>-<run-id>-<description>.md`.** All three parts, because specs are found by pattern as often as by path.
+- **A spec is `<task-type>-<run_id>-<description>.md`.** All three parts, because specs are found by pattern as often as by path.
 - **A command is named for its single responsibility.** If the name needs "and", split it.
 
 ## What is ours

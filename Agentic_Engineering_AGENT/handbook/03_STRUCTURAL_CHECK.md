@@ -1,6 +1,6 @@
 # 🩺 Structural check
 
-The one executable check this package has. Read-only: parses every JSON template and asserts every internal Markdown link resolves inside the folder. Run it from the package root after any move, rename or split -- that is exactly when links break silently.
+The one executable check this package has. Read-only: asserts every internal Markdown link resolves inside the folder, and parses any JSON the package grows. The package is currently all Markdown, so the JSON half passes vacuously -- that is expected, not a pass worth reporting. Run it from the package root after any move, rename or split -- that is exactly when links break silently.
 
 ```bash
 python3 - <<'EOF'

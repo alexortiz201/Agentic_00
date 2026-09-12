@@ -2,7 +2,7 @@
 
 Proper engineering. The part that was true before agents existed and is still true now.
 
-This area exists because the agentic side kept asserting things it had not grounded. It described a lifecycle without naming it, it required interfaces to be checkable without saying what makes an interface checkable, and it treated separation of concerns as obvious rather than as a practice with a reason. Those are engineering questions with engineering answers, and stating them here is what lets the agentic side *rest* on them rather than quietly reinvent them.
+The agentic side rests on this area rather than restating it. Where a rule here is amplified by agents -- and several are -- the amplification is noted where it applies, and the rule itself stays here.
 
 ## What is in here
 
@@ -14,7 +14,9 @@ This area exists because the agentic side kept asserting things it had not groun
 
 The test is a single question: **would this still be true if you removed agents from the picture?**
 
-If yes, it is engineering and it belongs here -- the lifecycle, interface design, separation of concerns, coupling and cohesion, testing strategy, review, release and rollback practice, observability. If no, it belongs in [`Agentic_Engineering/`](../Agentic_Engineering/README.md).
+If yes, it is engineering and it belongs here. If it concerns the environment the code runs in and the path it takes to get there, it belongs in [`DevOps/`](../DevOps/README.md). If neither, it belongs in [`Agentic_Engineering/`](../Agentic_Engineering/README.md).
+
+Topics in scope but **not yet written**: interface design, coupling and cohesion, separation of concerns, testing strategy, code review. They are named so a reader can tell the difference between missing and hidden -- if you want one of them, it is not here yet.
 
 Two things follow from that test, and both are easy to get wrong:
 

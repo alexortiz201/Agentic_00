@@ -12,6 +12,19 @@ Where nothing consumes a value mechanically, this file is describing a **distinc
 
 ---
 
+## Named things
+
+Terms used throughout and defined nowhere else. They are names, not enums -- nothing validates them -- but a reader who has not met them cannot follow the rest.
+
+| Term | Means |
+|---|---|
+| `agentic layer` | The layer that wraps an application and gives it a programmatic interface -- prompts, commands, workflows, gates, the code that sequences them. Work gets done *to* the application *through* it |
+| `application layer` | The product itself, and the validation ground. Deleting the agentic layer must not take it with it |
+| `ADW` | **Agentic Developer Workflow.** A sequence of contracted phases, each deterministic code or a bounded agent call, that carries work through the lifecycle without a person performing each step |
+| `Core Four` | The four things resolved at every agent invocation: **context, model, prompt, tools.** Chosen per call rather than configured once |
+| `primitive` | One of the building blocks an ADW is composed from -- command, spec, phase, composition, module, record, gate, state, trigger, hook, pinned reference, design document |
+| `blueprint` | The document stating what a primitive must contain when one is created. It is a requirement list, not a schema: it validates nothing |
+
 ## Actors -- who performs a step
 
 | Term | Owns | Must not substitute for |

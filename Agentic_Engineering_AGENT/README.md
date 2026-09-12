@@ -19,6 +19,8 @@ Loading everything contradicts this package's own rule about context, so the res
 | Read | When you are about to |
 |---|---|
 | 🏗️ [`foundations/Software_Engineering/`](foundations/Software_Engineering/README.md) | Ask whether something is engineering practice rather than an agentic concern |
+| 🚀 [`foundations/DevOps/`](foundations/DevOps/README.md) | Sandbox an agent, touch an environment, handle credentials, or ship |
+| 🎓 [`foundations/Coaching/`](foundations/Coaching/README.md) | Teach this work, or run in `coaching` mode |
 | 🔄 [`foundations/Agentic_Engineering/02_WORKFLOW.md`](foundations/Agentic_Engineering/02_WORKFLOW.md) | Run a task through its lifecycle -- states, gates, repair routing |
 | 🔐 [`foundations/Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md`](foundations/Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md) | Discover, touch credentials, isolate work, or do anything needing approval |
 | 🔬 [`foundations/Agentic_Engineering/04_VERIFICATION.md`](foundations/Agentic_Engineering/04_VERIFICATION.md) | Check something, record evidence, or judge whether a failure is real |
@@ -33,7 +35,7 @@ Loading everything contradicts this package's own rule about context, so the res
 | 🗂️ [`handbook/02_RUN_ARTIFACTS.md`](handbook/02_RUN_ARTIFACTS.md) | Write anything into `runs/<run_id>/` |
 | 🩺 [`handbook/03_STRUCTURAL_CHECK.md`](handbook/03_STRUCTURAL_CHECK.md) | Confirm a move or rename did not break the package |
 
-This package **describes** how workflows are constructed and where they go. It does not ship workflows, generate code, or execute anything. Generated output belongs to the target project.
+This package **describes** how workflows are constructed and where they go, and it generates them into a target project -- it does not hold them. It ships no workflows of its own and no application code. The one thing it does execute is its own [structural check](handbook/03_STRUCTURAL_CHECK.md). Generated output belongs to the target project.
 
 ## Starting a session cold
 
@@ -49,11 +51,12 @@ The package separates the vocabulary, the discipline, and the conventions for op
 |---|---|---|
 | 🔤 [`LANGUAGE.md`](LANGUAGE.md) | The canonical vocabulary every other file writes to | A term is renamed -- here **and** everywhere that reads or writes it, in the same change |
 | 🏗️ [`foundations/Software_Engineering/`](foundations/Software_Engineering/README.md) | Proper engineering -- the practice agentic work rests on and does not replace | A statement would have been true before agents existed |
+| 🚀 [`foundations/DevOps/`](foundations/DevOps/README.md) | The environment the code runs in and the path it takes to get there | Isolation, credentials, release or rollback practice changes |
 | 🤖 [`foundations/Agentic_Engineering/`](foundations/Agentic_Engineering/README.md) | What changes when agents and code perform the phases -- principles, lifecycle, authority, verification, recovery, composition | A lesson proves true **anywhere**, not just here |
 | 📓 [`handbook/`](handbook/README.md) | How this package is operated -- conventions, naming, what may be created | A convention changes |
 | `.memory/` | Local notes and staged artifacts. Never committed | Freely; see [`handbook/01_LOCAL_MEMORY.md`](handbook/01_LOCAL_MEMORY.md) |
 
-**`foundations/` is standalone by rule.** It names no company, repository, tracker, model or harness, and it reaches nothing outside itself -- including the vocabulary, which is why `LANGUAGE.md` is read up front rather than pointed at from the place a term is used. Its two areas may reference each other, and that is the point: the agentic side names the engineering practice it rests on instead of quietly reinventing it. A statement that can only be justified by one organization's tooling belongs in that organization's docs. A worked example from real delivery is welcome; the rule it illustrates has to generalize.
+**`foundations/` is standalone by rule.** It names no company, repository, tracker, model or harness, and it reaches nothing outside itself -- including the vocabulary, which is why `LANGUAGE.md` is read up front rather than pointed at from the place a term is used. Its areas may reference each other, and that is the point: the agentic side names the engineering practice it rests on instead of quietly reinventing it. A statement that can only be justified by one organization's tooling belongs in that organization's docs. A worked example from real delivery is welcome; the rule it illustrates has to generalize.
 
 A half-applied rename is worse than the original name, because it fails silently at the consuming phase rather than erroring where the mistake was made.
 
@@ -84,7 +87,7 @@ Controls are marked as:
 
 ## Minimal use
 
-This is a bootable instruction package for a specialized agent, not an executable orchestrator. The host supplies the model, tools, permissions, and any tested runtime gates. Without those gates, workflow checks are agent-checked; no validator, sandbox, or automation is bundled.
+This is a bootable instruction package for a specialized agent, not an executable orchestrator. The host supplies the model, tools, permissions, and any tested runtime gates. Without those gates, workflow checks are agent-checked. The only bundled executable is the structural check, which validates this package's own links and nothing about a workflow's behavior; no sandbox, runtime validator, or automation is included.
 
 1. Spawn an agent with this instruction: "Read this package's AGENTS.md and complete its README.md boot sequence before acting. Report the loaded files, missing capabilities, and proposed authority envelope; then await the task." Supply the actual package location to the host. Merely placing the folder does not load it.
 2. Provide the target, task, and read-only discovery scope. Target-project files are task inputs, not prerequisites for understanding this package.

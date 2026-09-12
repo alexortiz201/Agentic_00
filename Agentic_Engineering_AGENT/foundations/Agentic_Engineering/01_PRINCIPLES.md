@@ -68,14 +68,9 @@ Bound work by paths, tools, network targets, time, cost, retries, branch/worktre
 
 ## Evidence hierarchy
 
-1. Enforced gate with retained output.
-2. Independently reproduced command result.
-3. Inspected code/diff tied to an acceptance criterion.
-4. Previous artifact or commit.
-5. Documentation claim.
-6. Agent assertion.
+Six ranks, defined once in the canonical vocabulary. **Never promote a weaker claim into a stronger one.**
 
-Never promote a weaker claim into a stronger one.
+The rank that matters most here is the first, and it is conditional: an enforced gate outranks everything **only if it observed a non-empty subject**. A gate that ran against nothing returns a confident pass with no evidence in it, which makes the strongest rank the most dangerous one when that condition is dropped. Read the qualifier with the rank; a copy of this list without it is wrong.
 
 ## Control labels
 

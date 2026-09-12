@@ -1,12 +1,17 @@
 # 🗒️ Local memory
 
-A `.memory/` folder at the package root holds working notes about **the environment this package is being used in**. It is never committed -- the root `.gitignore` covers `.memory/`, `memory/` and `*.memory.md`, and `.memory/.gitignore` ignores everything including itself.
+A `.memory/` folder at the package root is **the agent's scratchpad**. It is never committed: the root `.gitignore` covers `.memory/`, `memory/` and `*.memory.md`.
 
 **Create it if it is absent.** No permission is needed: it is local, ignored and additive. Because it is never shared, the *conventions* for it live here, in a committed file, rather than inside it.
 
 ## How it is organised
 
-`.memory/` holds things worth keeping track of that **have not yet been decided on** -- where they belong, or whether they matter enough to become part of the package. It is a staging area, not an archive.
+`.memory/` holds whatever is worth keeping track of and later clearing out. Two things it is specifically for:
+
+- **Carrying a thread across a deliberately restarted session.** When context grows unwieldy the right move is to start a clean session, and this folder is what survives that boundary. A cold-start note here is load-bearing, not a courtesy.
+- **Making proposals and half-formed ideas visible.** Something does not have to be finished to be written down here.
+
+It is a staging area, not an archive.
 
 **Folders are topics.** A folder name says what the thinking inside it is about, so someone can follow a line of thought, or come back to something discovered earlier and decide it has earned a permanent home. Promotion out of `.memory/` into the package is the expected end state for anything that proves important; most items will never get there, and that is fine.
 
@@ -19,9 +24,11 @@ A `.memory/` folder at the package root holds working notes about **the environm
 
 - **A topic gets a folder once it has a second file.** One file does not need one; a folder per file is noise, and noise is what makes a staging area stop being read.
 - **Filenames carry a kind prefix** -- `proposal_`, `adw_` -- even inside a folder that already implies it. The redundancy is deliberate: these files are meant to be **promoted out**, and a name that survives the move is worth a repeated word.
-- **Everything here is plain `.md`.** The folder is ignored twice over -- by the root `.gitignore` and by `.memory/.gitignore` -- so the `*.memory.md` suffix adds nothing inside it.
+- **Everything here is plain `.md`.** The folder is already ignored as a whole, so the `*.memory.md` suffix adds nothing inside it.
 
 ## Current topics
+
+This table drifts the moment a file is added without updating it. If it disagrees with the folder listing, the listing wins.
 
 | Path | Thinking about |
 |---|---|
@@ -30,12 +37,20 @@ A `.memory/` folder at the package root holds working notes about **the environm
 | `adws/` | Where ADWs are today versus where they are going |
 | `proposals/` | Proposed changes to this package, each promotable to a spec |
 | `package_cleanup.md` | The in-progress cleanup -- what is settled, what is still open |
+| `todo_list.md` | The run in progress. Wiped at the end of every run |
+| `engineer_growth.md`, `engineer_preferences.md` | Who this package is being operated by, and what they have asked for |
+| `foundations_audit.md` | `foundations/` measured against the external manual it answers to |
+| `reference_apps/` | Implementations studied for prior art |
 
 ## Writing notes
 
 One topic per file. Keep them short and current -- **correct a stale fact in place** rather than appending a correction beneath it, and delete a file whose topic is resolved. These are notes to act on, not a log.
 
-What belongs: facts about the target environment that would otherwise be rediscovered -- its de-facto tooling, known limits of the current approach, gaps between where things are and where they are going. What does not: task status, run state, or anything that belongs in this package's tracked documentation.
+What belongs: facts about the target environment that would otherwise be rediscovered -- its de-facto tooling, known limits of the current approach, gaps between where things are and where they are going -- plus the working state of the run in progress. What does not: anything that belongs in this package's tracked documentation, because a decision recorded only here is a decision nobody else can review.
+
+**`todo_list.md` is the run's working plan.** It is written before the work starts, worked top to bottom, rewritten as the work reveals things, and **wiped clean at the end of every run**. The wipe is the part that matters: a list left behind is read by the next session as outstanding work, and a stale list is worse than no list because it looks authoritative. Finishing the work and clearing the list are one step.
+
+A generated workflow running out of a target project keeps its own run state under its own run artifacts, not here.
 
 ## Artifacts
 
