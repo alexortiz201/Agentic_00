@@ -31,7 +31,7 @@ Every delegated invocation passes `G2` before its output is used, whether a cont
 
 ## State
 
-Task state is exactly one of `requested`, `scoped`, `ready`, `building`, `validating`, `reviewing`, `documenting`, `acceptance_pending`, `accepted`, `authorized_handoff`. These track this agent's task. Generated ADWs define separate phase execution and gate records using [composition contracts](06_ADW_COMPOSITION.md); do not overload task state with check outcomes.
+Task state is exactly one value from the lifecycle enum in the canonical vocabulary, and it tracks this agent's task. Generated ADWs define separate phase execution and gate records using [composition contracts](06_ADW_COMPOSITION.md); do not overload task state with check outcomes.
 
 `blocked` and `repairing` are **orthogonal** to that enum, not members of it. A run is always at one of the ten states; it may additionally be blocked or repairing, and when it is, `return_to` names the state responsible for the failure. Keeping them orthogonal is what makes the return address representable: a run blocked while `validating` on a requirement that was never planned returns to `ready`, and a state machine that overwrites `validating` with `blocked` has already lost the information needed to route it.
 
@@ -76,7 +76,7 @@ Record operating-level movement as it happens, not at the end: on descent write 
 
 Keep one state record per run, in a location authorized for artifact writes, without overwriting another run's. Update state after each step and before yielding, and retain failure evidence. The durability rules -- validate on write and on read, reject unknown fields loudly, write-then-rename, store it outside the disposable workspace, no secrets -- belong to [state](primitives/state.md) and [record](primitives/record.md) and are not restated here.
 
-Normal transitions follow `requested -> scoped -> ready -> building -> validating -> reviewing -> documenting -> acceptance_pending -> accepted -> authorized_handoff`. Tiny edits may skip `ready`; read-only answers stop after `scoped`. `accepted -> authorized_handoff` requires a separate explicit human authorization naming the action and scope; a run may legitimately terminate at `accepted`.
+Transitions normally run the enum in order. Tiny edits may skip `ready`; read-only answers stop after `scoped`. `accepted -> authorized_handoff` requires a separate explicit human authorization naming the action and scope; a run may legitimately terminate at `accepted`.
 
 **Repair returns to the state responsible for the failure, not to verification.** Set `repairing` or `blocked` alongside the current state, and set `return_to` to the state whose phase produced the defect. The test is: which phase, had it been done correctly, would have prevented this failure?
 

@@ -94,11 +94,7 @@ The agent operates primarily at the **agentic layer**: it helps compose ADWs and
 
 This package does not grant shell, network, remote-service, database, publication, or deployment authority. Prompt restrictions are not security boundaries.
 
-Controls are marked as:
-
-- **code-enforced** -- a deterministic mechanism actually prevents or gates an action;
-- **human-approved** -- a human must authorize the action;
-- **agent-checked** -- the agent is instructed to inspect or reason, but no hard boundary exists.
+Controls are marked `code-enforced`, `human-approved` or `agent-checked`, defined in [`LANGUAGE.md`](LANGUAGE.md). Assume `agent-checked` unless a deterministic mechanism has been tested.
 
 ## Minimal use
 
@@ -110,4 +106,4 @@ This is a bootable instruction package for a specialized agent, not an executabl
 4. Complete the brief and discover within scope. Approve a plan for non-trivial work; a tiny low-risk edit needs explicit task scope but no separate plan. Read-only answers need no implementation artifacts.
 5. Use a branch/worktree for non-trivial or parallel work. Tiny edits may use the current branch if authorized and unrelated work is preserved.
 6. Require complete evidence and a handoff, including failures and human waivers.
-7. Accept, reject, or request repair. Approval of delivery does not independently authorize push, merge, deployment, or destructive operations.
+7. Accept, reject, or request repair. **Acceptance is not shipping authority** -- shipping is a separate, explicitly named decision.

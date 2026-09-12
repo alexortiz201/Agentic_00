@@ -16,7 +16,7 @@ Select primitives by kind, and name them consistently within a workflow. These a
 8. **Build the smallest vertical slice.** Implement typed contracts, the agent adapter, one useful phase, real quality checks and state/evidence storage. Use focused, bounded prompts, and author any missing primitive deliberately rather than inlining it. Do not generate an entire platform for a one-off task.
 9. **Compose thinly.** Reuse phase entry points; keep sequencing separate from prompts and model selection. Pass one run identity, explicit workspace and validated artifact references. Do not duplicate phase internals inside a composite script.
 10. **Walk through and test.** First use mocked agents/tools and disposable workspaces; then a human-supervised real task within authority. Exercise the control-plane matrix below. Document exact invocation, prerequisites, artifacts, safe resume and cancellation before unattended use.
-11. **Make it discoverable and improve deliberately.** Add an entry recipe/skill and conditional context links. Record effective config, measured cost/time/interventions and outcomes. Extract reusable patterns after repeated evidence; test a second use before claiming generality.
+11. **Make it discoverable and improve deliberately.** Add an entry recipe/skill and conditional context links. Record effective config, measured cost/time/interventions and outcomes. Extract only what a second real use has already proven; see the area README on reuse being earned.
 
 ### Salvage before contracting
 
@@ -54,9 +54,9 @@ Four vocabularies, deliberately disjoint:
 
 | Axis | Values |
 |---|---|
-| Task state | `requested`, `scoped`, `ready`, `building`, `validating`, `reviewing`, `documenting`, `acceptance_pending`, `accepted`, `authorized_handoff` -- with `blocked` / `repairing` as orthogonal flags plus `return_to` |
+| Task state | The lifecycle enum, with `blocked` / `repairing` as orthogonal flags plus `return_to` |
 | Execution status | `completed`, `failed`, `blocked`, `cancelled` |
-| Check result | `passed`, `failed`, `not_run`, `error` -- plus a separate `applicable` (`true` / `false`) with reason, and `source`: `executed` / `inspected` / `documented` / `asserted` |
+| Check result | The check-status enum, plus a separate `applicable` (`true` / `false`) with reason, and a `source` provenance |
 | Gate decision | `pass`, `blocked`, `human_waived` |
 
 `blocked` appears on three of these axes and means a different thing on each; never move a `blocked` value between them without re-deciding it. There is no `skipped` check result: an authorized exclusion is `applicable: false`, and a check prevented from running is `not_run`. An agent completion is not a passing check, human acceptance, or shipping permission.
@@ -207,7 +207,7 @@ Prefer explicit phase calls over shell pipelines. If pipes are supported, reserv
 | Denied capability, hook failure, agent attempts to alter gate policy | No unauthorized action; fails closed at the actual enforcement boundary |
 | Invalid/expired waiver or unapproved destructive/shipping step | Blocks and asks for exact human authorization |
 
-Count and test each retry kind separately -- `invocation_retry`, `output_correction`, `gate_repair`, `test_fix`, `review_revision`, `restart` -- each with its own cap, under a shared `total_budget`. Persist them as the `attempts` object in task state; a single scalar cannot represent this, and a run that burns two output corrections and two test fixes is then simultaneously at 4 of 2 and at 2 of 2 twice. The default two repair attempts is a supervised starting point, not a license for unlimited nested retries.
+Retries are counted per kind under a shared cap, and a composition must **test each kind separately** -- an exhausted budget is a control-plane path like any other, and one that is never exercised fails the first time it matters. The kinds, the caps and why a single counter cannot express them are in [recovery and handoff](05_RECOVERY_AND_HANDOFF.md).
 
 **Caps must not be evaded by starting new sessions or subagents.** Attempt accounting belongs to the task, not to the process counting it. A retry performed by a fresh session, a new subagent, a second worktree, or a re-issued run ID for the same task increments the same counter. A controller must carry `attempts` across resume and delegation, and must reject a resumed run whose counters are lower than the last persisted values.
 

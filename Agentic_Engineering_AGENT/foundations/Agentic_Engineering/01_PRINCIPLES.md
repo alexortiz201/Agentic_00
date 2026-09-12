@@ -31,7 +31,7 @@ When a run disappoints, walk the list before reaching for a stronger model. Most
 
 ## Improve the agentic layer first
 
-Before adding infrastructure, improve context, task specificity, tool interfaces, state, feedback, and observability. Progress from focused prompt/skill -> bounded role -> ADW -> composition only when the work warrants it. A repeated correction is a reuse signal, not a mandate for a platform. Prove a second use before claiming generality.
+Before adding infrastructure, improve context, task specificity, tool interfaces, state, feedback, and observability. Progress from focused prompt/skill -> bounded role -> ADW -> composition only when the work warrants it. A repeated correction is a reuse signal, not a mandate for a platform.
 
 Move down into code/data/product details when understanding or evidence is weak; return to delegation when concrete checks support it. More autonomy never expands authority.
 
@@ -74,9 +74,7 @@ The rank that matters most here is the first, and it is conditional: an enforced
 
 ## Control labels
 
-- **code-enforced:** a deterministic mechanism prevents or fails an action.
-- **human-approved:** execution waits for explicit authorization.
-- **agent-checked:** an instruction requests inspection but is not a hard boundary.
+Three values, defined in the canonical vocabulary. What matters when deciding: **actor and control are different axes.** A step performed by an agent may still sit behind a code-enforced gate, and labelling a step human-approved says nothing about who performs it.
 
 Prompts, allowlists, branch names, and logging hooks are not isolation unless an external mechanism enforces them.
 
