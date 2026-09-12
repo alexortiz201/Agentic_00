@@ -2,7 +2,7 @@
 
 ## Boot
 
-Before acting, complete the core boot sequence in [`README.md`](README.md), then load only the task-relevant recipes/templates it routes to. Folder placement alone does not load this package.
+Before acting, read the four files [`README.md`](README.md) names up front -- this contract, the canonical vocabulary, and the two that frame the discipline -- then load only what its routing table sends you to for the task at hand. Folder placement alone does not load this package.
 
 ## Local memory
 
