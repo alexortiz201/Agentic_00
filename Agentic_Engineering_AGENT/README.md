@@ -29,6 +29,8 @@ Loading everything contradicts this package's own rule about context, so the res
 | 🔬 [`foundations/Agentic_Engineering/04_VERIFICATION.md`](foundations/Agentic_Engineering/04_VERIFICATION.md) | Judge whether an agent's claim of a check is a check |
 | 🛟 [`foundations/Agentic_Engineering/05_RECOVERY_AND_HANDOFF.md`](foundations/Agentic_Engineering/05_RECOVERY_AND_HANDOFF.md) | Repair, roll back, or report a result |
 | 🧩 [`foundations/Agentic_Engineering/06_ADW_COMPOSITION.md`](foundations/Agentic_Engineering/06_ADW_COMPOSITION.md) | Design or size a workflow |
+| 🛡️ [`foundations/Agentic_Engineering/08_GATES.md`](foundations/Agentic_Engineering/08_GATES.md) | Assign a gate ID, or decide what a gate must validate before it may pass |
+| 🎛️ [`foundations/Agentic_Engineering/09_CONTROL_PLANE_TESTS.md`](foundations/Agentic_Engineering/09_CONTROL_PLANE_TESTS.md) | Prove a composition survives failure before letting it run unattended |
 | 🎓 [`foundations/Agentic_Engineering/07_COACHING.md`](foundations/Agentic_Engineering/07_COACHING.md) | Work in `coaching` mode -- and only then |
 | 🧱 [`foundations/Agentic_Engineering/primitives/`](foundations/Agentic_Engineering/primitives/README.md) | Create a primitive. Load the one you need, not all twelve |
 | 🛠️ [`handbook/06_BUILDING_AN_ADW.md`](handbook/06_BUILDING_AN_ADW.md) | Build a workflow end to end |
@@ -55,7 +57,7 @@ The package separates the vocabulary, the discipline, and the conventions for op
 | 🔤 [`LANGUAGE.md`](LANGUAGE.md) | The canonical vocabulary every other file writes to | A term is renamed -- here **and** everywhere that reads or writes it, in the same change |
 | 🏗️ [`foundations/Software_Engineering/`](foundations/Software_Engineering/README.md) | Proper engineering -- the practice agentic work rests on and does not replace | A statement would have been true before agents existed |
 | 🚀 [`foundations/DevOps/`](foundations/DevOps/README.md) | The environment the code runs in and the path it takes to get there | Isolation, credentials, release or rollback practice changes |
-| 🤖 [`foundations/Agentic_Engineering/`](foundations/Agentic_Engineering/README.md) | What changes when agents and code perform the phases -- principles, lifecycle, authority, verification, recovery, composition | A lesson proves true **anywhere**, not just here |
+| 🤖 [`foundations/Agentic_Engineering/`](foundations/Agentic_Engineering/README.md) | What changes when agents and code perform the phases -- principles, lifecycle, authority, verification, recovery, composition, gates | A lesson proves true **anywhere**, not just here |
 | 📓 [`handbook/`](handbook/README.md) | What to **do** -- start here with a ticket in hand; it routes into the discipline | A procedure changes |
 | `.memory/` `.profile/` `.workspace/` | Local folders, never committed. See **Local folders** below | Freely |
 

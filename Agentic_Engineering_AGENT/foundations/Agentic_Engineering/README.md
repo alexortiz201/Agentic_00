@@ -15,8 +15,10 @@ Everything here is standalone in the sense the [`foundations/` index](../README.
 | 🔐 [`03_AUTHORITY_AND_SAFETY.md`](03_AUTHORITY_AND_SAFETY.md) | What may be done without asking, what may not, and what an allowlisted agent can still reach |
 | 🔬 [`04_VERIFICATION.md`](04_VERIFICATION.md) | Whether a claimed check is a check -- provenance, gates that found no subject, and the reviewer that is itself an agent |
 | 🛟 [`05_RECOVERY_AND_HANDOFF.md`](05_RECOVERY_AND_HANDOFF.md) | Bounded repair, resumable runs, and reporting a result truthfully |
-| 🧩 [`06_ADW_COMPOSITION.md`](06_ADW_COMPOSITION.md) | Primitives, how they compose into workflows, and the control-plane failures a composition must survive |
+| 🧩 [`06_ADW_COMPOSITION.md`](06_ADW_COMPOSITION.md) | Primitives, how they compose into a workflow, and how much machinery a given job actually justifies |
 | 🎓 [`07_COACHING.md`](07_COACHING.md) | What to teach about this discipline -- the questions, the distinctions worth forcing, the practice ladder |
+| 🛡️ [`08_GATES.md`](08_GATES.md) | The `G0`-`G7` namespace, what a gate validates in code, and why an empty diff is `blocked` rather than `pass` |
+| 🎛️ [`09_CONTROL_PLANE_TESTS.md`](09_CONTROL_PLANE_TESTS.md) | The faults a composition must survive before anything runs it unattended |
 | 🧱 [`primitives/`](primitives/README.md) | Blueprints -- what each primitive must contain when you create one |
 
 ## The ideas the rest of it rests on

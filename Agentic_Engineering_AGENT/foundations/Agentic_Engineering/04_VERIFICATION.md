@@ -12,7 +12,7 @@ Gates read `source`: a required mechanical check satisfies its gate only with `s
 
 ## A gate must find its subject
 
-A gate whose subject is a change must record its diff base and changed-file count and must decide `blocked` when the count is `0` -- **an empty diff means the gate did not find its subject**, which is not the same as finding nothing wrong with it. See "A gate must bind to a non-empty diff" in [composition contracts](06_ADW_COMPOSITION.md).
+A gate whose subject is a change must record its diff base and changed-file count and must decide `blocked` when the count is `0` -- **an empty diff means the gate did not find its subject**, which is not the same as finding nothing wrong with it. See "A gate must bind to a non-empty diff" in [gates](08_GATES.md).
 
 ## What an agent produces that is not output
 
@@ -36,4 +36,4 @@ Test for a conformant review record: a gate can decide using `disposition` alone
 
 ## Test the control plane, not the files
 
-For workflow implementation, also test the [control-plane failure cases](06_ADW_COMPOSITION.md) before unattended adoption. **Static file/link validation is not an end-to-end ADW test** -- it establishes that the workflow is well-formed, not that it runs, and the failures that matter unattended are the ones that only appear when it does.
+For workflow implementation, also test the [control-plane failure cases](09_CONTROL_PLANE_TESTS.md) before unattended adoption. **Static file/link validation is not an end-to-end ADW test** -- it establishes that the workflow is well-formed, not that it runs, and the failures that matter unattended are the ones that only appear when it does.

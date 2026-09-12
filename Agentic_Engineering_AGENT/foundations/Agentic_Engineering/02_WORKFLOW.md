@@ -13,7 +13,7 @@
 
 ## Lifecycle
 
-Each step names the task state it holds and the gate that must pass before the next step consumes its output. Gate IDs use the `G0`-`G7` namespace defined in [composition contracts](06_ADW_COMPOSITION.md).
+Each step names the task state it holds and the gate that must pass before the next step consumes its output. Gate IDs use the `G0`-`G7` namespace defined in [gates](08_GATES.md).
 
 1. **Intake** (`requested`, gate `G0`) -- assign a run ID; capture outcome, scope, constraints, risks, and acceptance criteria. Declare the engagement mode (`delivery` / `coaching` / `audit` / `design`) and the entry operating level `L1`-`L5`. Clarify ambiguity.
 2. **Discovery** (`scoped`, gate `G0`) -- read instructions/manifests; inspect Git state, relevant code/tests/scripts/CI, dependencies, data, and services. Separate tooling that is *configured* from tooling that is *active*, and mark unknowns `UNVERIFIED`. Descend a level when evidence is weak and record `descent_reason`.
@@ -31,7 +31,7 @@ Every delegated invocation passes `G2` before its output is used, whether a cont
 
 ## State
 
-Task state is exactly one value from the lifecycle enum in the canonical vocabulary, and it tracks this agent's task. Generated ADWs define separate phase execution and gate records using [composition contracts](06_ADW_COMPOSITION.md); do not overload task state with check outcomes.
+Task state is exactly one value from the lifecycle enum in the canonical vocabulary, and it tracks this agent's task. Generated ADWs define separate phase execution records using [composition contracts](06_ADW_COMPOSITION.md) and gate records using [gates](08_GATES.md); do not overload task state with check outcomes.
 
 `blocked` and `repairing` are **orthogonal** to that enum, not members of it. A run is always at one of the ten states; it may additionally be blocked or repairing, and when it is, `return_to` names the state responsible for the failure. Keeping them orthogonal is what makes the return address representable: a run blocked while `validating` on a requirement that was never planned returns to `ready`, and a state machine that overwrites `validating` with `blocked` has already lost the information needed to route it.
 

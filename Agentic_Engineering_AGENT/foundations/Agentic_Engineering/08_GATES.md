@@ -1,0 +1,60 @@
+# 🛡️ Gates
+
+A gate is the independent check that decides whether a transition may happen. This file holds what is shared across every gate in every workflow: the ID namespace that makes decisions comparable, the record vocabularies a gate reads, what it must validate in code, and the rule that a gate may not pass without having observed its subject. Where gates are designed into a workflow is step 6 of the authoring process in [composition](06_ADW_COMPOSITION.md); what a single gate record must contain is [`primitives/gate.md`](primitives/gate.md).
+
+## The record vocabularies a gate reads
+
+Phase and gate records carry four status-like vocabularies, deliberately disjoint:
+
+| Axis | Values |
+|---|---|
+| Task state | The lifecycle enum, with `blocked` / `repairing` as orthogonal flags plus `return_to` |
+| Execution status | `completed`, `failed`, `blocked`, `cancelled` |
+| Check result | The check-status enum, plus a separate `applicable` (`true` / `false`) with reason, and a `source` provenance |
+| Gate decision | `pass`, `blocked`, `human_waived` |
+
+`blocked` appears on three of these axes and means a different thing on each; never move a `blocked` value between them without re-deciding it. There is no `skipped` check result: an authorized exclusion is `applicable: false`, and a check prevented from running is `not_run`. An agent completion is not a passing check, human acceptance, or shipping permission.
+
+## Gate ID namespace
+
+`gate_id` draws from `G0`-`G7` by default, so gate records compare across projects. A project may extend the namespace; it may not renumber it. **The IDs and their names are policy** -- a locally-improved name is how two gate records stop comparing, which is the whole point of a shared namespace.
+
+| ID | Gate | Blocks |
+|---|---|---|
+| `G0` | Scope and authority -- bounded outcome, criteria, scope, engagement mode, operating level, approvals present | Starting work on an unbounded or unauthorized task |
+| `G1` | Research and readiness -- interfaces, data flows, dependencies, baseline failures and required inputs identified; **a bug reproduced, or the blocker stated with what supports the hypothesis**; every acceptance criterion mapped to a change and a named check | Building against an unmapped criterion, or against a defect nobody has reproduced |
+| `G2` | Invocation and handoff -- Core Four, cwd, allowed mutations and output contract fixed before the call; on return, identity, workspace and artifact containment validated | Consuming a result from an invocation that was not the one issued |
+| `G3` | Build and scope integrity -- diff bounded to approved scope; unrelated work preserved | Advancing on an out-of-scope or unreviewable diff |
+| `G4` | Closed-loop validation -- expected check set compared to actual; partial verification reported truthfully | Claiming coverage that was not executed |
+| `G5` | Spec review and revision -- every finding carries a `disposition`; approval may not contradict an unresolved `blocker` | Readiness with an open blocker |
+| `G6` | Documentation and future context -- documentation invalidated by the change is updated or explicitly found to need no change | Handing off an interface whose documentation describes behavior that no longer exists |
+| `G7` | Acceptance and authorized handoff -- acceptance recorded, and any external effect separately authorized | Push, merge, publish, release, or deploy on acceptance alone |
+
+`G2` and `G6` are not ADW-only. A supervised session delegating to a subagent runs `G2` by hand; a supervised session that changed an interface runs `G6` in the `documenting` state. A gate with no phase to run in is a gate that does not exist.
+
+## Validate handoffs in code
+
+- Match schema version, task/run/phase/attempt, configured model/tools/cwd and expected artifact kinds.
+- Resolve paths against authorized roots; reject traversal, symlink escape, wrong ownership, missing/empty content and stale artifacts. Never select the first matching plan from another run.
+- Compare all expected checks against actual records. Reject missing, duplicate, unknown, malformed, empty or contradictory results; zero failures alone is not success.
+- Retain timestamp, argv/cwd, timeout, exit, scope, measured duration or null, revision, diff base, changed-file count, diff identity and non-sensitive evidence references.
+- **A gate whose subject is a change MUST record its observed workspace, `diff_base` and `changed_file_count`, and MUST decide `blocked` when `changed_file_count == 0`. It may never decide `pass` on an empty diff.** The gate reports what it observed rather than what it expected; a count of zero is evidence the gate never found its subject, not an observation that the subject is clean.
+- Verify review criteria coverage and `disposition` consistency, not merely `success: true`. A record whose `severity` and `disposition` disagree with the table in [`Software_Engineering/03_CODE_REVIEW.md`](../Software_Engineering/03_CODE_REVIEW.md) is malformed.
+- If a human waives a failure, independently record approver, approval reference/time, exact failure and evidence, allowed scope, consequences and validity limit. Only that human decision can unblock it; original failed results stay failed. Destructive next actions need their own explicit approval.
+
+## A gate must bind to a non-empty diff, and prove which one it read
+
+`revision` and `diff_identity` are necessary and **not sufficient**. A gate that resolved its working directory to the wrong checkout records a correct-looking revision *of the wrong tree*, and an empty diff has a perfectly valid identity. Both fields can be fully populated by a gate that never saw the change it certified. On a real run two gates delegated to subagents did exactly this -- resolved to the main checkout on the default branch instead of the feature worktree, inspected an empty diff, and returned a confident `pass` -- and nothing in either record distinguished them from a genuine pass.
+
+The rule is therefore about what emptiness means. Treat `changed_file_count == 0` as evidence the gate did not find its subject, never as the observation that the subject contains nothing. Required behavior:
+
+- Resolve and record the workspace actually inspected, not the workspace configured.
+- Record `diff_base` and the resulting `changed_file_count` on every gate result whose subject is a change.
+- Decide `blocked` on zero, and report observed workspace, base and count in the block so the mismatch is diagnosable without re-running.
+- A gate that cannot determine its own workspace is `blocked`, not `not_run`, and not `error`.
+
+**Why this outranks every other rule here.** The [evidence hierarchy](01_PRINCIPLES.md) ranks *enforced gate with retained output* first. That ranking is sound only if a gate cannot pass without having observed its subject. Without this rule the strongest evidence class carries a silent null case -- a confident pass produced by observing nothing -- which makes it the **most** dangerous class rather than the safest, precisely because everything downstream trusts it most and stops looking. Every weaker tier is checked by something; tier 1 is what does the checking. Do not promote the evidence hierarchy anywhere, or rely on it to license reduced scrutiny, until this rule is enforced in code.
+
+The mirror-image failure is the same root error and equally real: a readiness check that read the full history of check runs rather than the latest per context counted five superseded failures as current and returned a confident `fail` on a passing subject. Trusting a payload's shape without checking what it represents fails in both directions, so the gate-side test is "did I observe my subject", not "did I get a plausible payload".
+
+The injections that prove these rules are enforced rather than merely written down are in [control-plane tests](09_CONTROL_PLANE_TESTS.md).

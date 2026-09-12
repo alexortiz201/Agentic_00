@@ -4,6 +4,8 @@ An **ADW (Agentic Developer Workflow)** is executable orchestration combining de
 
 Select primitives by kind, and name them consistently within a workflow. These are portable design conventions, not installed commands or claims that every workflow needs every component.
 
+This file is the shape of a composition and the order in which one is authored. The gate namespace every composition draws from, and what a gate must validate before it may decide `pass`, are in [gates](08_GATES.md). What a composition must survive before anything runs it unattended is in [control-plane tests](09_CONTROL_PLANE_TESTS.md).
+
 ## Authoring process
 
 1. **Define the outcome before the technology.** Preserve the original request; specify trigger, input, target, criteria, non-goals, acceptance owner, and side effects. Decide whether one focused prompt is sufficient.
@@ -11,11 +13,11 @@ Select primitives by kind, and name them consistently within a workflow. These a
 3. **Draw the sequence and failure routes.** Label every node human judgment, agent judgment, or deterministic code. Known commands, IDs, counters, routing enums, and receipts belong in code. Classification needs an agent only when meaning is ambiguous; validate its output against an allowed set.
 4. **Salvage before contracting.** Before contracting the chosen design, enumerate the **mechanisms** in every rejected design and classify each one **promote / defer / drop**, with a reason. Record the classification in the design artifact; "nothing to salvage" is a claim that requires justification, not a default.
 5. **Contract each phase.** Define required predecessor artifacts, actor, Core Four (context, model, prompt, tools), cwd, allowed mutations, output schema, limits, checks, and next transitions. Build uses the approved plan; review uses the original criteria AND actual diff/evidence.
-6. **Design gates before prompts.** Define the expected check set and real commands/cwd/timeouts. Assign each gate an ID from the `G0`-`G7` namespace below. Specify success, failure, missing-output and interruption cases. Make independent code check artifacts and claims before advancing; agent confidence cannot approve its own transition.
+6. **Design gates before prompts.** Define the expected check set and real commands/cwd/timeouts. Assign each gate an ID from the `G0`-`G7` namespace in [gates](08_GATES.md). Specify success, failure, missing-output and interruption cases. Make independent code check artifacts and claims before advancing; agent confidence cannot approve its own transition.
 7. **Persist the design.** Record it in a durable design document rather than leaving it in a conversation. Obtain approval for the scoped implementation and side effects. Scaffolding, dependency installation, hooks, tracker updates, and worktree creation are mutations--even if a phase is called "plan."
 8. **Build the smallest vertical slice.** Implement typed contracts, the agent adapter, one useful phase, real quality checks and state/evidence storage. Use focused, bounded prompts, and author any missing primitive deliberately rather than inlining it. Do not generate an entire platform for a one-off task.
 9. **Compose thinly.** Reuse phase entry points; keep sequencing separate from prompts and model selection. Pass one run identity, explicit workspace and validated artifact references. Do not duplicate phase internals inside a composite script.
-10. **Walk through and test.** First use mocked agents/tools and disposable workspaces; then a human-supervised real task within authority. Exercise the control-plane matrix below. Document exact invocation, prerequisites, artifacts, safe resume and cancellation before unattended use.
+10. **Walk through and test.** First use mocked agents/tools and disposable workspaces; then a human-supervised real task within authority. Exercise the [control-plane matrix](09_CONTROL_PLANE_TESTS.md). Document exact invocation, prerequisites, artifacts, safe resume and cancellation before unattended use.
 11. **Make it discoverable and improve deliberately.** Add an entry recipe/skill and conditional context links. Record effective config, measured cost/time/interventions and outcomes. Extract only what a second real use has already proven; see the area README on reuse being earned.
 
 ### Salvage before contracting
@@ -48,60 +50,7 @@ Rules a conformant salvage pass can be checked against:
 | Gate | Independent schema/domain/artifact/check validation tied to current revision, diff base, non-zero changed-file count and diff identity |
 | Failure | Preserve result, partial effects and per-kind attempt accounting; set `return_to`; route to correction, repair, human decision, or blocked handoff |
 
-A phase-result record and a gate-decision record are illustrative shapes, not schemas or validators. Implement consumer-tested types before machine use; reject placeholder records. Keep diagnostics off machine-consumed stdout; never parse the last plausible-looking path out of arbitrary prose.
-
-Four vocabularies, deliberately disjoint:
-
-| Axis | Values |
-|---|---|
-| Task state | The lifecycle enum, with `blocked` / `repairing` as orthogonal flags plus `return_to` |
-| Execution status | `completed`, `failed`, `blocked`, `cancelled` |
-| Check result | The check-status enum, plus a separate `applicable` (`true` / `false`) with reason, and a `source` provenance |
-| Gate decision | `pass`, `blocked`, `human_waived` |
-
-`blocked` appears on three of these axes and means a different thing on each; never move a `blocked` value between them without re-deciding it. There is no `skipped` check result: an authorized exclusion is `applicable: false`, and a check prevented from running is `not_run`. An agent completion is not a passing check, human acceptance, or shipping permission.
-
-### Gate ID namespace
-
-`gate_id` draws from `G0`-`G7` by default, so gate records compare across projects. A project may extend the namespace; it may not renumber it. **The IDs and their names are policy** -- a locally-improved name is how two gate records stop comparing, which is the whole point of a shared namespace.
-
-| ID | Gate | Blocks |
-|---|---|---|
-| `G0` | Scope and authority -- bounded outcome, criteria, scope, engagement mode, operating level, approvals present | Starting work on an unbounded or unauthorized task |
-| `G1` | Research and readiness -- interfaces, data flows, dependencies, baseline failures and required inputs identified; **a bug reproduced, or the blocker stated with what supports the hypothesis**; every acceptance criterion mapped to a change and a named check | Building against an unmapped criterion, or against a defect nobody has reproduced |
-| `G2` | Invocation and handoff -- Core Four, cwd, allowed mutations and output contract fixed before the call; on return, identity, workspace and artifact containment validated | Consuming a result from an invocation that was not the one issued |
-| `G3` | Build and scope integrity -- diff bounded to approved scope; unrelated work preserved | Advancing on an out-of-scope or unreviewable diff |
-| `G4` | Closed-loop validation -- expected check set compared to actual; partial verification reported truthfully | Claiming coverage that was not executed |
-| `G5` | Spec review and revision -- every finding carries a `disposition`; approval may not contradict an unresolved `blocker` | Readiness with an open blocker |
-| `G6` | Documentation and future context -- documentation invalidated by the change is updated or explicitly found to need no change | Handing off an interface whose documentation describes behavior that no longer exists |
-| `G7` | Acceptance and authorized handoff -- acceptance recorded, and any external effect separately authorized | Push, merge, publish, release, or deploy on acceptance alone |
-
-`G2` and `G6` are not ADW-only. A supervised session delegating to a subagent runs `G2` by hand; a supervised session that changed an interface runs `G6` in the `documenting` state. A gate with no phase to run in is a gate that does not exist.
-
-### Validate handoffs in code
-
-- Match schema version, task/run/phase/attempt, configured model/tools/cwd and expected artifact kinds.
-- Resolve paths against authorized roots; reject traversal, symlink escape, wrong ownership, missing/empty content and stale artifacts. Never select the first matching plan from another run.
-- Compare all expected checks against actual records. Reject missing, duplicate, unknown, malformed, empty or contradictory results; zero failures alone is not success.
-- Retain timestamp, argv/cwd, timeout, exit, scope, measured duration or null, revision, diff base, changed-file count, diff identity and non-sensitive evidence references.
-- **A gate whose subject is a change MUST record its observed workspace, `diff_base` and `changed_file_count`, and MUST decide `blocked` when `changed_file_count == 0`. It may never decide `pass` on an empty diff.** The gate reports what it observed rather than what it expected; a count of zero is evidence the gate never found its subject, not an observation that the subject is clean.
-- Verify review criteria coverage and `disposition` consistency, not merely `success: true`. A record whose `severity` and `disposition` disagree with the table in [`Software_Engineering/03_CODE_REVIEW.md`](../Software_Engineering/03_CODE_REVIEW.md) is malformed.
-- If a human waives a failure, independently record approver, approval reference/time, exact failure and evidence, allowed scope, consequences and validity limit. Only that human decision can unblock it; original failed results stay failed. Destructive next actions need their own explicit approval.
-
-#### A gate must bind to a non-empty diff, and prove which one it read
-
-`revision` and `diff_identity` are necessary and **not sufficient**. A gate that resolved its working directory to the wrong checkout records a correct-looking revision *of the wrong tree*, and an empty diff has a perfectly valid identity. Both fields can be fully populated by a gate that never saw the change it certified. On a real run two gates delegated to subagents did exactly this -- resolved to the main checkout on the default branch instead of the feature worktree, inspected an empty diff, and returned a confident `pass` -- and nothing in either record distinguished them from a genuine pass.
-
-The rule is therefore about what emptiness means. Treat `changed_file_count == 0` as evidence the gate did not find its subject, never as the observation that the subject contains nothing. Required behavior:
-
-- Resolve and record the workspace actually inspected, not the workspace configured.
-- Record `diff_base` and the resulting `changed_file_count` on every gate result whose subject is a change.
-- Decide `blocked` on zero, and report observed workspace, base and count in the block so the mismatch is diagnosable without re-running.
-- A gate that cannot determine its own workspace is `blocked`, not `not_run`, and not `error`.
-
-**Why this outranks every other rule here.** The evidence hierarchy ranks *enforced gate with retained output* first. That ranking is sound only if a gate cannot pass without having observed its subject. Without this rule the strongest evidence class carries a silent null case -- a confident pass produced by observing nothing -- which makes it the **most** dangerous class rather than the safest, precisely because everything downstream trusts it most and stops looking. Every weaker tier is checked by something; tier 1 is what does the checking. Do not promote the evidence hierarchy anywhere, or rely on it to license reduced scrutiny, until this rule is enforced in code.
-
-The mirror-image failure is the same root error and equally real: a readiness check that read the full history of check runs rather than the latest per context counted five superseded failures as current and returned a confident `fail` on a passing subject. Trusting a payload's shape without checking what it represents fails in both directions, so the gate-side test is "did I observe my subject", not "did I get a plausible payload".
+A phase-result record and a gate-decision record are illustrative shapes, not schemas or validators. Implement consumer-tested types before machine use; reject placeholder records. Keep diagnostics off machine-consumed stdout; never parse the last plausible-looking path out of arbitrary prose. The four status-like vocabularies these records write are deliberately disjoint; [gates](08_GATES.md) holds them, alongside the validation a gate performs on the records that carry them.
 
 ## Start minimal, grow on evidence
 
@@ -188,30 +137,6 @@ return handoff awaiting human acceptance
 ```
 
 Prefer explicit phase calls over shell pipelines. If pipes are supported, reserve stdout for the contract and propagate every child's failure; the final child's zero exit must not hide an earlier failure. A "continue to collect evidence" mode may run independent diagnostics but cannot clear a failed gate or permit dependent mutation.
-
-## Control-plane tests before adoption
-
-| Inject | Required observation |
-|---|---|
-| Valid result + current artifacts + all expected checks | Advances exactly once; trace reconstructs the transition |
-| Malformed JSON, wrong enum/ID, empty/missing result | Blocks; no fallback to empty success |
-| Missing/empty/outside-root/stale artifact | Blocks the consuming phase |
-| Failed, `not_run`, or zero-test required suite | Blocks unless explicit bounded human waiver; never relabels as pass, and never as `applicable: false` |
-| Gate run from a workspace other than the one under test, or against an empty diff | Blocks; reports observed workspace, `diff_base` and `changed_file_count`. Never reports pass |
-| Corrupted state record -- truncated write, wrong run ID, state moved backwards, orthogonal `blocked` lost on update | Blocks; refuses to infer the missing state; preserves the corrupt record alongside the last known-good one |
-| Cleanup omitted or resource leaked -- orphaned worker, held lock, retained worktree, open port, temp workspace after cancellation | Detects and reports the leak, names the owner, and blocks unattended reuse of the resource; never silently reclaims another run's workspace |
-| Review claims approval while listing an unresolved `blocker` disposition | Blocks pending repair or explicit waiver; `risk_accepted` must name a human |
-| Repair changes checked files | Invalidates and reruns affected downstream gates |
-| Timeout, process crash, cancellation, partial external write | Preserves evidence; inspects effects before retry; stops owned workers |
-| Duplicate trigger or occupied workspace/port | Atomic claim/reservation prevents double execution; reports conflict |
-| Denied capability, hook failure, agent attempts to alter gate policy | No unauthorized action; fails closed at the actual enforcement boundary |
-| Invalid/expired waiver or unapproved destructive/shipping step | Blocks and asks for exact human authorization |
-
-Retries are counted per kind under a shared cap, and a composition must **test each kind separately** -- an exhausted budget is a control-plane path like any other, and one that is never exercised fails the first time it matters. The kinds, the caps and why a single counter cannot express them are in [recovery and handoff](05_RECOVERY_AND_HANDOFF.md).
-
-**Caps must not be evaded by starting new sessions or subagents.** Attempt accounting belongs to the task, not to the process counting it. A retry performed by a fresh session, a new subagent, a second worktree, or a re-issued run ID for the same task increments the same counter. A controller must carry `attempts` across resume and delegation, and must reject a resumed run whose counters are lower than the last persisted values.
-
-Resume revalidates workspace, partial effects, configuration and artifacts; a session ID is not recovery or isolation.
 
 ## Optional integration, not mandatory infrastructure
 
