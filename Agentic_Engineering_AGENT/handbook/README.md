@@ -1,18 +1,15 @@
 # Handbook — how to operate this package
 
-Conventions for *using* this package: where things go, how they are named, what may be created
-without asking. Numbered so the order is ours to choose rather than alphabetical.
+Conventions for *using* this package: where things go, how they are named, what may be created without asking. Numbered so the order is ours to choose rather than alphabetical.
 
-This is the counterpart to [`foundations/`](../foundations/README.md), and the split is worth keeping
-straight:
+This is the counterpart to [`foundations/`](../foundations/README.md), and the split is worth keeping straight:
 
 | | Answers | Portable? |
 |---|---|---|
 | [`foundations/`](../foundations/README.md) | What Agentic Engineering **is** | Yes — standalone by rule |
 | `handbook/` | How **this package** is operated | No — specific to this package's layout |
 
-A convention that would hold for any agentic-engineering effort belongs in `foundations/`. A
-convention about this folder structure belongs here.
+A convention that would hold for any agentic-engineering effort belongs in `foundations/`. A convention about this folder structure belongs here.
 
 | File | Covers |
 |---|---|

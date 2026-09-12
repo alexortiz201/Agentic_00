@@ -2,8 +2,7 @@
 
 `foundations/` names concepts and links to nothing. This is the mapping it leaves out.
 
-Until `v2/` exists, the **blueprint is the definition** — it says what each artifact must contain.
-Concrete starting files land in `v2/` and this table gains a second column when they do.
+Until `v2/` exists, the **blueprint is the definition** — it says what each artifact must contain. Concrete starting files land in `v2/` and this table gains a second column when they do.
 
 | Concept in `foundations/` | Defined by |
 |---|---|
@@ -23,12 +22,10 @@ Concrete starting files land in `v2/` and this table gains a second column when 
 
 ## Rules
 
-- **A new concept in `foundations/` earns a row here**, not a link there. A link in the discipline is
-  the leak returning.
+- **A new concept in `foundations/` earns a row here**, not a link there. A link in the discipline is the leak returning.
 - **A blueprint is not a schema.** It states what must be present and why; it validates nothing.
 - **A target project may use its own convention.** Record that mapping where its workflow is defined.
 
 ## `v1/`
 
-The previous toolkit — templates, prompts, commands, skills, hooks. Kept isolated and unreferenced.
-Read it for prior art; do not wire anything to it.
+The previous toolkit — templates, prompts, commands, skills, hooks. Kept isolated and unreferenced. Read it for prior art; do not wire anything to it.

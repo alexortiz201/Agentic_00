@@ -123,13 +123,11 @@ That is enough to do real work. Everything else is added when something forces i
 | Tests | a transition has broken once |
 | Durable storage | a fact must outlive a single run |
 
-**Read that table as a growth path, not a checklist.** Each row names the evidence that justifies the
-addition; adding a row without its evidence is building a platform before there is a project.
+**Read that table as a growth path, not a checklist.** Each row names the evidence that justifies the addition; adding a row without its evidence is building a platform before there is a project.
 
 ## Choose the smallest sufficient set
 
-Build the least that does the job. Each row's right-hand column is what to add **only when the
-situation demands it**, not what to add next.
+Build the least that does the job. Each row's right-hand column is what to add **only when the situation demands it**, not what to add next.
 
 | Situation | Needed | Add only if justified |
 |---|---|---|
@@ -141,21 +139,15 @@ situation demands it**, not what to add next.
 
 ## Invocation
 
-Every agent call is four choices: **context, model, prompt, tools.** Select a model by measured
-capability, cost, privacy and latency; do not hard-code a ranking that was true once.
+Every agent call is four choices: **context, model, prompt, tools.** Select a model by measured capability, cost, privacy and latency; do not hard-code a ranking that was true once.
 
-**Prompt shape:** purpose → named variables → constraints → relevant files → ordered workflow → exact
-report. Add examples, delegation or loops only where they earn their place.
+**Prompt shape:** purpose → named variables → constraints → relevant files → ordered workflow → exact report. Add examples, delegation or loops only where they earn their place.
 
-**Reduce and delegate.** Prime for the task at hand, give each actor one purpose, and return compact
-manifests. Reload authoritative state and the relevant files rather than copying a whole transcript
-forward.
+**Reduce and delegate.** Prime for the task at hand, give each actor one purpose, and return compact manifests. Reload authoritative state and the relevant files rather than copying a whole transcript forward.
 
-**A context bundle is an index, not memory and not instructions.** Validate containment and freshness.
-Never capture secret values by default.
+**A context bundle is an index, not memory and not instructions.** Validate containment and freshness. Never capture secret values by default.
 
-A higher-order prompt consumes a prompt or plan; a metaprompt produces one. **Neither authorizes
-running arbitrary supplied instructions.**
+A higher-order prompt consumes a prompt or plan; a metaprompt produces one. **Neither authorizes running arbitrary supplied instructions.**
 
 ## Composition examples
 

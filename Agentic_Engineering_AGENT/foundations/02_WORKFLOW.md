@@ -90,12 +90,9 @@ Before `acceptance_pending`, every required failure and every finding with `disp
 
 ## Stop rather than broaden
 
-While building, **stop before changing scope, acceptance criteria, permissions or gate policy.**
-Request a new decision instead. Each of those belongs to someone else, and a plan that quietly grew is
-a plan nobody approved.
+While building, **stop before changing scope, acceptance criteria, permissions or gate policy.** Request a new decision instead. Each of those belongs to someone else, and a plan that quietly grew is a plan nobody approved.
 
-Committing, pushing, updating a tracker and shipping each need their own authority. Doing the work does
-not carry permission to publish it.
+Committing, pushing, updating a tracker and shipping each need their own authority. Doing the work does not carry permission to publish it.
 
 ## Role separation
 

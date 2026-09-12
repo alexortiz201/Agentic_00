@@ -1,14 +1,12 @@
 # Gate
 
-An **independent** check on whether a transition may happen. Independent is the whole word: a gate
-evaluated by whatever produced the thing is not a gate, it is a self-assessment.
+An **independent** check on whether a transition may happen. Independent is the whole word: a gate evaluated by whatever produced the thing is not a gate, it is a self-assessment.
 
 ## Must contain
 
 - **An identifier** from a declared namespace, so decisions compare across projects and runs.
 - **What it checks**, as an expected set — not "the tests", but *which* checks must have run.
-- **How it is enforced** — code, a person, or an agent's inspection. Say which; they are not
-  interchangeable.
+- **How it is enforced** — code, a person, or an agent's inspection. Say which; they are not interchangeable.
 - **What it blocks** when it fails, and where control goes.
 
 ## The decision record
@@ -29,8 +27,6 @@ Beyond the common record fields:
 ## Rules
 
 - **`human_waived` is not a pass** and is never counted as one. The failing evidence stays.
-- **A gate must observe its subject.** Record the base and the changed-file count; treat emptiness as
-  evidence the gate never found what it was checking.
-- **Record the workspace it actually resolved**, not the one it was supposed to use. A gate in the
-  wrong tree records a correct-looking revision of the wrong thing.
+- **A gate must observe its subject.** Record the base and the changed-file count; treat emptiness as evidence the gate never found what it was checking.
+- **Record the workspace it actually resolved**, not the one it was supposed to use. A gate in the wrong tree records a correct-looking revision of the wrong thing.
 - **Approval may not contradict an unresolved blocker.**

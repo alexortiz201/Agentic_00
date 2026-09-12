@@ -1,7 +1,6 @@
 # State
 
-What a run persists so it can be resumed, inspected, or handed to another phase. **The handoff
-mechanism** — phases do not pass data to each other, they pass an identifier and re-read state.
+What a run persists so it can be resumed, inspected, or handed to another phase. **The handoff mechanism** — phases do not pass data to each other, they pass an identifier and re-read state.
 
 ## Must hold
 
@@ -15,12 +14,9 @@ Keep the set small and closed. A state record that accepts anything is a log.
 
 ## The run identifier is the spine
 
-One short identifier, minted once, that appears in **everything the run touches** — the workspace it
-created, the resources it reserved, the artifacts it wrote, the messages it posted, the commits it
-made. It is what makes a run reconstructable afterwards by someone who was not watching.
+One short identifier, minted once, that appears in **everything the run touches** — the workspace it created, the resources it reserved, the artifacts it wrote, the messages it posted, the commits it made. It is what makes a run reconstructable afterwards by someone who was not watching.
 
-Phases do not pass data to each other. **They pass this identifier and re-read state.** That is what
-lets a phase be run alone, resumed after a failure, or debugged in isolation.
+Phases do not pass data to each other. **They pass this identifier and re-read state.** That is what lets a phase be run alone, resumed after a failure, or debugged in isolation.
 
 ## Minimum field set
 
@@ -44,8 +40,7 @@ Keep it closed. If something does not need to survive the process that wrote it,
 ## Rules
 
 - **Validate on write and on read.** A malformed record found at read time has already cost you the run.
-- **Reject unknown fields loudly.** Silently dropping a write, then reporting success, is the worst
-  available behaviour — the caller believes something was recorded that was not.
+- **Reject unknown fields loudly.** Silently dropping a write, then reporting success, is the worst available behaviour — the caller believes something was recorded that was not.
 - **Store it outside the disposable workspace.** State must outlive the thing it describes.
 - **Write after every material fact**, not at the end.
 - **Write-then-rename** so a reader never sees a partial record.
@@ -53,5 +48,4 @@ Keep it closed. If something does not need to survive the process that wrote it,
 
 ## Common failure
 
-Building two handoff mechanisms — a state file *and* a piping channel — and leaving one dead. Pick one.
-The dead one will be re-enabled years later by someone who does not know it was abandoned.
+Building two handoff mechanisms — a state file *and* a piping channel — and leaving one dead. Pick one. The dead one will be re-enabled years later by someone who does not know it was abandoned.

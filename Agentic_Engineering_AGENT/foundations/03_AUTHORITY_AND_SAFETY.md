@@ -22,17 +22,11 @@
 
 Some things are not on the approval list, because approving them is the mistake.
 
-**An agent does not receive credentials.** Not production credentials, and not by approval. Where a
-system requires one, the credential is held by code and exposed as a **function the agent may call** —
-code holds the secret, the agent holds only the capability to invoke. The agent cannot read, log,
-forward or persist what it never had.
+**An agent does not receive credentials.** Not production credentials, and not by approval. Where a system requires one, the credential is held by code and exposed as a **function the agent may call** — code holds the secret, the agent holds only the capability to invoke. The agent cannot read, log, forward or persist what it never had.
 
-This is structural rather than procedural, and that is the point: there is no approval step to get
-wrong, no reviewer to tire, and no prompt to bypass. A credential an agent can read is a credential
-that reaches its transcript, its tool calls and its error messages.
+This is structural rather than procedural, and that is the point: there is no approval step to get wrong, no reviewer to tire, and no prompt to bypass. A credential an agent can read is a credential that reaches its transcript, its tool calls and its error messages.
 
-The same shape applies wherever the answer would otherwise be "ask a human every time": prefer
-removing the capability over gating it.
+The same shape applies wherever the answer would otherwise be "ask a human every time": prefer removing the capability over gating it.
 
 ### Authority changes and invariants
 
@@ -61,12 +55,9 @@ Unknown impact means inspect first or ask.
 
 ## Capability
 
-**Minimize first; restrict second.** The strongest control is a capability the agent does not have. If
-a run does not need a general shell, do not give it one — expose narrow, typed operations instead. An
-allowlist is defense in depth, never proof.
+**Minimize first; restrict second.** The strongest control is a capability the agent does not have. If a run does not need a general shell, do not give it one — expose narrow, typed operations instead. An allowlist is defense in depth, never proof.
 
-**An allowlist limits what an agent can name, not what it can reach.** Before trusting one, trace the
-*entire reachable capability graph* from every permitted entry:
+**An allowlist limits what an agent can name, not what it can reach.** Before trusting one, trace the *entire reachable capability graph* from every permitted entry:
 
 - interpreters and inline code
 - package, build and test scripts
@@ -75,30 +66,19 @@ allowlist is defense in depth, never proof.
 - generated executables
 - tool composition, and non-shell read/write/edit or API tools
 
-**A permitted wrapper that can execute arbitrary code defeats a command allowlist.** Permitting a
-version-control command permits whatever its hooks run. Removing shell access does not remove risk
-while write and edit tools remain, because what is written can be executed by something else — a test
-runner, a build step, a package script.
+**A permitted wrapper that can execute arbitrary code defeats a command allowlist.** Permitting a version-control command permits whatever its hooks run. Removing shell access does not remove risk while write and edit tools remain, because what is written can be executed by something else — a test runner, a build step, a package script.
 
-Ask what the smallest set of capabilities this run needs is, and grant that. Convenience is the reason
-capability sets grow, and a set that grew for convenience has no boundary anyone can state.
+Ask what the smallest set of capabilities this run needs is, and grant that. Convenience is the reason capability sets grow, and a set that grew for convenience has no boundary anyone can state.
 
 ## Moving data between environments
 
-**Prefer synthetic or minimized fixtures.** Real production data is not automatically necessary to
-reproduce a problem, and the burden is on showing it is.
+**Prefer synthetic or minimized fixtures.** Real production data is not automatically necessary to reproduce a problem, and the burden is on showing it is.
 
-Where a transfer is genuinely required, authorize the source read, the destination write and the
-transfer itself as separate decisions. Enforce read-only source access and an approved transformation
-boundary mechanically — **a prompt instructing an agent to act as a privacy gatekeeper enforces
-nothing.**
+Where a transfer is genuinely required, authorize the source read, the destination write and the transfer itself as separate decisions. Enforce read-only source access and an approved transformation boundary mechanically — **a prompt instructing an agent to act as a privacy gatekeeper enforces nothing.**
 
-Validate before the data moves, not after: allowed fields, free text, identifiers and what they can be
-linked to, logs, artifacts and payloads. **A remote model call is a transfer.** If data may not leave
-its environment, sending it for inference is sending it out.
+Validate before the data moves, not after: allowed fields, free text, identifiers and what they can be linked to, logs, artifacts and payloads. **A remote model call is a transfer.** If data may not leave its environment, sending it for inference is sending it out.
 
-Block on uncertainty. **Redaction is not proof of anonymization**, and preserving the relationships
-that make a reproduction faithful is a separate check from preserving privacy — both have to pass.
+Block on uncertainty. **Redaction is not proof of anonymization**, and preserving the relationships that make a reproduction faithful is a separate check from preserving privacy — both have to pass.
 
 ## Isolation
 
@@ -113,25 +93,16 @@ Prefer worktrees, containers, OS permissions, scoped credentials, and ephemeral 
 
 ## Remote and sandboxed execution
 
-A sandbox is a **tested boundary, not a label**. A container or VM proves neither isolation nor zero
-blast radius on its own.
+A sandbox is a **tested boundary, not a label**. A container or VM proves neither isolation nor zero blast radius on its own.
 
-- **Declare the actual boundary** before relying on it: host mounts, privileges, network egress,
-  credentials, data reachable, services exposed. Then **verify a denied action is actually denied** in
-  a safe test. An untested boundary is an assumption.
-- **Provision least-privilege, short-lived credentials scoped to the run.** Revoke on completion or
-  cancellation, and **verify the revocation**. Deleting the machine is not revocation — anything the
-  credential reached may outlive it.
-- **Spend caps do not prevent exfiltration.** A budget limits cost, not disclosure; they are unrelated
-  controls and one does not substitute for the other.
-- **Export and verify evidence before teardown.** Patches, artifacts and records must be in authorized
-  durable storage *and confirmed there* before anything is destroyed. A run whose evidence died with
-  its sandbox produced nothing.
+- **Declare the actual boundary** before relying on it: host mounts, privileges, network egress, credentials, data reachable, services exposed. Then **verify a denied action is actually denied** in a safe test. An untested boundary is an assumption.
+- **Provision least-privilege, short-lived credentials scoped to the run.** Revoke on completion or cancellation, and **verify the revocation**. Deleting the machine is not revocation — anything the credential reached may outlive it.
+- **Spend caps do not prevent exfiltration.** A budget limits cost, not disclosure; they are unrelated controls and one does not substitute for the other.
+- **Export and verify evidence before teardown.** Patches, artifacts and records must be in authorized durable storage *and confirmed there* before anything is destroyed. A run whose evidence died with its sandbox produced nothing.
 
 ## Commands and services
 
-**Do not run an unfamiliar workflow to find out what it does — not even with a help or dry-run flag.**
-Those paths are code too, and in practice they discover, connect, spawn and write. Read first.
+**Do not run an unfamiliar workflow to find out what it does — not even with a help or dry-run flag.** Those paths are code too, and in practice they discover, connect, spawn and write. Read first.
 
 Read unfamiliar scripts before running them, especially reset, delete, cleanup, publish, deploy, tunnel, credential, and migration scripts. Use timeouts and clean up spawned process groups.
 

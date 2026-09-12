@@ -2,9 +2,7 @@
 
 Blueprints. Each file answers one question: **what must this thing contain when I create one?**
 
-They are requirements, not tutorials — the reasoning lives in the rest of `foundations/`, and the
-step-by-step construction lives in the handbook. If a blueprint needs a paragraph to justify a line,
-the justification belongs elsewhere.
+They are requirements, not tutorials — the reasoning lives in the rest of `foundations/`, and the step-by-step construction lives in the handbook. If a blueprint needs a paragraph to justify a line, the justification belongs elsewhere.
 
 | Primitive | Is |
 |---|---|
@@ -23,8 +21,7 @@ the justification belongs elsewhere.
 
 ## Prove it at the consuming interface
 
-Before a primitive is used by anything, exercise **six cases** — not at its own boundary, but at the
-interface of whatever calls it:
+Before a primitive is used by anything, exercise **six cases** — not at its own boundary, but at the interface of whatever calls it:
 
 | Case | Must |
 |---|---|
@@ -35,24 +32,16 @@ interface of whatever calls it:
 | timeout | end, and report ending rather than hanging |
 | **wrong workspace** | **detect the mismatch and report it, rather than operating on whatever it found** |
 
-The last one is the cheapest place to catch a whole defect class. A primitive invoked from the wrong
-directory, or against a workspace that is not the one under test, must report the workspace it
-observed and the one it expected — and fail. **Silently succeeding there is the primitive-level form of
-a gate certifying an empty diff.**
+The last one is the cheapest place to catch a whole defect class. A primitive invoked from the wrong directory, or against a workspace that is not the one under test, must report the workspace it observed and the one it expected — and fail. **Silently succeeding there is the primitive-level form of a gate certifying an empty diff.**
 
-Check argument order, output shape, path containment and actual side effects. Verify a generated
-artifact **as an artifact** before executing it.
+Check argument order, output shape, path containment and actual side effects. Verify a generated artifact **as an artifact** before executing it.
 
 ## Label what is true
 
-Four different claims, routinely collapsed into one: **authored** · **configured** · **tested** ·
-**actually used**. Say which. A thing that exists is not a thing that runs, and a thing that runs is
-not a thing anyone depends on.
+Four different claims, routinely collapsed into one: **authored** · **configured** · **tested** · **actually used**. Say which. A thing that exists is not a thing that runs, and a thing that runs is not a thing anyone depends on.
 
 ## Two rules across all of them
 
-**State the contract in the prompt; validate it in code.** Every blueprint that crosses the
-agent boundary says this in some form. A prompt asking for JSON is a request, not a guarantee.
+**State the contract in the prompt; validate it in code.** Every blueprint that crosses the agent boundary says this in some form. A prompt asking for JSON is a request, not a guarantee.
 
-**Name what a thing must contain, never where it lives.** Directory layout, filenames and language are
-the adopter's choice and belong in their handbook.
+**Name what a thing must contain, never where it lives.** Directory layout, filenames and language are the adopter's choice and belong in their handbook.

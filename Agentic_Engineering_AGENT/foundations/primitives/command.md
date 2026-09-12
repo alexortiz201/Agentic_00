@@ -1,7 +1,6 @@
 # Command
 
-A named, reusable prompt invoked by name and composed by workflows. **Short by default** — the detail
-belongs in a spec, not here.
+A named, reusable prompt invoked by name and composed by workflows. **Short by default** — the detail belongs in a spec, not here.
 
 ## Must contain
 
@@ -22,18 +21,15 @@ Exactly two shapes, and choosing a third means the caller cannot parse it:
 - **One scalar, nothing else** — a path, an identifier, a name.
 - **Strict structured data** — stated as such, because it will be parsed immediately.
 
-State the contract **twice**: once in the instructions, once in the report. Then **write the artifact
-to a derivable location**, so a caller that fails to parse can still find it.
+State the contract **twice**: once in the instructions, once in the report. Then **write the artifact to a derivable location**, so a caller that fails to parse can still find it.
 
 ## Rules
 
 - **One responsibility.** If it does two things, it is two commands.
-- **Length is bimodal and that is correct.** A handoff command is a dozen lines. A long one is long
-  only because it inlines a format — the instruction body stays short either way.
+- **Length is bimodal and that is correct.** A handoff command is a dozen lines. A long one is long only because it inlines a format — the instruction body stays short either way.
 - **Set the reasoning budget explicitly** when the task needs it.
 - Compose by reference: a command may instruct that another be read and executed.
 
 ## Common failure
 
-The caller parses prose with a regex, the regex is patched, then patched again. That is a missing
-output channel, not a parsing problem — declare a structured result or a known artifact path.
+The caller parses prose with a regex, the regex is patched, then patched again. That is a missing output channel, not a parsing problem — declare a structured result or a known artifact path.

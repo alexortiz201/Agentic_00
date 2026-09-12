@@ -5,37 +5,25 @@ A self-contained package for bounded, observable, and repairable software delive
 ## Boot order
 
 1. [`AGENTS.md`](AGENTS.md) — the operating contract. What you may do, and what needs asking.
-2. [`foundations/README.md`](foundations/README.md) — what Agentic Engineering is, and the rule that
-   keeps this folder portable.
-3. [`foundations/LANGUAGE.md`](foundations/LANGUAGE.md) — canonical vocabulary. **Read before the
-   rest**; most apparent contradictions turn out to be two spellings of one idea.
-4. [`foundations/01_PRINCIPLES.md`](foundations/01_PRINCIPLES.md) — the two layers, the leverage
-   points, evidence, and how to decide.
+2. [`foundations/README.md`](foundations/README.md) — what Agentic Engineering is, and the rule that keeps this folder portable.
+3. [`foundations/LANGUAGE.md`](foundations/LANGUAGE.md) — canonical vocabulary. **Read before the rest**; most apparent contradictions turn out to be two spellings of one idea.
+4. [`foundations/01_PRINCIPLES.md`](foundations/01_PRINCIPLES.md) — the two layers, the leverage points, evidence, and how to decide.
 5. [`foundations/02_WORKFLOW.md`](foundations/02_WORKFLOW.md) — lifecycle, states, gates.
-6. [`foundations/03_AUTHORITY_AND_SAFETY.md`](foundations/03_AUTHORITY_AND_SAFETY.md) — capability,
-   credentials, isolation, what is never granted.
+6. [`foundations/03_AUTHORITY_AND_SAFETY.md`](foundations/03_AUTHORITY_AND_SAFETY.md) — capability, credentials, isolation, what is never granted.
 7. [`foundations/04_VERIFICATION.md`](foundations/04_VERIFICATION.md) — what counts as evidence.
-8. [`foundations/05_RECOVERY_AND_HANDOFF.md`](foundations/05_RECOVERY_AND_HANDOFF.md) — repair,
-   rollback, reporting truthfully.
-9. [`foundations/06_ADW_COMPOSITION.md`](foundations/06_ADW_COMPOSITION.md) — how workflows are built
-   and sized.
+8. [`foundations/05_RECOVERY_AND_HANDOFF.md`](foundations/05_RECOVERY_AND_HANDOFF.md) — repair, rollback, reporting truthfully.
+9. [`foundations/06_ADW_COMPOSITION.md`](foundations/06_ADW_COMPOSITION.md) — how workflows are built and sized.
 10. [`foundations/07_COACHING.md`](foundations/07_COACHING.md) — only in coaching mode.
-11. [`foundations/primitives/`](foundations/primitives/README.md) — **what each primitive must contain
-    when you create one.** Load the one you need, not all of them.
+11. [`foundations/primitives/`](foundations/primitives/README.md) — **what each primitive must contain when you create one.** Load the one you need, not all of them.
 12. [`RUNBOOK.md`](RUNBOOK.md) — the execution checklist for a task.
 
-Load 1–4 always. Beyond that, load what the task needs — loading everything contradicts this
-package's own rule about context.
+Load 1–4 always. Beyond that, load what the task needs — loading everything contradicts this package's own rule about context.
 
 ## Starting a session cold
 
-If [`.memory/`](handbook/01_LOCAL_MEMORY.md) exists, **read `.memory/package_cleanup.md` first.** It
-records what is settled, what is still open, and what was deliberately deferred — which is the fastest
-way to avoid re-deciding something already decided.
+If [`.memory/`](handbook/01_LOCAL_MEMORY.md) exists, **read `.memory/package_cleanup.md` first.** It records what is settled, what is still open, and what was deliberately deferred — which is the fastest way to avoid re-deciding something already decided.
 
-Then the rest of `.memory/`: the `.md` files at its root, then its topic folders. It is never
-committed, so a clone will not have it. Treat everything there as a **prior snapshot to verify against
-current sources**, never as authority.
+Then the rest of `.memory/`: the `.md` files at its root, then its topic folders. It is never committed, so a clone will not have it. Treat everything there as a **prior snapshot to verify against current sources**, never as authority.
 
 Run artifacts are described in [`handbook/02_RUN_ARTIFACTS.md`](handbook/02_RUN_ARTIFACTS.md).
 
@@ -49,13 +37,11 @@ Run artifacts are described in [`handbook/02_RUN_ARTIFACTS.md`](handbook/02_RUN_
 | Settle a term | [`foundations/LANGUAGE.md`](foundations/LANGUAGE.md) |
 | Check the package is not structurally broken | [`handbook/03_STRUCTURAL_CHECK.md`](handbook/03_STRUCTURAL_CHECK.md) |
 
-This package **describes** how workflows are constructed and where they go. It does not ship
-workflows, generate code, or execute anything. Generated output belongs to the target project.
+This package **describes** how workflows are constructed and where they go. It does not ship workflows, generate code, or execute anything. Generated output belongs to the target project.
 
 ## Layout
 
-The package separates the **discipline** from the **toolkit** that applies it, because the two change
-at different rates and for different reasons.
+The package separates the **discipline** from the **toolkit** that applies it, because the two change at different rates and for different reasons.
 
 | | Holds | Changes when |
 |---|---|---|
@@ -64,18 +50,13 @@ at different rates and for different reasons.
 | [`handbook/`](handbook/README.md) | How this package is operated — conventions, naming, what may be created | A convention changes |
 | `.memory/` | Local notes and staged artifacts. Never committed | Freely; see [`handbook/01_LOCAL_MEMORY.md`](handbook/01_LOCAL_MEMORY.md) |
 
-**`foundations/` is standalone by rule.** It names no company, repository, tracker, model or harness.
-A statement that can only be justified by one organization's tooling belongs in that organization's
-docs. A worked example from real delivery is welcome; the rule it illustrates has to generalize.
+**`foundations/` is standalone by rule.** It names no company, repository, tracker, model or harness. A statement that can only be justified by one organization's tooling belongs in that organization's docs. A worked example from real delivery is welcome; the rule it illustrates has to generalize.
 
-Changes to vocabulary land in [`foundations/LANGUAGE.md`](foundations/LANGUAGE.md) **and** everywhere
-that reads or writes the term, in the same change. A half-applied rename fails silently at the
-consuming phase, which is worse than the original name.
+Changes to vocabulary land in [`foundations/LANGUAGE.md`](foundations/LANGUAGE.md) **and** everywhere that reads or writes the term, in the same change. A half-applied rename fails silently at the consuming phase, which is worse than the original name.
 
 ## Local memory
 
-Working notes and staged artifacts live in a never-committed `.memory/` folder. Conventions:
-[`handbook/01_LOCAL_MEMORY.md`](handbook/01_LOCAL_MEMORY.md).
+Working notes and staged artifacts live in a never-committed `.memory/` folder. Conventions: [`handbook/01_LOCAL_MEMORY.md`](handbook/01_LOCAL_MEMORY.md).
 
 ## Purpose
 

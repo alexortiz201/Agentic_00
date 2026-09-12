@@ -50,11 +50,9 @@ A check record that is `passed` with `source: asserted` is not a passed check; i
 - An exclusion is `applicable: false` plus a reason, and a required check may be marked inapplicable only by the same authority that could waive it.
 - “No tests found” is not proof of correctness.
 - A gate whose subject is a change must record its diff base and changed-file count and must decide `blocked` when the count is `0` — an empty diff means the gate did not find its subject. See “A gate must bind to a non-empty diff” in [composition contracts](06_ADW_COMPOSITION.md).
-- Review prose does not replace executable checks, and the reciprocal holds: **tests do not replace spec
-review, and screenshots do not replace executable tests.** Each answers a question the others cannot.
+- Review prose does not replace executable checks, and the reciprocal holds: **tests do not replace spec review, and screenshots do not replace executable tests.** Each answers a question the others cannot.
 
-**Reviewer output is advisory until an independent gate accepts it.** An approving review is a finding,
-not a decision — reading it as a gate result is how approval quietly becomes authorization.
+**Reviewer output is advisory until an independent gate accepts it.** An approving review is a finding, not a decision — reading it as a gate result is how approval quietly becomes authorization.
 - Previous artifacts do not prove current correctness.
 - Configured tooling does not prove it ran.
 - Compare the full expected check set with actual results; missing, malformed, duplicate, empty, stale or contradictory results cannot pass.
@@ -63,13 +61,9 @@ not a decision — reading it as a gate result is how approval quietly becomes a
 
 ## Verify behaviour, not description
 
-**Trace actual arguments, working directory and exit handling — not names, not a README.** A document
-describes intent; only the code describes behaviour. When they disagree, the document is usually the
-*target* and the code the *current state*, and the gap is the finding.
+**Trace actual arguments, working directory and exit handling — not names, not a README.** A document describes intent; only the code describes behaviour. When they disagree, the document is usually the *target* and the code the *current state*, and the gap is the finding.
 
-Where a runtime is missing or an integration was never exercised, **label it unverified and say so**.
-**Structural checks do not prove adoption** — that every file parses and every link resolves says
-nothing about whether the thing runs.
+Where a runtime is missing or an integration was never exercised, **label it unverified and say so**. **Structural checks do not prove adoption** — that every file parses and every link resolves says nothing about whether the thing runs.
 
 ## Claims that look like evidence
 
@@ -77,26 +71,17 @@ Each of these has been mistaken for proof of work and is not:
 
 - **A zero exit code, or a success flag** — check the artifacts and the full expected check set.
 - **A path-shaped string, a directory, a ticked checkbox, or a populated state object.**
-- **A parse error or empty result treated as "zero failures."** Choose fail-fast or collect-all
-  explicitly, and record dependent checks as not-run.
+- **A parse error or empty result treated as "zero failures."** Choose fail-fast or collect-all explicitly, and record dependent checks as not-run.
 - **A port probe** — it is not a reservation; something else can bind between the check and the use.
-- **A tracker update, a logging hook, or a dashboard** — they observe and report. They do not grant
-  acceptance.
+- **A tracker update, a logging hook, or a dashboard** — they observe and report. They do not grant acceptance.
 
 ## Never manufacture a pass
 
-Re-running until green is one way. **Weakening the assertion is the commoner one**, and it leaves no
-trace in the result — the suite is green and the record says so.
+Re-running until green is one way. **Weakening the assertion is the commoner one**, and it leaves no trace in the result — the suite is green and the record says so.
 
-Add or update tests without weakening what they assert to obtain green. Do not delete or skip
-assertions, do not widen a tolerance to swallow the failure, and do not redefine acceptance so the
-current behaviour qualifies. A check that was changed to pass is evidence about the check, not about
-the code.
+Add or update tests without weakening what they assert to obtain green. Do not delete or skip assertions, do not widen a tolerance to swallow the failure, and do not redefine acceptance so the current behaviour qualifies. A check that was changed to pass is evidence about the check, not about the code.
 
-**Verify the permission-shaped claim the same way as the artifact-shaped ones.** "This action was
-permitted" is established by consulting the independent policy, never by the proposer asserting it.
-That is the claim most often taken on trust, and it is the one where trusting the proposer defeats the
-entire separation between proposing and authorizing.
+**Verify the permission-shaped claim the same way as the artifact-shaped ones.** "This action was permitted" is established by consulting the independent policy, never by the proposer asserting it. That is the claim most often taken on trust, and it is the one where trusting the proposer defeats the entire separation between proposing and authorizing.
 
 ## Flake adjudication
 
@@ -112,11 +97,9 @@ The corroborating-indicator requirement is what separates this from retry-until-
 
 ## What a review inspects
 
-Correctness · regressions · authorization · input handling · data and migration safety · cleanup ·
-concurrency · compatibility · maintainability · **changes unrelated to the task**.
+Correctness · regressions · authorization · input handling · data and migration safety · cleanup · concurrency · compatibility · maintainability · **changes unrelated to the task**.
 
-Map each acceptance criterion to code, behaviour and check evidence. **Missing required evidence is a
-finding, not implied success**, and the builder's claims are not evidence.
+Map each acceptance criterion to code, behaviour and check evidence. **Missing required evidence is a finding, not implied success**, and the builder's claims are not evidence.
 
 After a repair, the affected checks run again **and the review runs again against the current diff**.
 

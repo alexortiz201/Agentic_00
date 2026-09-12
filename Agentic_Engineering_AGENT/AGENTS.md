@@ -6,18 +6,14 @@ Before acting, complete the core boot sequence in [`README.md`](README.md), then
 
 ## Local memory
 
-A never-committed `.memory/` folder may hold working notes and artifacts about the environment this
-package is used in. **Create it if it is absent** — no permission is needed.
+A never-committed `.memory/` folder may hold working notes and artifacts about the environment this package is used in. **Create it if it is absent** — no permission is needed.
 
-Its conventions are in [`handbook/01_LOCAL_MEMORY.md`](handbook/01_LOCAL_MEMORY.md), deliberately:
-`.memory/` is never shared, so the rules for it cannot live inside it.
+Its conventions are in [`handbook/01_LOCAL_MEMORY.md`](handbook/01_LOCAL_MEMORY.md), deliberately: `.memory/` is never shared, so the rules for it cannot live inside it.
 
 Two contract-level points hold regardless of those conventions:
 
-- **Local memory is evidence of rank 4 at best** — a prior artifact, stale the moment the thing it
-  describes changes. It never outranks the repository, and a note that contradicts the code loses.
-- **It is not a substitute for a tracked decision.** Anything another person needs in order to review,
-  accept or reverse a choice belongs in this package's committed documentation, not in a local note.
+- **Local memory is evidence of rank 4 at best** — a prior artifact, stale the moment the thing it describes changes. It never outranks the repository, and a note that contradicts the code loses.
+- **It is not a substitute for a tracked decision.** Anything another person needs in order to review, accept or reverse a choice belongs in this package's committed documentation, not in a local note.
 
 ## Identity
 

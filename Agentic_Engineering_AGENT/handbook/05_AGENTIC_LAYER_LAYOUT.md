@@ -1,13 +1,10 @@
 # Agentic layer layout
 
-Where the primitives go in a target project. [`foundations/primitives/`](../foundations/primitives/README.md)
-says what each must contain; this says where we put them. A project that already has a convention keeps
-it — **record the mapping instead of imposing this one.**
+Where the primitives go in a target project. [`foundations/primitives/`](../foundations/primitives/README.md) says what each must contain; this says where we put them. A project that already has a convention keeps it — **record the mapping instead of imposing this one.**
 
 ## Start here
 
-The first three directories. Do not generate more than this until something forces it —
-[`foundations/06`](../foundations/06_ADW_COMPOSITION.md) has the table of what forces what.
+The first three directories. Do not generate more than this until something forces it — [`foundations/06`](../foundations/06_ADW_COMPOSITION.md) has the table of what forces what.
 
 ```
 .claude/commands/    named, reusable prompts
@@ -35,17 +32,13 @@ agents/<run-id>/     per-run artifacts: state record, logs, prompts, raw agent o
 trees/<run-id>/      isolated workspaces, one per run
 ```
 
-The last two are **generated, not authored** — and both belong in the ignore file. A run's artifacts
-are evidence; a workspace is disposable.
+The last two are **generated, not authored** — and both belong in the ignore file. A run's artifacts are evidence; a workspace is disposable.
 
-**The application lives elsewhere.** Whatever directory holds the product is the application layer and
-is not part of this. An agentic layer that cannot be deleted without taking the product with it has
-been built in the wrong place.
+**The application lives elsewhere.** Whatever directory holds the product is the application layer and is not part of this. An agentic layer that cannot be deleted without taking the product with it has been built in the wrong place.
 
 ## This is one way, not the way
 
-A target project may organise differently and still be correct. The criterion is not the directory
-names — it is whether the layout produces an environment where:
+A target project may organise differently and still be correct. The criterion is not the directory names — it is whether the layout produces an environment where:
 
 - engineering patterns are **templated and reusable**
 - agents have **clear instructions** for operating the codebase
@@ -56,10 +49,8 @@ A layout that delivers those four is a good layout. Record whichever one the tar
 
 ## Naming
 
-- **A composition's filename is its phase sequence**, in execution order: `adw_plan_build_test.ts`.
-  Reading the directory tells you what workflows exist without opening anything.
-- **A spec is `<task-type>-<run-id>-<description>.md`.** All three parts, because specs are found by
-  pattern as often as by path.
+- **A composition's filename is its phase sequence**, in execution order: `adw_plan_build_test.ts`. Reading the directory tells you what workflows exist without opening anything.
+- **A spec is `<task-type>-<run-id>-<description>.md`.** All three parts, because specs are found by pattern as often as by path.
 - **A command is named for its single responsibility.** If the name needs "and", split it.
 
 ## What is ours
@@ -71,10 +62,8 @@ A layout that delivers those four is a good layout. Record whichever one the tar
 | Reserved resources | derived from the run id, written into the workspace as a file the agent reads |
 | State | outside the worktree, so it survives the workspace being deleted |
 
-The port-contract-in-a-file detail is worth keeping deliberately: the contract lives where the work
-happens, so anything operating in that workspace picks it up without being told.
+The port-contract-in-a-file detail is worth keeping deliberately: the contract lives where the work happens, so anything operating in that workspace picks it up without being told.
 
 ## Where ADWs live for a given project
 
-**This package generates ADWs; it does not hold them.** The output goes to the target project's own
-agentic layer. Record the target and its layout in `.memory/` when it differs from the above.
+**This package generates ADWs; it does not hold them.** The output goes to the target project's own agentic layer. Record the target and its layout in `.memory/` when it differs from the above.

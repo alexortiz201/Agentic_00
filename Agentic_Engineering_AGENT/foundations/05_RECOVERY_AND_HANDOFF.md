@@ -30,18 +30,14 @@ Increment the counter for the kind actually performed, before the retry. Exhaust
 
 ## Repairing
 
-1. **Preserve prior evidence**, then inspect current files and possible partial effects before
-   retrying. Do not assume a failed attempt did nothing.
+1. **Preserve prior evidence**, then inspect current files and possible partial effects before retrying. Do not assume a failed attempt did nothing.
 2. **Reproduce the failure**, or mark it unverified and name the evidence that would settle it.
-3. **Change the hypothesis before the next attempt.** Re-running the same attempt against the same
-   hypothesis is not a repair, it is a retry wearing one's clothes.
+3. **Change the hypothesis before the next attempt.** Re-running the same attempt against the same hypothesis is not a repair, it is a retry wearing one's clothes.
 4. **Make the smallest in-scope fix.** A missing requirement returns to planning — it is not a defect.
-5. **Re-run the reproducer**, then hand back the changed paths and the list of gates that must
-   re-evaluate. **Narrow success is not sufficient**; a fix invalidates evidence beyond the one test.
+5. **Re-run the reproducer**, then hand back the changed paths and the list of gates that must re-evaluate. **Narrow success is not sufficient**; a fix invalidates evidence beyond the one test.
 6. **Record each attempt without overwriting prior failures.**
 
-**Stop** on: the same failure twice, an exhausted budget, newly discovered risk, or side effects you
-cannot characterize. Each of those is a decision for a person, not a reason to try again.
+**Stop** on: the same failure twice, an exhausted budget, newly discovered risk, or side effects you cannot characterize. Each of those is a decision for a person, not a reason to try again.
 
 ## Make runs resumable
 
@@ -60,10 +56,7 @@ Keep a per-run copy of the run-state record and the handoff record. Before resum
 
 ## Rollback
 
-**Reversibility is an evidenced property, not an implied one.** Version control does not make a change
-reversible, and neither does using a write tool rather than a shell. An overwrite can reach untracked
-files, secrets, generated state, external systems and committed history — none of which a commit
-restores. Prove the rollback path before relying on it; an untested one is a plan, not a recovery.
+**Reversibility is an evidenced property, not an implied one.** Version control does not make a change reversible, and neither does using a write tool rather than a shell. An overwrite can reach untracked files, secrets, generated state, external systems and committed history — none of which a commit restores. Prove the rollback path before relying on it; an untested one is a plan, not a recovery.
 
 Plan rollback before high-risk changes. Prefer reversible edits and additive migrations. Preserve unrelated work. In order:
 
@@ -74,25 +67,19 @@ Plan rollback before high-risk changes. Prefer reversible edits and additive mig
 
 ## Permission and isolation failures
 
-When an action is denied, or a boundary turns out not to hold: **stop the action, preserve the
-evidence, and escalate.** Do not widen credentials, disable the safeguard, or retry around it.
+When an action is denied, or a boundary turns out not to hold: **stop the action, preserve the evidence, and escalate.** Do not widen credentials, disable the safeguard, or retry around it.
 
-This is the moment the wrong instinct is strongest, because the obstacle looks like a configuration
-problem and the fix looks one flag away. A denied action is information about the boundary. Removing
-the boundary destroys the information and the protection together.
+This is the moment the wrong instinct is strongest, because the obstacle looks like a configuration problem and the fix looks one flag away. A denied action is information about the boundary. Removing the boundary destroys the information and the protection together.
 
 ## Documenting
 
 **Document actual changed behaviour. The plan is intent, never proof of delivery.**
 
-Cover what changed, how to use it, prerequisites and configuration *names*, limitations, how it was
-verified, and how to roll it back. Never include secret values, raw transcripts or unapproved payloads.
+Cover what changed, how to use it, prerequisites and configuration *names*, limitations, how it was verified, and how to roll it back. Never include secret values, raw transcripts or unapproved payloads.
 
-**Label an illustration as an illustration.** A diagram of how something is supposed to work and a
-capture of it actually working are different claims. **Mark an example that was not run as unverified.**
+**Label an illustration as an illustration.** A diagram of how something is supposed to work and a capture of it actually working are different claims. **Mark an example that was not run as unverified.**
 
-Add the discovery links that cause this to be found later. A trivial change may use the handoff itself
-rather than a separate document.
+Add the discovery links that cause this to be found later. A trivial change may use the handoff itself rather than a separate document.
 
 ## Handoff
 
@@ -131,11 +118,6 @@ Carries the common [record](primitives/record.md) fields plus:
 
 ## Escalation
 
-> **Blocked on:** specific condition  
-> **Evidence:** concise facts  
-> **Options:** choices and consequences  
-> **Recommendation:** choice and rationale  
-> **Approval needed:** exact action and scope  
-> **Safe work remaining:** work that can proceed without this decision, and work that cannot
+> **Blocked on:** specific condition **Evidence:** concise facts **Options:** choices and consequences **Recommendation:** choice and rationale **Approval needed:** exact action and scope **Safe work remaining:** work that can proceed without this decision, and work that cannot
 
 All six fields are required. **Safe work remaining** is what keeps a blocked run productive instead of idle, and it is also a check on the block itself: a block that stops everything is either correctly total or scoped too widely, and stating the remaining work is what distinguishes the two. Name the work, not a reassurance — "documentation for the delivered interface; no further edits to the module under review" is the shape. If nothing is safe to proceed with, say so explicitly and why; an empty field reads as an unanswered question.
