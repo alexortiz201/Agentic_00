@@ -4,19 +4,38 @@ A self-contained package for bounded, observable, and repairable software delive
 
 ## Boot order
 
-1. [`AGENTS.md`](AGENTS.md) — operating contract.
-2. [`foundations/README.md`](foundations/README.md) — what Agentic Engineering is, and what is in the discipline.
-3. [`foundations/LANGUAGE.md`](foundations/LANGUAGE.md) — canonical vocabulary. **Read before the rest**; most apparent contradictions are two spellings of one idea.
-4. [`foundations/01_PRINCIPLES.md`](foundations/01_PRINCIPLES.md) — decision model.
-5. [`foundations/02_WORKFLOW.md`](foundations/02_WORKFLOW.md) — task lifecycle.
-6. [`foundations/03_AUTHORITY_AND_SAFETY.md`](foundations/03_AUTHORITY_AND_SAFETY.md) — authority boundaries.
-7. [`foundations/04_VERIFICATION.md`](foundations/04_VERIFICATION.md) — quality gates.
-8. [`foundations/05_RECOVERY_AND_HANDOFF.md`](foundations/05_RECOVERY_AND_HANDOFF.md) — recovery and handoff.
-9. [`RUNBOOK.md`](RUNBOOK.md) — execution checklist.
-10. `.memory/` — local working notes and staged artifacts, **if present**. Never committed. Read the
-    `.md` files at its root, then browse its topic folders. Conventions in
-    [`handbook/01_LOCAL_MEMORY.md`](handbook/01_LOCAL_MEMORY.md); treat everything there as a prior
-    snapshot to verify, not as authority.
+1. [`AGENTS.md`](AGENTS.md) — the operating contract. What you may do, and what needs asking.
+2. [`foundations/README.md`](foundations/README.md) — what Agentic Engineering is, and the rule that
+   keeps this folder portable.
+3. [`foundations/LANGUAGE.md`](foundations/LANGUAGE.md) — canonical vocabulary. **Read before the
+   rest**; most apparent contradictions turn out to be two spellings of one idea.
+4. [`foundations/01_PRINCIPLES.md`](foundations/01_PRINCIPLES.md) — the two layers, the leverage
+   points, evidence, and how to decide.
+5. [`foundations/02_WORKFLOW.md`](foundations/02_WORKFLOW.md) — lifecycle, states, gates.
+6. [`foundations/03_AUTHORITY_AND_SAFETY.md`](foundations/03_AUTHORITY_AND_SAFETY.md) — capability,
+   credentials, isolation, what is never granted.
+7. [`foundations/04_VERIFICATION.md`](foundations/04_VERIFICATION.md) — what counts as evidence.
+8. [`foundations/05_RECOVERY_AND_HANDOFF.md`](foundations/05_RECOVERY_AND_HANDOFF.md) — repair,
+   rollback, reporting truthfully.
+9. [`foundations/06_ADW_COMPOSITION.md`](foundations/06_ADW_COMPOSITION.md) — how workflows are built
+   and sized.
+10. [`foundations/07_COACHING.md`](foundations/07_COACHING.md) — only in coaching mode.
+11. [`foundations/primitives/`](foundations/primitives/README.md) — **what each primitive must contain
+    when you create one.** Load the one you need, not all of them.
+12. [`RUNBOOK.md`](RUNBOOK.md) — the execution checklist for a task.
+
+Load 1–4 always. Beyond that, load what the task needs — loading everything contradicts this
+package's own rule about context.
+
+## Starting a session cold
+
+If [`.memory/`](handbook/01_LOCAL_MEMORY.md) exists, **read `.memory/package_cleanup.md` first.** It
+records what is settled, what is still open, and what was deliberately deferred — which is the fastest
+way to avoid re-deciding something already decided.
+
+Then the rest of `.memory/`: the `.md` files at its root, then its topic folders. It is never
+committed, so a clone will not have it. Treat everything there as a **prior snapshot to verify against
+current sources**, never as authority.
 
 Run artifacts are described in [`handbook/02_RUN_ARTIFACTS.md`](handbook/02_RUN_ARTIFACTS.md).
 
