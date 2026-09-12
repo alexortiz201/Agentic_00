@@ -21,6 +21,8 @@ Loading everything contradicts this package's own rule about context, so the res
 | 📓 [`handbook/README.md`](handbook/README.md) | **Do a piece of work.** A bug ticket, a feature, a workflow to build -- start here and it routes you into the discipline |
 | 🏗️ [`foundations/Software_Engineering/`](foundations/Software_Engineering/README.md) | Ask whether something is engineering practice rather than an agentic concern |
 | 🚀 [`foundations/DevOps/`](foundations/DevOps/README.md) | Sandbox an agent, touch an environment, handle credentials, or ship |
+| 🔌 [`foundations/Harness_Engineering/`](foundations/Harness_Engineering/README.md) | Decide what a workflow may assume of its harness, or make one run on two |
+| 🔀 [`harnesses/`](harnesses/README.md) | Answer what a *specific* harness does, or port a flow between two |
 | 🎓 [`foundations/Coaching/`](foundations/Coaching/README.md) | Teach this work, or run in `coaching` mode |
 | 🔄 [`foundations/Agentic_Engineering/02_WORKFLOW.md`](foundations/Agentic_Engineering/02_WORKFLOW.md) | Run a task through its lifecycle -- states, gates, repair routing |
 | 🔐 [`foundations/Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md`](foundations/Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md) | Discover within scope, bound what an agent can reach, or do anything needing approval |
@@ -59,6 +61,7 @@ The package separates the vocabulary, the discipline, and the conventions for op
 | 🚀 [`foundations/DevOps/`](foundations/DevOps/README.md) | The environment the code runs in and the path it takes to get there | Isolation, credentials, release or rollback practice changes |
 | 🤖 [`foundations/Agentic_Engineering/`](foundations/Agentic_Engineering/README.md) | What changes when agents and code perform the phases -- principles, lifecycle, authority, verification, recovery, composition, gates | A lesson proves true **anywhere**, not just here |
 | 📓 [`handbook/`](handbook/README.md) | What to **do** -- start here with a ticket in hand; it routes into the discipline | A procedure changes |
+| 🔀 [`harnesses/`](harnesses/README.md) | What each harness actually does, against the capability surface | Those products change, which is often |
 | `.memory/` `.profile/` `.workspace/` | Local folders, never committed. See **Local folders** below | Freely |
 
 **`foundations/` is standalone by rule.** It names no company, repository, tracker, model or harness, and it reaches nothing outside itself -- including the vocabulary, which is why `LANGUAGE.md` is read up front rather than pointed at from the place a term is used. Its areas may reference each other, and that is the point: the agentic side names the engineering practice it rests on instead of quietly reinventing it. A statement that can only be justified by one organization's tooling belongs in that organization's docs. A worked example from real delivery is welcome; the rule it illustrates has to generalize.

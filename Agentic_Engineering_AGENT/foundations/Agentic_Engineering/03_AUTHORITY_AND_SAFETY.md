@@ -48,9 +48,11 @@ git diff
 
 git worktree list --porcelain
 
-find . -name AGENTS.md -o -name CLAUDE.md -o -name package.json \
+find . -name AGENTS.md -o -name package.json \
   -o -name pyproject.toml -o -name Cargo.toml -o -name go.mod
 ```
+
+Add whatever instruction filenames the harness in use reads; they differ per harness and a brand-specific name does not belong in the discipline.
 
 Being read-only is a property of the specific command, not of the activity. A command run to *find something out* still answers the preflight questions below before it runs.
 
