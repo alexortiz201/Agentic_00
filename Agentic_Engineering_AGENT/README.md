@@ -23,8 +23,10 @@ Loading everything contradicts this package's own rule about context, so the res
 | 🚀 [`foundations/DevOps/`](foundations/DevOps/README.md) | Sandbox an agent, touch an environment, handle credentials, or ship |
 | 🎓 [`foundations/Coaching/`](foundations/Coaching/README.md) | Teach this work, or run in `coaching` mode |
 | 🔄 [`foundations/Agentic_Engineering/02_WORKFLOW.md`](foundations/Agentic_Engineering/02_WORKFLOW.md) | Run a task through its lifecycle -- states, gates, repair routing |
-| 🔐 [`foundations/Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md`](foundations/Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md) | Discover, touch credentials, isolate work, or do anything needing approval |
-| 🔬 [`foundations/Agentic_Engineering/04_VERIFICATION.md`](foundations/Agentic_Engineering/04_VERIFICATION.md) | Check something, record evidence, or judge whether a failure is real |
+| 🔐 [`foundations/Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md`](foundations/Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md) | Discover within scope, bound what an agent can reach, or do anything needing approval |
+| ⚖️ [`foundations/Software_Engineering/02_TESTING_AND_EVIDENCE.md`](foundations/Software_Engineering/02_TESTING_AND_EVIDENCE.md) | Choose checks, record evidence, or judge whether a failure is real |
+| 🔎 [`foundations/Software_Engineering/03_CODE_REVIEW.md`](foundations/Software_Engineering/03_CODE_REVIEW.md) | Review a change, or decide what a finding obliges |
+| 🔬 [`foundations/Agentic_Engineering/04_VERIFICATION.md`](foundations/Agentic_Engineering/04_VERIFICATION.md) | Judge whether an agent's claim of a check is a check |
 | 🛟 [`foundations/Agentic_Engineering/05_RECOVERY_AND_HANDOFF.md`](foundations/Agentic_Engineering/05_RECOVERY_AND_HANDOFF.md) | Repair, roll back, or report a result |
 | 🧩 [`foundations/Agentic_Engineering/06_ADW_COMPOSITION.md`](foundations/Agentic_Engineering/06_ADW_COMPOSITION.md) | Design or size a workflow |
 | 🎓 [`foundations/Agentic_Engineering/07_COACHING.md`](foundations/Agentic_Engineering/07_COACHING.md) | Work in `coaching` mode -- and only then |

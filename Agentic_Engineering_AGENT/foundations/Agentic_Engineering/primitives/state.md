@@ -33,9 +33,12 @@ Beyond the fields every [record](record.md) carries:
 | `artifacts` | Paths to what has been produced, by kind |
 | `phases_run` | In order, so the path taken is visible |
 | `attempts` | Per retry kind, plus the shared total |
-| `config` | Choices later phases must honour -- model set, engagement mode, operating level |
+| `config` | Choices later phases must honour -- model set, engagement mode, operating level, and the `descent_reason` and `return_condition` that justify a level movement |
+| `total_budget` | The shared cap across all retry kinds |
 
 Keep it closed. If something does not need to survive the process that wrote it, it is not state.
+
+**This table is the authority for the field set.** A task-level run adds fields on top of it -- acceptance criteria, scope, granted authority, retained failures, the next action awaited -- and those are additions, not replacements. Anything showing a state record elsewhere is an example of this shape, not a second definition of it; where the two disagree, this one is right.
 
 ## Rules
 

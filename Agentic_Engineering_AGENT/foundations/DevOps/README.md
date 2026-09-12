@@ -14,8 +14,16 @@ The environment and the path are here. The code is [`Software_Engineering/`](../
 
 Concretely: isolation and sandboxes, environments and the movement of data between them, credential lifecycle, release, deploy, rollback, CI pipelines, and the observability of running systems. A rule about *what a test asserts* is engineering; a rule about *what the machine running it is allowed to reach* is here.
 
+## What is in here
+
+| File | Answers |
+|---|---|
+| 🏝️ [`01_ISOLATION_AND_SANDBOXING.md`](01_ISOLATION_AND_SANDBOXING.md) | What each isolation mechanism actually contains, and what makes a sandbox a tested boundary rather than a label |
+| 🔑 [`02_CREDENTIALS_AND_ENVIRONMENTS.md`](02_CREDENTIALS_AND_ENVIRONMENTS.md) | Secret hygiene, moving data between environments, and acting against an external service |
+| 🚢 [`03_RELEASE_AND_ROLLBACK.md`](03_RELEASE_AND_ROLLBACK.md) | Evidenced reversibility, the rollback ladder, and why merge is not deployment |
+
 ## Topics in scope but not yet written
 
-Named so a reader can tell missing from hidden. If you want one of these, it is not here yet: isolation and sandboxing, credential lifecycle, environments and data movement, release and rollback, CI gating, observability.
+Named so a reader can tell missing from hidden. If you want one of these, it is not here yet: CI gating, and the observability of running systems.
 
-Material for all of these currently sits in [`Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md`](../Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md) and [`05_RECOVERY_AND_HANDOFF.md`](../Agentic_Engineering/05_RECOVERY_AND_HANDOFF.md), and moves here as each topic is worked in depth rather than all at once. A topic earns a file when it is being dug into, not when it is mentioned.
+Material for both currently sits in [`Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md`](../Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md) and [`04_VERIFICATION.md`](../Agentic_Engineering/04_VERIFICATION.md), and moves here as each topic is worked in depth rather than all at once. A topic earns a file when it is being dug into, not when it is mentioned.

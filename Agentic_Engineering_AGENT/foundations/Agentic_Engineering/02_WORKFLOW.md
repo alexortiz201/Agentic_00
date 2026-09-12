@@ -35,19 +35,20 @@ Task state is exactly one of `requested`, `scoped`, `ready`, `building`, `valida
 
 `blocked` and `repairing` are **orthogonal** to that enum, not members of it. A run is always at one of the ten states; it may additionally be blocked or repairing, and when it is, `return_to` names the state responsible for the failure. Keeping them orthogonal is what makes the return address representable: a run blocked while `validating` on a requirement that was never planned returns to `ready`, and a state machine that overwrites `validating` with `blocked` has already lost the information needed to route it.
 
-Persist at least:
+Persist at least the following. **The field set is defined by [state](primitives/state.md); this is an example of that shape, not a second definition of it.** The fields below `config` are task-level additions on top of the blueprint's minimum.
 
 ```json
 {
   "run_id": "task-YYYYMMDD-name",
-  "state": "ready",
+  "task_ref": "bounded outcome",
+  "task_state": "ready",
   "blocked": false,
   "repairing": false,
   "return_to": null,
-  "engagement_mode": "delivery",
-  "operating_level": "L3",
-  "descent_reason": null,
-  "return_condition": null,
+  "workspace": null,
+  "reserved": {},
+  "artifacts": {"plan": null, "evidence": [], "handoff": null},
+  "phases_run": [],
   "attempts": {
     "invocation_retry": 0,
     "output_correction": 0,
@@ -57,11 +58,15 @@ Persist at least:
     "restart": 0
   },
   "total_budget": 2,
-  "task": "bounded outcome",
+  "config": {
+    "engagement_mode": "delivery",
+    "operating_level": "L3",
+    "descent_reason": null,
+    "return_condition": null
+  },
   "acceptance_criteria": [],
   "scope": {"allowed": [], "excluded": []},
   "authority": {"approved": [], "requires_approval": []},
-  "artifacts": {"plan": null, "evidence": [], "handoff": null},
   "failures": [],
   "next_action": "human approves plan"
 }
@@ -69,7 +74,7 @@ Persist at least:
 
 Record operating-level movement as it happens, not at the end: on descent write `descent_reason` (what evidence was too weak) and `return_condition` (the concrete check that would justify returning); on return, record which check satisfied it. A return with no satisfied `return_condition` is a level claim without evidence.
 
-This example is the minimum shape, not the whole record. Keep one state record per run, in a location authorized for artifact writes, without overwriting another run's. Update state after each step and before yielding; retain failure evidence. Write a temporary file then rename within the same directory where practical. Never store secrets.
+Keep one state record per run, in a location authorized for artifact writes, without overwriting another run's. Update state after each step and before yielding, and retain failure evidence. The durability rules -- validate on write and on read, reject unknown fields loudly, write-then-rename, store it outside the disposable workspace, no secrets -- belong to [state](primitives/state.md) and [record](primitives/record.md) and are not restated here.
 
 Normal transitions follow `requested -> scoped -> ready -> building -> validating -> reviewing -> documenting -> acceptance_pending -> accepted -> authorized_handoff`. Tiny edits may skip `ready`; read-only answers stop after `scoped`. `accepted -> authorized_handoff` requires a separate explicit human authorization naming the action and scope; a run may legitimately terminate at `accepted`.
 

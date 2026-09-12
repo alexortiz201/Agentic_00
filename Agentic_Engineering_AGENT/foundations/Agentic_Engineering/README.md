@@ -12,11 +12,11 @@ Everything here is standalone in the sense the [`foundations/` index](../README.
 |---|---|
 | 🧭 [`01_PRINCIPLES.md`](01_PRINCIPLES.md) | How to decide -- evidence ranking, control labels, repair over performed success |
 | 🔄 [`02_WORKFLOW.md`](02_WORKFLOW.md) | The task lifecycle, its states, and which gate guards each transition |
-| 🔐 [`03_AUTHORITY_AND_SAFETY.md`](03_AUTHORITY_AND_SAFETY.md) | What may be done without asking, what may not, and what isolation actually isolates |
-| 🔬 [`04_VERIFICATION.md`](04_VERIFICATION.md) | What counts as a check, how checks are ordered, and when a failure blocks |
-| 🛟 [`05_RECOVERY_AND_HANDOFF.md`](05_RECOVERY_AND_HANDOFF.md) | Bounded repair, rollback ordering, and reporting a result truthfully |
+| 🔐 [`03_AUTHORITY_AND_SAFETY.md`](03_AUTHORITY_AND_SAFETY.md) | What may be done without asking, what may not, and what an allowlisted agent can still reach |
+| 🔬 [`04_VERIFICATION.md`](04_VERIFICATION.md) | Whether a claimed check is a check -- provenance, gates that found no subject, and the reviewer that is itself an agent |
+| 🛟 [`05_RECOVERY_AND_HANDOFF.md`](05_RECOVERY_AND_HANDOFF.md) | Bounded repair, resumable runs, and reporting a result truthfully |
 | 🧩 [`06_ADW_COMPOSITION.md`](06_ADW_COMPOSITION.md) | Primitives, how they compose into workflows, and the control-plane failures a composition must survive |
-| 🎓 [`07_COACHING.md`](07_COACHING.md) | How the coaching mode is actually run -- the loop, the questions, mastery from evidence |
+| 🎓 [`07_COACHING.md`](07_COACHING.md) | What to teach about this discipline -- the questions, the distinctions worth forcing, the practice ladder |
 | 🧱 [`primitives/`](primitives/README.md) | Blueprints -- what each primitive must contain when you create one |
 
 ## The ideas the rest of it rests on

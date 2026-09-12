@@ -12,8 +12,11 @@ The *subject* being taught does not live here. A curriculum of agentic concepts 
 
 **No person is named here.** Like the rest of `foundations/`, this area is standalone -- it describes how to coach, not who is being coached. A specific engineer's history, level and next exercise are run-local notes, not discipline.
 
-## Topics in scope but not yet written
+## What is in here
 
-The session loop, the question-first method, the mastery rubric, and what persists from a session currently live in [`Agentic_Engineering/07_COACHING.md`](../Agentic_Engineering/07_COACHING.md) and move here as they are worked. That file mixes the method with the agentic syllabus, and the split follows that seam.
+| File | Answers |
+|---|---|
+| 🔁 [`01_THE_SESSION_LOOP.md`](01_THE_SESSION_LOOP.md) | The six steps a session runs, why their order is the instrument, and why a question beats an answer |
+| 🏅 [`02_MASTERY.md`](02_MASTERY.md) | How a named capability is scored from evidence, and what a session has to leave behind |
 
-One thing to resolve when it moves: the loop's first step says **choose level**, and the file never says whether that means the `L1`-`L5` operating level or the difficulty of the exercise. Whichever it is, say so.
+The subject taught under this method, for agentic work, is the curriculum in [`Agentic_Engineering/07_COACHING.md`](../Agentic_Engineering/07_COACHING.md) -- the questions, the distinctions worth forcing, and the ladder of practice.

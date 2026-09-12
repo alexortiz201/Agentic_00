@@ -85,7 +85,7 @@ Four vocabularies, deliberately disjoint:
 - Compare all expected checks against actual records. Reject missing, duplicate, unknown, malformed, empty or contradictory results; zero failures alone is not success.
 - Retain timestamp, argv/cwd, timeout, exit, scope, measured duration or null, revision, diff base, changed-file count, diff identity and non-sensitive evidence references.
 - **A gate whose subject is a change MUST record its observed workspace, `diff_base` and `changed_file_count`, and MUST decide `blocked` when `changed_file_count == 0`. It may never decide `pass` on an empty diff.** The gate reports what it observed rather than what it expected; a count of zero is evidence the gate never found its subject, not an observation that the subject is clean.
-- Verify review criteria coverage and `disposition` consistency, not merely `success: true`. A record whose `severity` and `disposition` disagree with the table in [04_VERIFICATION.md](04_VERIFICATION.md) is malformed.
+- Verify review criteria coverage and `disposition` consistency, not merely `success: true`. A record whose `severity` and `disposition` disagree with the table in [`Software_Engineering/03_CODE_REVIEW.md`](../Software_Engineering/03_CODE_REVIEW.md) is malformed.
 - If a human waives a failure, independently record approver, approval reference/time, exact failure and evidence, allowed scope, consequences and validity limit. Only that human decision can unblock it; original failed results stay failed. Destructive next actions need their own explicit approval.
 
 #### A gate must bind to a non-empty diff, and prove which one it read

@@ -56,14 +56,7 @@ Keep a per-run copy of the run-state record and the handoff record. Before resum
 
 ## Rollback
 
-**Reversibility is an evidenced property, not an implied one.** Version control does not make a change reversible, and neither does using a write tool rather than a shell. An overwrite can reach untracked files, secrets, generated state, external systems and committed history -- none of which a commit restores. Prove the rollback path before relying on it; an untested one is a plan, not a recovery.
-
-Plan rollback before high-risk changes. Prefer reversible edits and additive migrations. Preserve unrelated work. In order:
-
-1. regenerate artifacts from their source;
-2. revert only agent-owned changes;
-3. use a tested application/database rollback;
-4. ask a human to choose among destructive alternatives.
+A run states its rollback path as part of its handoff, and the path itself -- evidenced reversibility, the ordered ladder, and the authority each shipping effect requires -- is in [`DevOps/03_RELEASE_AND_ROLLBACK.md`](../DevOps/03_RELEASE_AND_ROLLBACK.md).
 
 ## Permission and isolation failures
 
