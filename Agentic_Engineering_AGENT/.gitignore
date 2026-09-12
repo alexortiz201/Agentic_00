@@ -1,0 +1,5 @@
+# Local working memory for operating this package. Never committed.
+# Both spellings are ignored so a folder created under either name cannot leak.
+.memory/
+memory/
+*.memory.md
