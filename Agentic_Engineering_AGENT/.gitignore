@@ -1,5 +1,8 @@
-# Local working memory for operating this package. Never committed.
-# Both spellings are ignored so a folder created under either name cannot leak.
+# Three local folders, never committed. Each manages a different unique circumstance;
+# see the README's "Local folders" section for which is which.
+# Both spellings of memory are ignored so a folder created under either name cannot leak.
 .memory/
 memory/
 *.memory.md
+.profile/
+.workspace/

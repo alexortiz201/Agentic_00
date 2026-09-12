@@ -1,8 +1,20 @@
-# 🗒️ Local memory
+# 🗒️ Local folders
 
-A `.memory/` folder at the package root is **the agent's scratchpad**. It is never committed: the root `.gitignore` covers `.memory/`, `memory/` and `*.memory.md`.
+Three folders at the package root, none of them committed. **Create any of them if it is absent** -- no permission is needed: they are local, ignored and additive.
 
-**Create it if it is absent.** No permission is needed: it is local, ignored and additive. Because it is never shared, the *conventions* for it live here, in a committed file, rather than inside it.
+| | Holds | Lives as long as |
+|---|---|---|
+| `.memory/` | What is worth carrying to the next session | Until acted on or stale |
+| `.profile/` | Who is operating this package -- preferences, growth direction | As long as that person does |
+| `.workspace/` | Scratch for the run in progress | The run |
+
+`.profile/` is what keeps `foundations/` standalone: anything true of one person goes there rather than into doctrine. `.workspace/` is distinguished from `.memory/` by one question -- would a fresh session want to read this? Yes means `.memory/`, no means `.workspace/`. The rest of this file is about `.memory/`, which has the most structure.
+
+## `.memory/`
+
+It is **the agent's scratchpad**. It is never committed: the root `.gitignore` covers `.memory/`, `memory/` and `*.memory.md`.
+
+Because it is never shared, the *conventions* for it live here, in a committed file, rather than inside it.
 
 ## How it is organised
 
