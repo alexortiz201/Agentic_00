@@ -1,4 +1,4 @@
-# Claude Code Bootstrap
+# 🤖 Claude Code Bootstrap
 
 Read and follow [`AGENTS.md`](AGENTS.md), then follow the boot order in [`README.md`](README.md).
 

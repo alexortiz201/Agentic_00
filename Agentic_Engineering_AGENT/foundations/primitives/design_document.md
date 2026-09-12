@@ -1,4 +1,4 @@
-# Design document
+# 📐 Design document
 
 Why the system is shaped the way it is. **It outlives every run**, which is what separates it from a spec.
 

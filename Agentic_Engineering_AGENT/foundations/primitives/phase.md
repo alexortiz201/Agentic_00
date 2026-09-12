@@ -1,4 +1,4 @@
-# Phase
+# 🪜 Phase
 
 One step of a workflow, **as code**. It owns sequencing, state and gates; the agents it invokes own judgment. A phase that only forwards a prompt is a command with extra steps.
 

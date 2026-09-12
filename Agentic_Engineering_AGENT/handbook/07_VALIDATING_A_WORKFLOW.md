@@ -1,4 +1,4 @@
-# Validating a workflow
+# 🧪 Validating a workflow
 
 How to check that a workflow does what it claims -- before trusting it, and before letting anything start it automatically. **Read-only by default.** Executing fixtures or walking a real task mutates state; that is a separate decision, and say when you cross the line.
 

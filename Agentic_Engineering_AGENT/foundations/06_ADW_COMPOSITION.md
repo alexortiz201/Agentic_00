@@ -1,4 +1,4 @@
-# Compose AI Developer Workflows
+# 🧩 Compose AI Developer Workflows
 
 An **ADW (AI Developer Workflow)** is executable orchestration combining deterministic code with bounded agent judgment to deliver a defined outcome. A prompt is an instruction; a phase is a contracted unit of work; an ADW can contain one or several phases; a composition reuses those phases or proven ADWs. A skill makes the workflow discoverable and operable--it is not the controller.
 

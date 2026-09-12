@@ -1,4 +1,4 @@
-# Hook
+# 🪝 Hook
 
 Code that runs at a lifecycle event. Most **observe**. A few can **block**. Confusing the two is how a logging layer gets described as a security boundary.
 

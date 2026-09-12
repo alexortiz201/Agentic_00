@@ -1,4 +1,4 @@
-# Record
+# 🧾 Record
 
 Any durable artifact a run writes for something else to read -- state, a phase result, a gate decision, a handoff. The rules here apply to all of them; each primitive states its own fields.
 

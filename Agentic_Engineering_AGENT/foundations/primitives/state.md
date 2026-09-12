@@ -1,4 +1,4 @@
-# State
+# 💾 State
 
 What a run persists so it can be resumed, inspected, or handed to another phase. **The handoff mechanism** -- phases do not pass data to each other, they pass an identifier and re-read state.
 

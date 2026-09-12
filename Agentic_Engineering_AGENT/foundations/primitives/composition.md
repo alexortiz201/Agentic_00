@@ -1,4 +1,4 @@
-# Composition
+# 🔗 Composition
 
 Phases in sequence. It owns exactly three things: **identity, order, and failure policy.** Nothing else -- if it reaches into a phase, the boundary is wrong.
 

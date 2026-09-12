@@ -1,4 +1,4 @@
-# Primitives
+# 🧱 Primitives
 
 Blueprints. Each file answers one question: **what must this thing contain when I create one?**
 
@@ -6,18 +6,18 @@ They are requirements, not tutorials -- the reasoning lives in the rest of `foun
 
 | Primitive | Is |
 |---|---|
-| [`command.md`](command.md) | A named, reusable prompt with a declared output contract |
-| [`spec.md`](spec.md) | The detail a command is deliberately missing -- one task, machine-generated |
-| [`phase.md`](phase.md) | One step of a workflow, as code that invokes agents |
-| [`composition.md`](composition.md) | Phases in sequence, with a failure policy |
-| [`module.md`](module.md) | Shared code a phase depends on |
-| [`record.md`](record.md) | What every durable artifact carries, and how versioning works |
-| [`gate.md`](gate.md) | An independent check on whether a transition may happen |
-| [`state.md`](state.md) | What a run persists so it can be resumed or handed off |
-| [`trigger.md`](trigger.md) | How a run starts without a person |
-| [`hook.md`](hook.md) | Code that observes or blocks at a lifecycle event |
-| [`pinned_reference.md`](pinned_reference.md) | External documentation frozen in the repository |
-| [`design_document.md`](design_document.md) | Why the system is shaped this way -- outlives any run |
+| ⌨️ [`command.md`](command.md) | A named, reusable prompt with a declared output contract |
+| 📋 [`spec.md`](spec.md) | The detail a command is deliberately missing -- one task, machine-generated |
+| 🪜 [`phase.md`](phase.md) | One step of a workflow, as code that invokes agents |
+| 🔗 [`composition.md`](composition.md) | Phases in sequence, with a failure policy |
+| 📦 [`module.md`](module.md) | Shared code a phase depends on |
+| 🧾 [`record.md`](record.md) | What every durable artifact carries, and how versioning works |
+| 🚦 [`gate.md`](gate.md) | An independent check on whether a transition may happen |
+| 💾 [`state.md`](state.md) | What a run persists so it can be resumed or handed off |
+| ⚡ [`trigger.md`](trigger.md) | How a run starts without a person |
+| 🪝 [`hook.md`](hook.md) | Code that observes or blocks at a lifecycle event |
+| 📌 [`pinned_reference.md`](pinned_reference.md) | External documentation frozen in the repository |
+| 📐 [`design_document.md`](design_document.md) | Why the system is shaped this way -- outlives any run |
 
 ## Prove it at the consuming interface
 

@@ -1,4 +1,4 @@
-# Local memory
+# 🗒️ Local memory
 
 A `.memory/` folder at the package root holds working notes about **the environment this package is being used in**. It is never committed -- the root `.gitignore` covers `.memory/`, `memory/` and `*.memory.md`, and `.memory/.gitignore` ignores everything including itself.
 

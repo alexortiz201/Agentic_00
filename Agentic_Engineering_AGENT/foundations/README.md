@@ -1,4 +1,4 @@
-# Foundations -- what Agentic Engineering is
+# 🏛️ Foundations -- what Agentic Engineering is
 
 This folder holds the **discipline**, not its application. Everything here is standalone: it describes how to run a bounded, observable, repairable software-delivery loop with agents, and it does so without naming a company, a repository, a tracker, a model or a harness.
 
@@ -10,15 +10,15 @@ That constraint is the point. Anything that touches a specific project, toolkit 
 
 | File | Answers |
 |---|---|
-| [`LANGUAGE.md`](LANGUAGE.md) | What each term *means*, and exactly how it is spelled in a record |
-| [`01_PRINCIPLES.md`](01_PRINCIPLES.md) | How to decide -- evidence ranking, control labels, repair over performed success |
-| [`02_WORKFLOW.md`](02_WORKFLOW.md) | The task lifecycle, its states, and which gate guards each transition |
-| [`03_AUTHORITY_AND_SAFETY.md`](03_AUTHORITY_AND_SAFETY.md) | What may be done without asking, what may not, and what isolation actually isolates |
-| [`04_VERIFICATION.md`](04_VERIFICATION.md) | What counts as a check, how checks are ordered, and when a failure blocks |
-| [`05_RECOVERY_AND_HANDOFF.md`](05_RECOVERY_AND_HANDOFF.md) | Bounded repair, rollback ordering, and reporting a result truthfully |
-| [`06_ADW_COMPOSITION.md`](06_ADW_COMPOSITION.md) | Primitives, how they compose into workflows, and the control-plane failures a composition must survive |
-| [`07_COACHING.md`](07_COACHING.md) | How the coaching mode is actually run -- the loop, the questions, mastery from evidence |
-| [`primitives/`](primitives/README.md) | Blueprints -- what each primitive must contain when you create one |
+| 🔤 [`LANGUAGE.md`](LANGUAGE.md) | What each term *means*, and exactly how it is spelled in a record |
+| 🧭 [`01_PRINCIPLES.md`](01_PRINCIPLES.md) | How to decide -- evidence ranking, control labels, repair over performed success |
+| 🔄 [`02_WORKFLOW.md`](02_WORKFLOW.md) | The task lifecycle, its states, and which gate guards each transition |
+| 🔐 [`03_AUTHORITY_AND_SAFETY.md`](03_AUTHORITY_AND_SAFETY.md) | What may be done without asking, what may not, and what isolation actually isolates |
+| 🔬 [`04_VERIFICATION.md`](04_VERIFICATION.md) | What counts as a check, how checks are ordered, and when a failure blocks |
+| 🛟 [`05_RECOVERY_AND_HANDOFF.md`](05_RECOVERY_AND_HANDOFF.md) | Bounded repair, rollback ordering, and reporting a result truthfully |
+| 🧩 [`06_ADW_COMPOSITION.md`](06_ADW_COMPOSITION.md) | Primitives, how they compose into workflows, and the control-plane failures a composition must survive |
+| 🎓 [`07_COACHING.md`](07_COACHING.md) | How the coaching mode is actually run -- the loop, the questions, mastery from evidence |
+| 🧱 [`primitives/`](primitives/README.md) | Blueprints -- what each primitive must contain when you create one |
 
 **Read `LANGUAGE.md` first.** The other files assume its vocabulary, and most contradictions between documents turn out to be two spellings of one idea rather than two ideas.
 

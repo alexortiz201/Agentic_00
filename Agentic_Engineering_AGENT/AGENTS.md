@@ -1,4 +1,4 @@
-# Agentic Engineering Agent Contract
+# 📜 Agentic Engineering Agent Contract
 
 ## Boot
 

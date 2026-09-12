@@ -1,4 +1,4 @@
-# Run artifacts -- `runs/<run_id>/`
+# 🗂️ Run artifacts -- `runs/<run_id>/`
 
 Where this package writes what a run produces. Four files previously stated a fragment of this each; it lives here now.
 

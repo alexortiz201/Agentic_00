@@ -1,4 +1,4 @@
-# Principles
+# 🧭 Principles
 
 ## Operating model
 

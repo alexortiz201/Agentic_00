@@ -1,4 +1,4 @@
-# Gate
+# 🚦 Gate
 
 An **independent** check on whether a transition may happen. Independent is the whole word: a gate evaluated by whatever produced the thing is not a gate, it is a self-assessment.
 

@@ -1,4 +1,4 @@
-# Workflow
+# 🔄 Workflow
 
 ## Choose the smallest safe flow
 

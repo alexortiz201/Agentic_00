@@ -1,4 +1,4 @@
-# Building an ADW
+# 🛠️ Building an ADW
 
 The process. Blueprints for each piece are in [`foundations/primitives/`](../foundations/primitives/README.md).
 

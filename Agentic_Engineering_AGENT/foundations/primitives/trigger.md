@@ -1,4 +1,4 @@
-# Trigger
+# ⚡ Trigger
 
 How a run starts without a person. It selects work, **claims it**, and dispatches -- and the claim is the part that is usually wrong.
 

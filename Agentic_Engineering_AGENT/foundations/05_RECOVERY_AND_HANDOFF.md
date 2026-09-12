@@ -1,4 +1,4 @@
-# Recovery and Handoff
+# 🛟 Recovery and Handoff
 
 ## Record failures
 

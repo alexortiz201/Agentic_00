@@ -1,4 +1,4 @@
-# Module
+# 📦 Module
 
 Shared code a phase depends on. **Earning a place here is the whole question** -- most things that feel shared are not.
 

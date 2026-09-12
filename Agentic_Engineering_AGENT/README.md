@@ -1,21 +1,21 @@
-# Agentic Engineering Agent
+# 📖 Agentic Engineering Agent
 
 A self-contained package for bounded, observable, and repairable software delivery.
 
 ## Boot order
 
-1. [`AGENTS.md`](AGENTS.md) -- the operating contract. What you may do, and what needs asking.
-2. [`foundations/README.md`](foundations/README.md) -- what Agentic Engineering is, and the rule that keeps this folder portable.
-3. [`foundations/LANGUAGE.md`](foundations/LANGUAGE.md) -- canonical vocabulary. **Read before the rest**; most apparent contradictions turn out to be two spellings of one idea.
-4. [`foundations/01_PRINCIPLES.md`](foundations/01_PRINCIPLES.md) -- the two layers, the leverage points, evidence, and how to decide.
-5. [`foundations/02_WORKFLOW.md`](foundations/02_WORKFLOW.md) -- lifecycle, states, gates.
-6. [`foundations/03_AUTHORITY_AND_SAFETY.md`](foundations/03_AUTHORITY_AND_SAFETY.md) -- capability, credentials, isolation, what is never granted.
-7. [`foundations/04_VERIFICATION.md`](foundations/04_VERIFICATION.md) -- what counts as evidence.
-8. [`foundations/05_RECOVERY_AND_HANDOFF.md`](foundations/05_RECOVERY_AND_HANDOFF.md) -- repair, rollback, reporting truthfully.
-9. [`foundations/06_ADW_COMPOSITION.md`](foundations/06_ADW_COMPOSITION.md) -- how workflows are built and sized.
-10. [`foundations/07_COACHING.md`](foundations/07_COACHING.md) -- only in coaching mode.
-11. [`foundations/primitives/`](foundations/primitives/README.md) -- **what each primitive must contain when you create one.** Load the one you need, not all of them.
-12. [`RUNBOOK.md`](RUNBOOK.md) -- the execution checklist for a task.
+1. 📜 [`AGENTS.md`](AGENTS.md) -- the operating contract. What you may do, and what needs asking.
+2. 🏛️ [`foundations/README.md`](foundations/README.md) -- what Agentic Engineering is, and the rule that keeps this folder portable.
+3. 🔤 [`foundations/LANGUAGE.md`](foundations/LANGUAGE.md) -- canonical vocabulary. **Read before the rest**; most apparent contradictions turn out to be two spellings of one idea.
+4. 🧭 [`foundations/01_PRINCIPLES.md`](foundations/01_PRINCIPLES.md) -- the two layers, the leverage points, evidence, and how to decide.
+5. 🔄 [`foundations/02_WORKFLOW.md`](foundations/02_WORKFLOW.md) -- lifecycle, states, gates.
+6. 🔐 [`foundations/03_AUTHORITY_AND_SAFETY.md`](foundations/03_AUTHORITY_AND_SAFETY.md) -- capability, credentials, isolation, what is never granted.
+7. 🔬 [`foundations/04_VERIFICATION.md`](foundations/04_VERIFICATION.md) -- what counts as evidence.
+8. 🛟 [`foundations/05_RECOVERY_AND_HANDOFF.md`](foundations/05_RECOVERY_AND_HANDOFF.md) -- repair, rollback, reporting truthfully.
+9. 🧩 [`foundations/06_ADW_COMPOSITION.md`](foundations/06_ADW_COMPOSITION.md) -- how workflows are built and sized.
+10. 🎓 [`foundations/07_COACHING.md`](foundations/07_COACHING.md) -- only in coaching mode.
+11. 🧱 [`foundations/primitives/`](foundations/primitives/README.md) -- **what each primitive must contain when you create one.** Load the one you need, not all of them.
+12. 🏃 [`RUNBOOK.md`](RUNBOOK.md) -- the execution checklist for a task.
 
 Load 1-4 always. Beyond that, load what the task needs -- loading everything contradicts this package's own rule about context.
 
@@ -31,11 +31,11 @@ Run artifacts are described in [`handbook/02_RUN_ARTIFACTS.md`](handbook/02_RUN_
 
 | Need | Load next |
 |---|---|
-| Understand what a primitive is / what one must contain | [`foundations/primitives/`](foundations/primitives/README.md) |
-| Build a workflow end to end | [`handbook/06_BUILDING_AN_ADW.md`](handbook/06_BUILDING_AN_ADW.md) |
-| Know where things go in a target project | [`handbook/05_AGENTIC_LAYER_LAYOUT.md`](handbook/05_AGENTIC_LAYER_LAYOUT.md) |
-| Settle a term | [`foundations/LANGUAGE.md`](foundations/LANGUAGE.md) |
-| Check the package is not structurally broken | [`handbook/03_STRUCTURAL_CHECK.md`](handbook/03_STRUCTURAL_CHECK.md) |
+| Understand what a primitive is / what one must contain | 🧱 [`foundations/primitives/`](foundations/primitives/README.md) |
+| Build a workflow end to end | 🛠️ [`handbook/06_BUILDING_AN_ADW.md`](handbook/06_BUILDING_AN_ADW.md) |
+| Know where things go in a target project | 🏗️ [`handbook/05_AGENTIC_LAYER_LAYOUT.md`](handbook/05_AGENTIC_LAYER_LAYOUT.md) |
+| Settle a term | 🔤 [`foundations/LANGUAGE.md`](foundations/LANGUAGE.md) |
+| Check the package is not structurally broken | 🩺 [`handbook/03_STRUCTURAL_CHECK.md`](handbook/03_STRUCTURAL_CHECK.md) |
 
 This package **describes** how workflows are constructed and where they go. It does not ship workflows, generate code, or execute anything. Generated output belongs to the target project.
 
@@ -45,9 +45,9 @@ The package separates the **discipline** from the **toolkit** that applies it, b
 
 | | Holds | Changes when |
 |---|---|---|
-| [`foundations/`](foundations/README.md) | What Agentic Engineering *is* -- vocabulary, principles, lifecycle, authority, verification, recovery, composition | A lesson proves true **anywhere**, not just here |
+| 🏛️ [`foundations/`](foundations/README.md) | What Agentic Engineering *is* -- vocabulary, principles, lifecycle, authority, verification, recovery, composition | A lesson proves true **anywhere**, not just here |
 | `commands/`, `prompts/`, `skills/`, `templates/`, `hooks/` | The toolkit -- recipes, prompt bodies, record shapes, contracts | A practice or artifact shape improves |
-| [`handbook/`](handbook/README.md) | How this package is operated -- conventions, naming, what may be created | A convention changes |
+| 📓 [`handbook/`](handbook/README.md) | How this package is operated -- conventions, naming, what may be created | A convention changes |
 | `.memory/` | Local notes and staged artifacts. Never committed | Freely; see [`handbook/01_LOCAL_MEMORY.md`](handbook/01_LOCAL_MEMORY.md) |
 
 **`foundations/` is standalone by rule.** It names no company, repository, tracker, model or harness. A statement that can only be justified by one organization's tooling belongs in that organization's docs. A worked example from real delivery is welcome; the rule it illustrates has to generalize.

@@ -1,4 +1,4 @@
-# Authority and Safety
+# 🔐 Authority and Safety
 
 ## Default envelope
 

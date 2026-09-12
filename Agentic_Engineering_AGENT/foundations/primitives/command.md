@@ -1,4 +1,4 @@
-# Command
+# ⌨️ Command
 
 A named, reusable prompt invoked by name and composed by workflows. **Short by default** -- the detail belongs in a spec, not here.
 

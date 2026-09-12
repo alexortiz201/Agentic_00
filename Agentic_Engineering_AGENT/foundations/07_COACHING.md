@@ -1,4 +1,4 @@
-# Coaching
+# 🎓 Coaching
 
 Coaching is one of the engagement modes. It develops an engineer's judgment; it does not relax any rule. Everything produced under it is subject to the same authority, gates and evidence discipline as delivery. What changes is **who decides and who explains**, not what is permitted.
 

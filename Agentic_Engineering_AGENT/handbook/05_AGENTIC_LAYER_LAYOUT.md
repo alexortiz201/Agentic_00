@@ -1,4 +1,4 @@
-# Agentic layer layout
+# 🏗️ Agentic layer layout
 
 Where the primitives go in a target project. [`foundations/primitives/`](../foundations/primitives/README.md) says what each must contain; this says where we put them. A project that already has a convention keeps it -- **record the mapping instead of imposing this one.**
 

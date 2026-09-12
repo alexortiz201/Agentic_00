@@ -1,4 +1,4 @@
-# Language
+# 🔤 Language
 
 The vocabulary of Agentic Engineering. Every term here is **canonical**: the value written into a record is the value named here, spelled exactly as shown.
 

@@ -1,4 +1,4 @@
-# Structural check
+# 🩺 Structural check
 
 The one executable check this package has. Read-only: parses every JSON template and asserts every internal Markdown link resolves inside the folder. Run it from the package root after any move, rename or split -- that is exactly when links break silently.
 

@@ -1,4 +1,4 @@
-# Pinned reference
+# 📌 Pinned reference
 
 External documentation frozen inside the repository, so a workflow can cite it deterministically.
 
