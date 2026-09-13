@@ -26,7 +26,8 @@ Terms used throughout and defined nowhere else. They are names, not enums -- not
 | `blueprint` | The document stating what a primitive must contain when one is created. It is a requirement list, not a schema: it validates nothing |
 | `software factory` | The composed set of workflows, with the code and agents that run them, for one subject. Its purpose is leverage on a prompt. Distinct from the autonomy rung, which says how much of it has earned the right to run unattended |
 | `workgroup` | A set of components worked on together and often run together, and the directory that holds them. Members may be repositories, services, external APIs or scripts. Distinct from `workspace`, which is the single checkout one run operates in |
-| `clean_up_hook` | The observing hook that fires when a todo item enters the closed state, reconciling every local store against what is now true. It updates, cleans and deletes; it never authors a new claim |
+| `clean_up_hook` | The observing hook that fires at a declared stopping point -- a completion, or a session ending -- reconciling every local store against what is now true. It updates, cleans and deletes; it never authors a new claim |
+| `tear_down_hook` | The hook that releases what a run started -- processes, sessions, containers, fixtures, worktrees. It captures evidence into the records first and then releases unconditionally, and it releases only what the run's own action log says it started |
 
 ## Actors -- who performs a step
 
