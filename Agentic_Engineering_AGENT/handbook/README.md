@@ -43,6 +43,7 @@ The worked example, because it is the most common arrival and every other kind o
 | 🛠️ [`06_BUILDING_AN_ADW.md`](06_BUILDING_AN_ADW.md) | Building a workflow, start to finish |
 | 🧪 [`07_VALIDATING_A_WORKFLOW.md`](07_VALIDATING_A_WORKFLOW.md) | Checking a workflow does what it claims, before trusting it |
 | 📋 [`08_GATE_ENFORCEMENT_CENSUS.md`](08_GATE_ENFORCEMENT_CENSUS.md) | Counting what actually holds each gate shut, so enforcement can be watched over time |
+| 🚪 [`09_ADOPTING_A_REPOSITORY.md`](09_ADOPTING_A_REPOSITORY.md) | Arriving somewhere new: observe, scaffold, wrangle, replace, factory — and where to stop |
 
 ## The split with `foundations/`
 
