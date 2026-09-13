@@ -69,7 +69,14 @@ A generated workflow running out of a target project keeps its own run state und
 
 ## `clean_up_hook`
 
-**Event: a todo item entering the closed state.** Not the end of the run, and not a periodic tidy. The transition is the trigger, so the sweep happens while the person or agent that made the change still knows what it touched.
+**Event: a declared stopping point.** The transition is the trigger, so the sweep happens while whoever caused it still knows what it touched. The trigger list is **open by design** -- an adopter names the scenarios that apply to their work, and each one is an entry rather than an exception.
+
+Two families, and they sweep differently:
+
+- **Completion** -- a todo item, a pull request or a tracker item entering a closed state. The question is *what did finishing this make stale?* Records that existed only to track the thing are now wrong or pointless, and retiring them is the work.
+- **Discontinuity** -- the session ending, work being set down to resume later. The question is different: *what would mislead someone who reads this cold?* Nothing is finished, so deletion is usually wrong; the work is recording where things actually stopped -- what is half-done, what is still running, what was about to happen next.
+
+Getting these the wrong way round is the failure to avoid. Sweeping a discontinuity as though it were a completion deletes in-flight state that nothing else records. Sweeping a completion as though it were a discontinuity leaves a finished thing described as pending, which is the stale-record defect this exists to prevent.
 
 It is an [observing hook](../foundations/Agentic_Engineering/primitives/hook.md) and follows that primitive: it never raises, and a failure inside it must not take the run with it. It guards nothing and blocks nothing -- by the time it fires, the work is already done.
 
@@ -109,7 +116,9 @@ The cost is paid on read rather than on write, which is what makes the interrupt
 
 Work tied to a tracker item gets **its own file, addressed by the ticket**: `.workgroup/<member>/PRs/<TICKET>.md`.
 
-The ticket identifier is the filename rather than the pull-request number, because the ticket is the stable identity -- one ticket may open several pull requests, a closed one may be reopened, and a ticket often exists before any PR does. The PR number is a field inside the file.
+The ticket identifier is the filename rather than the pull-request number, because the ticket is the stable identity -- one ticket may open several pull requests, a closed one may be reopened, and a ticket often exists before any PR does. Every PR is a row inside the file, each with the state it was last observed in.
+
+**These sit at the workgroup level rather than under a member.** A ticket can span several members, and filing it under one forces a wrong choice the first time work touches two -- and hides it from whoever opens the other. The file names the members it touches; a member's own folder stays for facts about that component.
 
 This is what makes `clean_up_hook` able to do its job. State buried inside one long running document cannot be retired by ticket, because nothing can find the boundary of what a given closure made obsolete. **A per-ticket file has an obvious end state: the ticket closes, the file is reconciled against the tracker and then removed.**
 
