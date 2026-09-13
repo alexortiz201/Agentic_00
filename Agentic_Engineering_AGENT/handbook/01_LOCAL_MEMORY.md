@@ -6,9 +6,9 @@ Three folders at the package root, none of them committed. **Create any of them 
 |---|---|---|
 | `.memory/` | What is worth carrying to the next session | Until acted on or stale |
 | `.profile/` | Who is operating this package -- preferences, growth direction | As long as that person does |
-| `.workspace/` | Scratch for the run in progress | The run |
+| `.workgroup/` | A folder per workgroup this discipline is applied to, plus run scratch | The workgroup, and the run |
 
-`.profile/` is what keeps `foundations/` standalone: anything true of one person goes there rather than into doctrine. `.workspace/` is distinguished from `.memory/` by one question -- would a fresh session want to read this? Yes means `.memory/`, no means `.workspace/`. The rest of this file is about `.memory/`, which has the most structure.
+`.profile/` is what keeps `foundations/` standalone: anything true of one person goes there rather than into doctrine. `.workgroup/` is distinguished from `.memory/` by subject -- `.memory/` is about this package, a folder in `.workgroup/` is about something this package is applied to, and loose scratch at its root belongs to neither and is cleared when the run ends. The rest of this file is about `.memory/`, which has the most structure.
 
 ## `.memory/`
 

@@ -63,7 +63,7 @@ The package separates the vocabulary, the discipline, and the conventions for op
 | 🤖 [`foundations/Agentic_Engineering/`](foundations/Agentic_Engineering/README.md) | What changes when agents and code perform the phases -- principles, lifecycle, authority, verification, recovery, composition, gates | A lesson proves true **anywhere**, not just here |
 | 📓 [`handbook/`](handbook/README.md) | What to **do** -- start here with a ticket in hand; it routes into the discipline | A procedure changes |
 | 🔀 [`harnesses/`](harnesses/README.md) | What each harness actually does, against the capability surface | Those products change, which is often |
-| `.memory/` `.profile/` `.workspace/` | Local folders, never committed. See **Local folders** below | Freely |
+| `.memory/` `.profile/` `.workgroup/` | Local folders, never committed. See **Local folders** below | Freely |
 
 **`foundations/` is standalone by rule.** It names no company, repository, tracker, model or harness, and it reaches nothing outside itself -- including the vocabulary, which is why `LANGUAGE.md` is read up front rather than pointed at from the place a term is used. Its areas may reference each other, and that is the point: the agentic side names the engineering practice it rests on instead of quietly reinventing it. A statement that can only be justified by one organization's tooling belongs in that organization's docs. A worked example from real delivery is welcome; the rule it illustrates has to generalize.
 
@@ -77,9 +77,9 @@ Three folders, none committed, each managing a circumstance the committed packag
 |---|---|---|
 | `.memory/` | What is worth carrying to the **next** session -- notes, proposals, the cold-start picture, and `todo_list.md` for the run in progress | Until it is acted on or goes stale |
 | `.profile/` | **Who is operating this package** -- their preferences, and where they are going | As long as that person does |
-| `.workspace/` | Scratch for the run in progress -- drafts, fragments mid-move, output being compared | The run |
+| `.workgroup/` | A folder per [`workgroup`](LANGUAGE.md) this discipline is applied to, plus scratch for the run in progress | The workgroup, and the run |
 
-The line between `.memory/` and `.workspace/` is whether a fresh session would want to read it. Yes means `.memory/`; no means `.workspace/`.
+The line between `.memory/` and `.workgroup/` is subject. `.memory/` is about **this package**; a folder in `.workgroup/` is about **something else this package is being applied to**. Loose scratch at the root of `.workgroup/` belongs to neither and is cleared when the run ends.
 
 **`.profile/` is what lets `foundations/` stay standalone.** The discipline describes work done by anyone; everything true of one particular person goes there instead. A preference that leaked into doctrine would make the doctrine unportable, and that is the failure the folder exists to prevent.
 
