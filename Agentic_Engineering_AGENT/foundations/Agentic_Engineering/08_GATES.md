@@ -32,6 +32,18 @@ Phase and gate records carry four status-like vocabularies, deliberately disjoin
 
 `G2` and `G6` are not ADW-only. A supervised session delegating to a subagent runs `G2` by hand; a supervised session that changed an interface runs `G6` in the `documenting` state. A gate with no phase to run in is a gate that does not exist.
 
+## When a gate is authored, and by whom
+
+Keeping a gate in the controller and outside builder control protects it from being *edited*. It does nothing about a gate that was written to fit work already done, because that gate was never independent to begin with. **Custody is not independence.** A check authored by whoever produced the thing it checks is a self-graded exam with a lock on the answer sheet.
+
+So the gate is authored **from the task statement, before the work exists, by an actor that is not the one doing the work.** That inverts what the builder is doing: rather than producing a result and having a check written around it, it is making an existing check pass. The criterion gets fixed while it can still be argued on its merits, instead of against a result someone is now attached to.
+
+**Then run it, before the work starts, and require it to fail.** A gate that passes against a workspace where the work has not happened is not checking the thing it names, and executing it early is the cheapest possible way to find that out. This is the counterfactual from [`Software_Engineering/02_TESTING_AND_EVIDENCE.md`](../Software_Engineering/02_TESTING_AND_EVIDENCE.md) -- *if this were not done, would the check report differently?* -- **executed rather than reasoned about**, which is exactly the distance between `inspected` and `executed` on the evidence hierarchy. The reasoned version is an opinion about a check; the executed version is an observation of one.
+
+Authoring in advance is also the only moment when **writing each failure for its consumer is free.** The author has the task statement in front of them and no result to be distracted by, so a failure can say what is missing and what would satisfy it rather than reporting that an assertion did not hold. Downstream that is the difference between a red that routes and a red that has to be investigated before anyone knows who owns it.
+
+**The limit is real and it bounds the practice.** This works where success has a mechanical consequence -- a command exits zero, an artifact appears, a schema validates, a count moves. Where it does not, a gate authored in advance will be either so loose it cannot fail or so tight it fails on acceptable work. Say so in that case and reach for [measurement](12_EVALUATIONS.md) instead: an unfalsifiable gate written to satisfy the procedure is worse than admitting the procedure does not apply here.
+
 ## A run may hold several workspaces
 
 Each gate records **which workspace it observed**. In a single-workspace run that field is bookkeeping. In a run spanning several components it is the thing that separates a real pass from a confident pass over the wrong tree, and the wrong tree is no longer an unlikely accident -- it is one resolution mistake away, every time.

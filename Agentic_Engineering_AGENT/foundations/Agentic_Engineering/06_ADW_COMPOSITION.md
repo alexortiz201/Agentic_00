@@ -107,6 +107,10 @@ Parallelism in this package has meant independent work split across workers. The
 
 **Put the strongest model on synthesis, not on production.** Where one actor reconciles several proposals, that seat decides what the whole exercise yields, and a weaker model there wastes everything spent on the proposals. The inverse is also true: strong models generating parallel drafts that a weak one then reconciles is the most expensive way to get a mediocre answer.
 
+**A synthesis that emits only the merged answer has thrown away what it paid for.** The relationship between the answers *is* the output; collapsing it to one result spends the multiple and keeps the part a single run would have produced anyway. So the synthesizing seat records three things: the **consensus**, and whether it was reached independently or after exposure, because those are different strengths of evidence; the **divergence**, naming what was taken from each side; and what was **discarded**, with why.
+
+The discard list is the one that disappears unless it is demanded, and it is the one that matters most. Without it, a synthesis that dropped the correct answer is indistinguishable from one that dropped a wrong one -- both emit a confident merged result, and nothing in the artifact says which happened. It is also what lets a later reader reopen the decision without re-running the exercise.
+
 **These cost multiples of a single run.** Reserve them for decisions whose blast radius justifies it -- a choice that binds for months, an irreversible migration, an architecture that everything else will be built against. For everything else, one competent actor and a real check is the better trade.
 
 ## A stack of models, not a model
@@ -114,6 +118,8 @@ Parallelism in this package has meant independent work split across workers. The
 The question "which model is best" is the wrong question for a composition, and it gets less useful as the field moves. A workflow runs many phases with different demands, and the useful object is a **stack**: a small roster of models held at distinct capability, cost and latency points, with each phase assigned the cheapest one that can do its work.
 
 Three tiers are usually enough to reason with -- the frontier tier for work where being wrong is expensive, a workhorse tier that handles most of the volume, and a lightweight tier for mechanical steps. What matters is not the count but that **the assignment is per phase and recorded**, so a phase's model is a decision with a reason rather than an inheritance from whatever the composition was started with. The reason has to come from somewhere, and the only honest source is [measurement on your own work](12_EVALUATIONS.md) -- a published benchmark says something about a model in general and very little about whether it can carry one phase of one workflow.
+
+**Effort is a second axis, and it does not behave like the first.** Where a model exposes a reasoning or deliberation setting, that setting is part of the per-phase assignment and is recorded alongside the model. Unlike the capability tier, **it is not monotonic**: a higher setting can consume several times the tokens and return a result that is no better, or worse, because extended deliberation on a problem that did not need it is the same failure as a person overthinking a simple decision. Assume nothing about the direction, and measure it the way the tier is measured -- on your own phases, against your own work.
 
 This is the same constraint as context size approached from the other side. A step's minimum context decides which tiers it *can* run on; the stack decides which of those it *should*. A composition that names one model everywhere has either not made the decision or has made it once for steps that do not resemble each other.
 
