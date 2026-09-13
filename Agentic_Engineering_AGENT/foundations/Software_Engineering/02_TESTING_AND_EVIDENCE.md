@@ -93,6 +93,14 @@ Everything above assumes the thing under test returns the same answer twice. Whe
 
 The boundary is worth policing in both directions. A deterministic step measured statistically is a test someone declined to write. A probabilistic step asserted against is a flaky test that will be re-run until it passes.
 
+### The instrument can be the probabilistic half
+
+Everything above puts the non-determinism in the **subject**. It sits just as often in the **instrument**, and that case is easier to miss precisely because the subject looks perfectly testable. An agent that drives an interface, reads what is on the screen and judges whether it matches a described outcome is producing a *generated observation of a computed thing*: the application may return the same answer every time while the route taken to reach it, and the judgement passed on it, do not.
+
+**A green from a probabilistic instrument is a measurement, not an assertion.** Read as a passing test, it becomes a gate that nothing can reproduce -- and the usual consequences of measurement apply from the other side too, since one run is not a sample and any threshold set on it needs margin over its own spread.
+
+Two obligations follow for the record. **Capture the evidence at each step, and keep it on passes as well as on failures**: a walk that cannot be reproduced leaves the captured artifact as the only account of what actually happened, and a trail kept only for failures cannot establish what a pass looked like when the next one disagrees with it. And **name the instrument beside the result**, because a result whose provenance is a generated observation is not interchangeable with one whose provenance is an exit code, and nothing but the record can say which was which.
+
 ## Flake adjudication
 
 ### Do not create the contention you will then have to adjudicate

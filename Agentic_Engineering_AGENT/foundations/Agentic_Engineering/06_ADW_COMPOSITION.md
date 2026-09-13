@@ -145,6 +145,10 @@ Build the least that does the job. Each row's right-hand column is what to add *
 
 Every agent call is four choices: **context, model, prompt, tools.** Select a model by measured capability, cost, privacy and latency; do not hard-code a ranking that was true once.
 
+**How a tool is surfaced is part of the tools choice.** The same capability reached through a tool protocol server -- MCP being the common one -- and reached as a command-line tool are not equivalent, and the difference is paid on every run. A protocol server's schemas load into context whether or not the step calls them, so the cost scales with what is *connected* rather than with what is *used*; its shape is its author's, so the available operations are the ones they chose to expose; and it cannot be wrapped, so local defaults must be restated in the prompt on every call. A command-line tool costs nothing until it is invoked, is described in whatever depth the step actually needs, and can be wrapped so the defaults that matter are applied once instead of requested each time.
+
+This is not an argument against protocol servers. They are the right answer for a capability with no command-line surface, for one that must hold a session the caller cannot, and wherever the protocol is the only integration on offer. It is an argument about the **default**: reach for the command-line form first, and connect a protocol server where the capability genuinely needs one. Either way the cost belongs in the same accounting as context size, because **a connection is a standing charge against every step in the run, including every step that had no use for it.**
+
 **Prompt shape:** purpose -> named variables -> constraints -> relevant files -> ordered workflow -> exact report. Add examples, delegation or loops only where they earn their place.
 
 **Reduce and delegate.** Prime for the task at hand, give each actor one purpose, and return compact manifests. Reload authoritative state and the relevant files rather than copying a whole transcript forward.

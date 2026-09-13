@@ -59,7 +59,7 @@ Prompts, allowlists, branch names and logging hooks are not isolation unless an 
 
 `deferral` is frequently omitted from this axis and should not be. Wrapping an existing proven workflow is a legitimate step kind, and the one most likely to be mistaken for "describe what it does" -- which produces duplication with drift built in. **A deferral names its dependency at the call site**, so a reader can see which part is yours and which is borrowed.
 
-A deferral is usually **transitional**: it costs a typed return, a caller-chosen model, and per-call overhead. Those costs are recovered when the mechanism it wraps is extracted into code the workflow can call directly.
+A deferral is usually **transitional**: it costs a typed return, a caller-chosen model, per-call overhead, and -- the cost that compounds -- **the capability to build the thing yourself**. What is deferred is not learned, and what is not learned cannot later be extracted, so a deferral left alone quietly removes the condition for its own removal. Those costs are recovered when the mechanism it wraps is extracted into code the workflow calls directly, and the first step of extracting it is reading it.
 
 ## Task state -- one value, always
 
