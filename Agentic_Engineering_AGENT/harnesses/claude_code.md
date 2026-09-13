@@ -1,6 +1,8 @@
 # 🅰️ Claude Code
 
-Anthropic's coding agent. Closed source, available as a terminal CLI, desktop and web app, and IDE extensions. **Verified 2026-09.**
+Anthropic's coding agent. Closed source, available as a terminal CLI, desktop and web app, and IDE extensions.
+
+> **Verified 2026-09-13.** Closed source, so every claim here rests on documentation and observed behaviour rather than on reading the implementation -- which is a weaker basis than the Pi report and should be treated as such.
 
 The design is the inverse of Pi's: capabilities ship in the product and are configured rather than composed. That means most of the surface below is satisfied out of the box, and the cost is that the ones it does not satisfy are harder to add.
 
@@ -25,15 +27,21 @@ Gating has two mechanisms, and they sit at different levels.
 
 The important structural difference from Pi: **a Claude Code hook is a configured external command, not a typed function in the same process.** It receives JSON on stdin and answers by exit code and stdout. That makes it language-agnostic and easy to wire, and it means the decision is not a typed object your controller shares a type system with.
 
+**A hook can tighten but never loosen.** `PreToolUse` fires *before* the permission-mode check; a hook denial holds even under the most permissive mode, and a hook approval does not override a deny rule. That asymmetry is deliberate and is the property worth relying on.
+
 **Interactive affordances exist and unattended runs do not get them.** Permission prompts assume a human. In headless runs the permission mode decides, and there is a flag that bypasses prompts entirely -- which is a real gate removed, not a formality, and belongs nowhere near an unattended run that can write.
 
 ## Configuration
 
-- **`CLAUDE.md`** is the project instruction file, discovered in the working directory and ancestors, plus `~/.claude/CLAUDE.md` for personal global instructions.
+- **`CLAUDE.md`** is the project instruction file, discovered in the working directory and ancestors, plus `~/.claude/CLAUDE.md` for personal global instructions and a managed policy location for organisation-wide ones. **It enters as a message in the conversation, not as part of the system prompt** -- which is why it is re-read from disk and re-injected after compaction rather than simply persisting.
 - **`.claude/settings.json`** holds permissions, hooks, environment and model configuration, with a `settings.local.json` for personal overrides.
 - **`.claude/commands/*.md`** are slash commands -- named prompt files invoked as `/name`.
 - **`.claude/agents/*.md`** are subagent definitions, frontmatter carrying `name`, `description`, `tools`, `model`.
-- **`.claude/skills/`** and `~/.agents/skills/` hold skills as `SKILL.md` directories following the Agent Skills standard.
+- **`.claude/skills/`** and `~/.agents/skills/` hold skills as `SKILL.md` directories following the Agent Skills standard. Only the **description** is present at startup; the body enters as a message when the skill is invoked, and then persists. **Skill descriptions do not reload after compaction** -- only the skills actually invoked survive it.
+- **Output styles** modify the system prompt itself, unlike everything above.
+- **`--system-prompt`** replaces the default system prompt; **`--append-system-prompt`** adds to it.
+
+Where each of these lands, and what that costs, is tabulated against Pi in [`equivalents.md`](equivalents.md).
 
 ## Built in, and worth knowing are not portable
 

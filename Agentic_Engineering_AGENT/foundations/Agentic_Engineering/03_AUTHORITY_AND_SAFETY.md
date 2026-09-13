@@ -56,6 +56,14 @@ Add whatever instruction filenames the harness in use reads; they differ per har
 
 Being read-only is a property of the specific command, not of the activity. A command run to *find something out* still answers the preflight questions below before it runs.
 
+## A control may tighten, never loosen
+
+**A mechanism that can both grant and deny is not a control, it is a second policy** -- and the two will disagree eventually, at which point which one wins is the only question that matters and the least likely to have been decided.
+
+So the property to require of any gate layer is asymmetry: it may refuse something the policy would have allowed, and it may never allow something the policy refuses. A denial from the gate holds regardless of how permissive the surrounding configuration is, and an approval from it is at most an opinion that the policy is still free to overrule.
+
+This is what makes a gate composable with a permission system rather than competing with it, and it is worth checking explicitly, because a layer that can grant looks identical to one that cannot until the day it grants something it should not have.
+
 ## Preflight before modification
 
 Determine:

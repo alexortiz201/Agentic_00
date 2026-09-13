@@ -1,5 +1,7 @@
 # 🔁 Porting between Claude Code and Pi
 
+> **Verified 2026-09-13**, against Pi v0.85.1 and Claude Code as documented on that date. Every row is a claim about two moving targets; a stale row here is worse than a missing one, because it will be believed.
+
 Organised by **mechanism**, not by feature. A feature often has no counterpart; the mechanism underneath it always does, and asking the mechanism question is what turns an apparently impossible port into a short one.
 
 Read this with both conformance reports open: [`claude_code.md`](claude_code.md) and [`pi.md`](pi.md).

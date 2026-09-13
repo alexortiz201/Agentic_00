@@ -12,6 +12,7 @@ What a harness is, what a workflow may assume of one, and how to keep the two se
 |---|---|
 | 📐 [`01_THE_CAPABILITY_SURFACE.md`](01_THE_CAPABILITY_SURFACE.md) | What a workflow may assume of any harness, and what it must not |
 | 🔁 [`02_PORTABILITY.md`](02_PORTABILITY.md) | How one workflow comes to run on two harnesses, and what that costs |
+| 💉 [`03_INJECTION_POINTS.md`](03_INJECTION_POINTS.md) | Where text can enter a run, what each position costs, and which choices fail silently |
 
 ## The argument for taking this seriously
 

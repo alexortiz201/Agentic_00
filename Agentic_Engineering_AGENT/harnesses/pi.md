@@ -1,6 +1,8 @@
 # 🅿️ Pi
 
-Open source, MIT, `earendil-works/pi`, by Mario Zechner. **Verified against v0.85.1, commit `71dca87`, 2026-09.**
+Open source, MIT, `earendil-works/pi`, by Mario Zechner.
+
+> **Verified 2026-09-13** against **v0.85.1**, commit `71dca87`. Read from source and in-repo docs, not from the marketing site. Re-verify before relying on any specific claim -- this product changes weekly.
 
 The design thesis: a coding agent needs four tools -- read, write, edit, bash -- and a system prompt under a thousand tokens. Everything else is opt-in, composed as typed TypeScript extensions. That makes almost every capability below a thing you build rather than a thing you configure, which is the trade the product is making on purpose.
 

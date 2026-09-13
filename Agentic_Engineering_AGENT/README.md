@@ -22,7 +22,7 @@ Loading everything contradicts this package's own rule about context, so the res
 | 🏗️ [`foundations/Software_Engineering/`](foundations/Software_Engineering/README.md) | Ask whether something is engineering practice rather than an agentic concern |
 | 🚀 [`foundations/DevOps/`](foundations/DevOps/README.md) | Sandbox an agent, touch an environment, handle credentials, or ship |
 | 🔌 [`foundations/Harness_Engineering/`](foundations/Harness_Engineering/README.md) | Decide what a workflow may assume of its harness, or make one run on two |
-| 🔀 [`harnesses/`](harnesses/README.md) | Answer what a *specific* harness does, or port a flow between two |
+| 🔀 [`harnesses/`](harnesses/README.md) | Answer what a *specific* harness does, compare the two, or port a flow between them |
 | 🎓 [`foundations/Coaching/`](foundations/Coaching/README.md) | Teach this work, or run in `coaching` mode |
 | 🔄 [`foundations/Agentic_Engineering/02_WORKFLOW.md`](foundations/Agentic_Engineering/02_WORKFLOW.md) | Run a task through its lifecycle -- states, gates, repair routing |
 | 🔐 [`foundations/Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md`](foundations/Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md) | Discover within scope, bound what an agent can reach, or do anything needing approval |

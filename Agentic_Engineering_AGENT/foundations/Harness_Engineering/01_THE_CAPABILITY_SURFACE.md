@@ -25,6 +25,7 @@ A harness may offer any of these and they may be worth using. A workflow that **
 - **Packaged capabilities.** Named bundles of instruction and tooling, loaded on demand, go by different names and different formats. The instruction inside one is portable; the packaging is not.
 - **Configuration file conventions.** Which file a harness reads for project instructions, and from which directories, is a per-harness fact. Two harnesses agreeing on a filename is convenient and is not a contract.
 - **Interactive affordances.** Permission prompts, approval dialogs and status displays assume a human is watching. An unattended run has no one to ask, so anything that depends on being asked is not available to it.
+- **Dynamic injection.** Rewriting the prompt or filtering history mid-run is powerful where it exists and absent where it does not. A workflow that is only correct because something was injected mid-run has an unwritten requirement -- see [injection points](03_INJECTION_POINTS.md).
 
 ## The rule that makes the surface load-bearing
 
