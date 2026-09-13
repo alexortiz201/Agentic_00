@@ -16,7 +16,7 @@ Same idea, different name. Where the row says the formats match, an artifact gen
 | Personal global instructions | `~/.claude/CLAUDE.md` | `~/.pi/agent/AGENTS.md` | **No.** Pi does not look in `~/.claude/` |
 | Organisation-wide instructions | Managed policy file, or a `claudeMd` settings key | No equivalent | **No** |
 | Packaged capability | Skill -- `SKILL.md` + frontmatter | Skill -- same standard | **Yes.** The one genuinely free asset |
-| Named prompt | Slash command, `.claude/commands/*.md` | Prompt template, `.pi/prompts/*.md` | Body yes, frontmatter and argument syntax no |
+| Named prompt | Slash command, `.claude/commands/*.md` | Prompt template, default `.pi/prompts/*.md`, path configurable | **Yes** -- body and positional args both port; point Pi at the directory |
 | Delegated agent | Subagent, `.claude/agents/*.md`, built in | Not built in; an extension spawns a child process | Definition format matches; the mechanism does not |
 | Gate before a tool runs | `PreToolUse` hook -- an external command | `pi.on("tool_call")` -- a typed function in-process | Same shape, different substrate |
 | Declarative permission policy | `permissions` in settings | None | **No.** Build it or bound the tool set |
@@ -123,6 +123,8 @@ Both prevent execution and feed the reason back to the model. In Pi, **throwing 
 | | Claude world | Pi world |
 |---|---|---|
 | Built-in set | File read/write/edit, search, shell, web, task management | `read`, `write`, `edit`, `bash`; `grep`, `find`, `ls` exist and are **off by default** |
+| Override a built-in | Not exposed | Register a tool with the same name |
+| Register a tool in-loop | Not exposed -- arrives as a skill or an external server | Yes, at runtime as well as when embedding |
 | Restrict per invocation | `--allowedTools` / `--disallowedTools`, plus permission rules | `--tools` (strict allowlist), `--exclude-tools`, `--no-tools`, `--no-builtin-tools` |
 | Restrict at runtime | Permission rules and modes | `setActiveTools(names)` from an extension |
 | Add a tool | Tool protocol server, or a skill wrapping a CLI | `registerTool()` in an extension, at load or after startup |

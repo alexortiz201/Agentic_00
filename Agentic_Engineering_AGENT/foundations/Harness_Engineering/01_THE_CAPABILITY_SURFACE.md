@@ -14,6 +14,7 @@ The surface is deliberately small. **Each capability added is a harness excluded
 | **Structured return** | Get output that can be validated rather than parsed out of prose | A regex over prose is a missing output channel; the consuming phase must validate, not interpret |
 | **Distinguishable failure** | Tell "the work failed" apart from "the harness failed" | These route differently. Conflating them sends a broken environment into a repair loop that cannot fix it |
 | **Retained transcript** | Persist what was sent and returned | Without it a run produces claims and no evidence, and cannot be reconstructed by anyone who was not watching |
+| **Standing-instruction control** | Replace or extend what the agent is told before the conversation starts | A harness whose standing instruction cannot be changed has decided the agent's role on your behalf, and no per-call prompt fully overrides it. This is the capability that makes specialization possible at all |
 
 ## Not required -- and therefore not to be depended on
 

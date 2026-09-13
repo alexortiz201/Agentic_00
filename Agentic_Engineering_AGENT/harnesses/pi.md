@@ -2,7 +2,7 @@
 
 Open source, MIT, `earendil-works/pi`, by Mario Zechner.
 
-> **Verified 2026-09-13** against **v0.85.1**, commit `71dca87`. Read from source and in-repo docs, not from the marketing site. Re-verify before relying on any specific claim -- this product changes weekly.
+> **Verified 2026-09-13** against **v0.85.1**, commit `71dca87`. Read from source and in-repo docs. **Corrected 2026-09-13** after a demonstration contradicted one claim -- see *Where commands load from*. Re-verify before relying on any specific claim; this product changes weekly.
 
 The design thesis: a coding agent needs four tools -- read, write, edit, bash -- and a system prompt under a thousand tokens. Everything else is opt-in, composed as typed TypeScript extensions. That makes almost every capability below a thing you build rather than a thing you configure, which is the trade the product is making on purpose.
 
@@ -76,6 +76,23 @@ Claude Code skills load into Pi with one settings line:
 ```
 
 Native locations include `~/.pi/agent/skills/`, `.pi/skills/`, and `~/.agents/skills/` -- the last being the same installer-managed store Claude Code uses. Skills also register as `/skill:<name>` commands.
+
+## Where commands load from -- a correction
+
+An earlier version of this report said `.claude/commands/` does not port, on the basis that the string appears nowhere in the source. **That was the wrong conclusion from a correct search.**
+
+Pi does not read that directory *by default*. It reads whatever an extension tells it to read: the `resources_discover` event returns `skillPaths` and `promptPaths`, and an extension can point either at any directory on disk. A demonstrated configuration loads skills, prompt templates and agent definitions from several locations at once, including a Claude-shaped one.
+
+So the accurate statement is **the default differs and the location is configurable.** A prompt body ports; where it is found is an extension's decision rather than a fixed convention. Argument syntax is close enough to be a non-issue in practice -- both use positional `$1`, `$2`.
+
+The lesson generalizes past this product: **absence of a hardcoded path proves a default, not a limit,** and a harness built to be configured will not name its conventions in its source.
+
+## Tools
+
+Four by default -- `read`, `write`, `edit`, `bash` -- against roughly twice that elsewhere. Two capabilities follow from the minimal core and are worth knowing:
+
+- **Built-in tools can be overridden.** Registering a tool with an existing name replaces it, so `edit`, `write` and `bash` are all substitutable.
+- **Tools can be registered at runtime, in-loop**, not only when embedding programmatically. Elsewhere a new capability has to arrive as a packaged skill or an external server.
 
 ## Not built in
 

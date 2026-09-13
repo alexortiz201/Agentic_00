@@ -12,7 +12,7 @@ Read this with both conformance reports open: [`claude_code.md`](claude_code.md)
 |---|---|---|---|
 | **Project instructions** | `CLAUDE.md`, cwd and ancestors, plus `~/.claude/CLAUDE.md` | `AGENTS.md` or `CLAUDE.md`, cwd and ancestors, plus `~/.pi/agent/` | **Nearly free.** Pi reads `CLAUDE.md` natively. Two traps: an `AGENTS.md` beside it wins and the `CLAUDE.md` is never read, and `~/.claude/CLAUDE.md` is not on Pi's path |
 | **Packaged capability** | Skill: `SKILL.md` + frontmatter | Skill: same standard, more permissive | **Free.** One settings line points Pi at the Claude skills directory. This is the single most portable asset you own |
-| **Named prompt** | `.claude/commands/*.md`, invoked `/name` | Prompt template in `.pi/prompts/*.md`, invoked `/name` | **Rewrite the frontmatter and argument syntax.** The prompt body moves unchanged; Pi uses `$1` / `$@` / `$ARGUMENTS` |
+| **Named prompt** | `.claude/commands/*.md`, invoked `/name` | Prompt template, default `.pi/prompts/*.md`, **load path configurable by extension** | **Nearly free.** The body moves unchanged and positional `$1`/`$2` works on both. Point Pi at the existing directory rather than copying files |
 | **Gate that must block** | `PreToolUse` hook -- external command, denies by exit status | `pi.on("tool_call")` -- typed function, returns `{ block: true, reason }` | **Reimplement, same shape.** Both block before execution. Claude's is a configured command; Pi's is code in-process |
 | **Permission policy** | `permissions` in `settings.json`, declarative | No permission system at all | **Build it or bound it.** Either a `tool_call` extension, or `--tools` as an allowlist, or containerize |
 | **Sub-agent** | `.claude/agents/*.md`, harness spawns it | Not built in. Example extension spawns a child `pi` process | **Reimplement, or move it to the controller.** The definition frontmatter is the same shape, so the *content* ports |
@@ -22,6 +22,8 @@ Read this with both conformance reports open: [`claude_code.md`](claude_code.md)
 | **Headless run** | `claude -p`, `--output-format stream-json` | `pi -p`, `--mode json`, `--mode rpc` | **Free**, but watch Pi's JSON-mode exit code -- it returns `0` on an errored turn |
 
 ## The question to ask when something has no counterpart
+
+**A correction that generalizes.** This table previously said named prompts needed rewriting on the grounds that the Claude directory appears nowhere in Pi's source. It does not -- because Pi reads whatever an extension points it at, and a harness built to be configured does not name conventions in its code. **Absence of a hardcoded path proves a default, not a limit.** When a port looks blocked by a missing convention, check whether the convention is configurable before believing it.
 
 **Not** "what is the other harness's version of this feature." That question frequently has no answer and makes the port look blocked.
 

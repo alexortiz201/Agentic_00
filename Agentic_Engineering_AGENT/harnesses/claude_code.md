@@ -52,6 +52,17 @@ These are genuine advantages of the harness and each is a portability liability.
 - **Hooks** are configured rather than written, so a gate is a settings entry rather than a program.
 - **Plugins** bundle commands, agents, skills and hooks as an installable unit.
 
+## What it is stronger at
+
+Recorded because a comparison that only lists one side's advantages is not a comparison.
+
+- **Out-of-the-box defaults.** A large standing instruction encoding practices that otherwise have to be built, and a low floor -- useful before it is configured.
+- **Sub-agents, task tracking and multi-agent coordination are built in**, where a minimal harness requires each to be constructed.
+- **Programmatic embedding is better supported**, with a more developed SDK surface.
+- **Enterprise adoption.** Organisation-wide policy, managed configuration and support exist here and do not meaningfully exist in a single-maintainer open-source alternative. For an organisation rather than an individual this is frequently decisive on its own.
+
+The trade is the other side of the same coin: strong defaults are opinions you did not choose, and a closed product changes on its owner's schedule rather than yours.
+
 ## Sources
 
 [Claude Code documentation](https://docs.anthropic.com/en/docs/claude-code) · [Agent Skills specification](https://agentskills.io/specification)

@@ -38,6 +38,16 @@ That is not an argument for building one. It is an argument for knowing which ce
 
 **Specialization is where the advantage is.** A general-purpose agent is available to everyone; an agent shaped around one domain's failure modes, conventions and checks is not. Where the harness permits it, that shaping is the highest-return investment available -- and where it does not, the [capability surface](01_THE_CAPABILITY_SURFACE.md) is how you find out before committing to it.
 
+## Harness control substitutes for model capability
+
+The package already says a stronger model cannot supply a check that does not exist. The inverse is also true and is the more actionable half: **a better harness can make a weaker model sufficient.**
+
+A model that would wander, skip steps or declare victory early can be held to a task by structure around it -- a gate that refuses to let the next tool run until the work is recorded, a loop that will not exit while an item is open, a tool set narrow enough that the wrong move is unavailable. None of that changes the model. It changes what the model is *able* to do next, which is frequently the same outcome at a fraction of the cost.
+
+The practical consequence is a purchasing decision most people make backwards. Reaching for a stronger model is the expensive fix and the first one tried; tightening the harness is the cheap fix and the last. **When a run disappoints, the question is not which model to upgrade to but which constraint was missing** -- and the answer is often something that costs nothing per run, forever.
+
+The limit is worth stating too, because the claim is easy to over-read. Structure cannot supply capability the model does not have; it can only prevent capability it does have from being wasted. A task genuinely beyond a model stays beyond it however well the harness is built.
+
 ## What conformance means here
 
 A harness is not evaluated on its feature list. It is evaluated against [the capability surface](01_THE_CAPABILITY_SURFACE.md) -- the set of things a workflow is allowed to depend on. A harness either satisfies a capability, satisfies it differently, or does not satisfy it.
