@@ -10,5 +10,9 @@
 /.profile/
 /.workgroup/
 
+# Dealpath-specific discipline. Authored here, pushed to a separate Dealpath repository.
+# Remove this entry in that repository -- it is what keeps the generic package generic.
+/foundations/Dealpath/
+
 # Agent scratchpad. Declared here rather than globally, for the same reason as above.
 *.memory.md
