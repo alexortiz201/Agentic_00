@@ -26,6 +26,16 @@ That argues for the controller as the default home for anything that must actual
 
 This is the same reasoning that puts required checks outside the thing being checked: a control that exists at the discretion of what it constrains is not a control.
 
+## A workflow must not depend on the environment that authored it
+
+The machine a workflow was written on carries things no other machine has: the author's local configuration, their personal preferences, their working notes, whatever they had installed. None of it travels, and a workflow that reads any of it is broken everywhere else.
+
+**The failure is quiet, which is what makes it expensive.** An absent configuration file usually reads as *no preferences* rather than as an error, so the workflow does not fail -- it behaves differently, correctly in one place and wrongly everywhere else, with nothing reporting the difference.
+
+Three honest homes for anything a workflow needs. It **travels with the workflow**, committed alongside it. It **lives in the target**, as a file the target owns, ignored if it is personal, with a committed example beside it. Or it is **discovered at runtime**, which is the only correct answer for facts about a machine the author has never seen -- a new environment's state is unknown by definition, and you cannot configure what you have not yet found.
+
+The distinction that settles most cases is **preference against fact**. Which tool someone likes is a preference and belongs to them. Whether that tool is installed is a fact and must be probed.
+
 ## The cost, stated plainly
 
 Portability is not free and pretending otherwise is how it gets abandoned halfway.

@@ -14,6 +14,7 @@ They are requirements, not tutorials -- the reasoning lives in the rest of `foun
 | 🧾 [`record.md`](record.md) | What every durable artifact carries, and how versioning works |
 | 🚦 [`gate.md`](gate.md) | An independent check on whether a transition may happen |
 | 💾 [`state.md`](state.md) | What a run persists so it can be resumed or handed off |
+| 📒 [`run_history.md`](run_history.md) | The append-only record of every run, and the only thing that makes behaviour visible over time |
 | ⚡ [`trigger.md`](trigger.md) | How a run starts without a person |
 | 🪝 [`hook.md`](hook.md) | Code that observes or blocks at a lifecycle event |
 | 📌 [`pinned_reference.md`](pinned_reference.md) | External documentation frozen in the repository |
