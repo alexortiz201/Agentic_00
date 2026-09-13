@@ -4,6 +4,9 @@ One step of a workflow, **as code**. It owns sequencing, state and gates; the ag
 
 ## Must handle
 
+**A bail condition, distinct from its preconditions.** Preconditions ask whether the phase *can* run -- state loads, workspace resolves, environment answers. A bail condition asks whether it *should*: whether the work handed to it is the kind of work it is for. Misclassification upstream is inevitable, and a phase that recognises "this is not mine" and stops is safe where one that proceeds anyway is not. It needs no new vocabulary -- that is `blocked`, with `return_to` naming the step that classified wrongly.
+
+
 1. **Identity.** An *entry* phase mints the run identifier; a *dependent* phase **requires** one and refuses to run without it. Say which it is in the file, with the reason.
 2. **Preconditions.** Load state, verify the workspace, confirm the environment. Exit with a remediation message naming what to run, not just what failed.
 3. **Invocation.** Build a typed request. Never assemble a raw prompt string inline.

@@ -39,6 +39,14 @@ Increment the counter for the kind actually performed, before the retry. Exhaust
 
 **Stop** on: the same failure twice, an exhausted budget, newly discovered risk, or side effects you cannot characterize. Each of those is a decision for a person, not a reason to try again.
 
+## Stopping obliges a clean environment
+
+A run that stops owes more than a report. **Whatever it touched is either finished or reverted** -- no half-applied changes, no orphaned processes, no instrumentation left in the tree, no resource held open because the path that would have closed it was the path not taken.
+
+This is separate from resumability and is frequently confused with it. A resumable run can be picked up; a clean stop means the next actor is not picking up someone else's debris first, and it means the thing that stopped did not quietly become the reason the next attempt fails.
+
+**The exit is not a failure mode to minimize.** It is the property that makes running the system unattended a reasonable thing to do, because it bounds what an abandoned run can leave behind.
+
 ## Make runs resumable
 
 Another agent must be able to identify:

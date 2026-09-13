@@ -62,6 +62,14 @@ Each invocation resolves context, model/provider, prompt and tools (Core Four), 
 
 Use code to validate inputs, track state, invoke tools, capture results, enforce gates, and bound retries. Use agents where interpretation and judgment are needed. Do not rely on conversational memory for workflow state.
 
+## Determinism buys measurement, not only safety
+
+The usual argument for deterministic orchestration is control: gates hold, state survives, failures route. There is a second argument that is easy to miss and is often the one that matters more.
+
+**A workflow whose context, prompts and tooling are assembled deterministically can be measured.** Swap the model and the only thing that changed is the model, so the comparison means something. Version the prompt and the diff is reviewable, because the prompt is a file rather than a thing that was typed once. Replay the run and it replays, because nothing load-bearing lived in a conversation nobody kept.
+
+None of that is available to a workflow assembled by hand each time. Two runs differ in ways nobody recorded, so a better result proves nothing and a worse one diagnoses nothing. **Reproducibility is what turns an opinion about a workflow into a finding about it.**
+
 ## Bounded autonomy
 
 Bound work by paths, tools, network targets, time, cost, retries, branch/worktree, stop conditions, and approvals. Parallelize only independent tasks with explicit ownership and isolation.

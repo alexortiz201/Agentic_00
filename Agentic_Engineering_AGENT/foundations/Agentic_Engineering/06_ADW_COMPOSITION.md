@@ -18,7 +18,8 @@ This file is the shape of a composition and the order in which one is authored. 
 8. **Build the smallest vertical slice.** Implement typed contracts, the agent adapter, one useful phase, real quality checks and state/evidence storage. Use focused, bounded prompts, and author any missing primitive deliberately rather than inlining it. Do not generate an entire platform for a one-off task.
 9. **Compose thinly.** Reuse phase entry points; keep sequencing separate from prompts and model selection. Pass one run identity, explicit workspace and validated artifact references. Do not duplicate phase internals inside a composite script.
 10. **Walk through and test.** First use mocked agents/tools and disposable workspaces; then a human-supervised real task within authority. Exercise the [control-plane matrix](09_CONTROL_PLANE_TESTS.md). Document exact invocation, prerequisites, artifacts, safe resume and cancellation before unattended use.
-11. **Make it discoverable and improve deliberately.** Add an entry recipe/skill and conditional context links. Record effective config, measured cost/time/interventions and outcomes. Extract only what a second real use has already proven; see the area README on reuse being earned.
+11. **Record the wrong turns, not only the outcomes.** An agent replaying a workflow repeats whatever mistakes are not written down, because nothing in the artifact warns it off. A workflow that carries its own history of failures -- what was tried, what it cost, why it was abandoned -- is the highest-value part of the document, and the part that is always omitted first because it reads as an admission rather than as a control.
+12. **Make it discoverable and improve deliberately.** Add an entry recipe/skill and conditional context links. Record effective config, measured cost/time/interventions and outcomes. Extract only what a second real use has already proven; see the area README on reuse being earned.
 
 ### Salvage before contracting
 
@@ -73,6 +74,20 @@ That is enough to do real work. Everything else is added when something forces i
 | Durable storage | a fact must outlive a single run |
 
 **Read that table as a growth path, not a checklist.** Each row names the evidence that justifies the addition; adding a row without its evidence is building a platform before there is a project.
+
+## Context size is model selection
+
+Decomposition is usually argued from maintainability and blast radius. There is a harder constraint underneath, and it decides things the other arguments cannot.
+
+**What a step must load before it can run determines which models it can run on.** A step that needs forty thousand tokens of library in front of it can never run on a small fast model -- not because its reasoning is hard, but because its preamble is big. A monolithic context forces a monolithic model choice, and that choice is then made for every step in the composition by whichever step needs the most.
+
+It decides concurrency too. **Small-context steps fan out; large-context steps serialize**, whether or not the work is logically parallel, because the constraint is what each invocation has to carry rather than what it has to do.
+
+So the question to ask of every step is: **what is the minimum an agent must load to perform this correctly?** That number is simultaneously the composition boundary and the model-tier boundary. Where it is large for a step whose work is mechanical, the boundary is drawn in the wrong place.
+
+The corollary for shared material: **centralize the contract, decentralize the content.** A step declares the shape of the context it needs and the caller supplies it. What genuinely belongs in one place is anything whose cardinality is greater than one -- a thing that must agree across callers. Everything else is payload, and payload carried centrally is paid for by every step that did not need it.
+
+A worked case, from a real in-house workflow library: roughly four hundred and forty markdown files totalling about three quarters of a million tokens, with single entry points pulling sixty to seventy thousand tokens before doing any work. Boundaries there had been drawn by topic -- one kind of ticket, one file -- rather than by what has to load together, and the effect was that the cheapest, most mechanical phases were priced at the same tier as the most demanding one.
 
 ## Choose the smallest sufficient set
 

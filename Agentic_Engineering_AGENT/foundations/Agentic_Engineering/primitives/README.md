@@ -38,6 +38,9 @@ Check argument order, output shape, path containment and actual side effects. Ve
 
 ## Label what is true
 
+**A status only a run may change.** Where these labels are recorded in an index, the execution column is writable by execution alone: editing an artifact does not change whether it has run, and only running it does. A label a reader can upgrade by improving the prose is not a label.
+
+
 Four different claims, routinely collapsed into one: **authored** / **configured** / **tested** / **actually used**. Say which. A thing that exists is not a thing that runs, and a thing that runs is not a thing anyone depends on.
 
 ## Two rules across all of them
