@@ -73,6 +73,10 @@ A generated workflow running out of a target project keeps its own run state und
 
 It is an [observing hook](../foundations/Agentic_Engineering/primitives/hook.md) and follows that primitive: it never raises, and a failure inside it must not take the run with it. It guards nothing and blocks nothing -- by the time it fires, the work is already done.
 
+**It is executed, not observed.** Where the runtime has no hook to register, the actor performs it as part of its own lifecycle, in the same turn as the close. A sweep that exists only as a rule written somewhere is the failure this section is describing, committed one level up: the value is entirely in it running, and a policy nobody executes is indistinguishable from no policy.
+
+**One batched pass, not a drip.** All stores reconciled against a single picture of what the completion changed. Editing them one at a time as each consequence occurs leaves two stores reconciled against different moments, and the difference between them is invisible afterwards.
+
 ### What it sweeps
 
 Every local store, not only the one the work happened in:
