@@ -12,6 +12,7 @@ When a task arrives -- a bug ticket, a feature, a chore, a workflow to build -- 
 | **A feature or chore** | The same lifecycle, sized down | 🔄 [workflow](../foundations/Agentic_Engineering/02_WORKFLOW.md) -- the flow-sizing table is the first thing to read |
 | **A workflow to build** | 🛠️ [`06_BUILDING_AN_ADW.md`](06_BUILDING_AN_ADW.md) | 🧩 [composition](../foundations/Agentic_Engineering/06_ADW_COMPOSITION.md) and 🧱 [the primitive you are creating](../foundations/Agentic_Engineering/primitives/README.md) |
 | **A workflow to trust** | 🧪 [`07_VALIDATING_A_WORKFLOW.md`](07_VALIDATING_A_WORKFLOW.md) | 🔬 [verification](../foundations/Agentic_Engineering/04_VERIFICATION.md), and ⚖️ [testing and evidence](../foundations/Software_Engineering/02_TESTING_AND_EVIDENCE.md) |
+| **A workflow you already trust** | 📋 [`08_GATE_ENFORCEMENT_CENSUS.md`](08_GATE_ENFORCEMENT_CENSUS.md) | 🛡️ [gates](../foundations/Agentic_Engineering/08_GATES.md) and 📒 [run history](../foundations/Agentic_Engineering/primitives/run_history.md) |
 | **Something that failed** | 🛟 [recovery and handoff](../foundations/Agentic_Engineering/05_RECOVERY_AND_HANDOFF.md) | Repair returns to the phase that *caused* the defect, not the one that found it |
 | **Somewhere to put a file** | 🏗️ [`05_AGENTIC_LAYER_LAYOUT.md`](05_AGENTIC_LAYER_LAYOUT.md) | -- |
 | **A concept and no idea where it is defined** | 🗺️ [`04_ARTIFACT_MAP.md`](04_ARTIFACT_MAP.md) | -- |
@@ -41,6 +42,7 @@ The worked example, because it is the most common arrival and every other kind o
 | 🏗️ [`05_AGENTIC_LAYER_LAYOUT.md`](05_AGENTIC_LAYER_LAYOUT.md) | Where things go in a target project, and our naming |
 | 🛠️ [`06_BUILDING_AN_ADW.md`](06_BUILDING_AN_ADW.md) | Building a workflow, start to finish |
 | 🧪 [`07_VALIDATING_A_WORKFLOW.md`](07_VALIDATING_A_WORKFLOW.md) | Checking a workflow does what it claims, before trusting it |
+| 📋 [`08_GATE_ENFORCEMENT_CENSUS.md`](08_GATE_ENFORCEMENT_CENSUS.md) | Counting what actually holds each gate shut, so enforcement can be watched over time |
 
 ## The split with `foundations/`
 

@@ -82,6 +82,24 @@ Cover what changed, how to use it, prerequisites and configuration *names*, limi
 
 Add the discovery links that cause this to be found later. A trivial change may use the handoff itself rather than a separate document.
 
+## Correcting a claim that has already travelled
+
+A wrong claim is rarely still in one place by the time it is found. It was read, summarised into a handoff, written into a document, quoted in a work item, and acted on -- and every one of those is now a copy that will outlive the correction unless it is found deliberately.
+
+**Enumerate every surface the claim reached before correcting any of them.** Correcting as you go feels like progress and stops when it feels done, which is reliably before the list is finished: the surfaces are fixed in the order they come to mind, that order is the order of memorability rather than of reach, and the last one is never missed noisily.
+
+The surfaces worth walking, roughly in the order a claim travels:
+
+- The record that first asserted it, and its provenance.
+- Every downstream phase record that read it, including ones that never quote it.
+- Documents changed on the strength of it.
+- The work item, the review, and anything said to a person.
+- The run history entry, corrected as a **new entry referencing the old one** -- never by rewriting, for the reasons in [run history](primitives/run_history.md).
+
+**The blast radius is what read the claim, not what mentions it.** This is the part that searching cannot find: a phase that consumed a wrong claim, reasoned from it and wrote something new never contains the original words, so it survives every grep for the text and is exactly where the error is now load-bearing. Trace consumption, not phrasing.
+
+**A half-propagated correction is worse than none.** Before, one source was wrong. After, two sources disagree and both look authoritative, and the reader has no way to tell which is the correction. If the full list cannot be walked now, say which surfaces are known-stale and where the correct version lives, rather than fixing the reachable half silently.
+
 ## Handoff
 
 Report:

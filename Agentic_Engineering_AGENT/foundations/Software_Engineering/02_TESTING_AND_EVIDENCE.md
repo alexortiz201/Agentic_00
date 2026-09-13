@@ -101,6 +101,23 @@ Everything above puts the non-determinism in the **subject**. It sits just as of
 
 Two obligations follow for the record. **Capture the evidence at each step, and keep it on passes as well as on failures**: a walk that cannot be reproduced leaves the captured artifact as the only account of what actually happened, and a trail kept only for failures cannot establish what a pass looked like when the next one disagrees with it. And **name the instrument beside the result**, because a result whose provenance is a generated observation is not interchangeable with one whose provenance is an exit code, and nothing but the record can say which was which.
 
+## Instrumentation changes what it measures
+
+Observing a system is an intervention on it. Usually a small one, occasionally the entire result, and the cases where it dominates look exactly like real findings.
+
+Four shapes, in rising order of how easy they are to miss:
+
+- **Timing.** Logging, tracing and profiling inside the subject change its timing. A performance result gathered from an instrumented build describes the instrumented build.
+- **Ordering and state.** A check that creates a fixture, warms a cache, opens a connection or writes a file has changed the conditions the next check runs under. The second result is now partly about the first check.
+- **Contention.** Running the observation beside the subject competes with it for the same machine. The concurrency case below is one instance of this.
+- **Self-observation.** An actor asked to report on its own behaviour behaves differently for having been asked -- it explains more, hedges more, and sometimes does the work differently because it knows the work is being described.
+
+**The rule is: wrap, do not rewrite.** Observe from outside the subject's boundary -- exit codes, artifacts it already produces, output it already emits, wall-clock from the caller -- before reaching inside to add reporting. An external observation cannot perturb what it is watching; an internal one always can, and the amount is rarely known.
+
+Where instrumenting inside genuinely is the only way, keep the instrumentation **present in both arms** of any comparison. A measured run against an unmeasured baseline compares two different systems and attributes the difference to the change under test.
+
+And record it either way. **A measurement that required modifying its subject is a measurement of the modified subject**, which may still be the best available and is a different claim from the one it looks like.
+
 ## Flake adjudication
 
 ### Do not create the contention you will then have to adjudicate
