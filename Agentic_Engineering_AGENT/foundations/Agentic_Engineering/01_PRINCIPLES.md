@@ -56,6 +56,8 @@ Give each role only what it needs:
 | Reviewer | Task, plan, diff, evidence, risk checklist |
 | Repairer | Concrete failures/findings and bounded scope |
 
+**Return failures, not successes.** When a deterministic check passes, the agent that produced the work has nothing to do with that result -- feeding a green suite back into its context spends tokens and attention to communicate that nothing is required. Route the failure back, with enough of the output to act on, and let a pass simply advance the workflow. The same holds for any check whose only interesting outcome is the negative one.
+
 Store stable knowledge in versioned files and run-specific facts in task state. Prime context by task; give each agent one purpose and compact artifact handoffs rather than whole transcripts. Load tools/MCP only when needed. Context bundles are validated indexes, not exact memory.
 
 Each invocation resolves context, model/provider, prompt and tools (Core Four), plus workspace, output contract, permissions and limits. Record effective configuration. Select models by observed capability, privacy, cost and latency--not fixed rankings. Diagnose intent/context/tools/contracts/gates/state before upgrading a model.

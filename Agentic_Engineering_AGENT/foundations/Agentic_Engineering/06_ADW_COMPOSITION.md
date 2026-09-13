@@ -95,6 +95,20 @@ The corollary for shared material: **centralize the contract, decentralize the c
 
 A worked case, from a real in-house workflow library: roughly four hundred and forty markdown files totalling about three quarters of a million tokens, with single entry points pulling sixty to seventy thousand tokens before doing any work. Boundaries there had been drawn by topic -- one kind of ticket, one file -- rather than by what has to load together, and the effect was that the cheapest, most mechanical phases were priced at the same tier as the most demanding one.
 
+## A stack of models, not a model
+
+The question "which model is best" is the wrong question for a composition, and it gets less useful as the field moves. A workflow runs many phases with different demands, and the useful object is a **stack**: a small roster of models held at distinct capability, cost and latency points, with each phase assigned the cheapest one that can do its work.
+
+Three tiers are usually enough to reason with -- the frontier tier for work where being wrong is expensive, a workhorse tier that handles most of the volume, and a lightweight tier for mechanical steps. What matters is not the count but that **the assignment is per phase and recorded**, so a phase's model is a decision with a reason rather than an inheritance from whatever the composition was started with.
+
+This is the same constraint as context size approached from the other side. A step's minimum context decides which tiers it *can* run on; the stack decides which of those it *should*. A composition that names one model everywhere has either not made the decision or has made it once for steps that do not resemble each other.
+
+## Staying in distribution
+
+**Do not invent a language for your workflows to be written in.** A configuration format nobody has seen, a bespoke expression syntax, a custom directive vocabulary -- each one is a thing every agent and every reader must be taught before it can help, and the teaching is paid for on every run and every onboarding.
+
+Ordinary code, ordinary configuration formats and ordinary prompt files are understood already. Staying inside what is widely known is not a stylistic preference; it is what makes the system legible to the actors operating it, and a workflow that requires a manual before an agent can modify it has traded away the agentic access it was built for.
+
 ## Choose the smallest sufficient set
 
 Build the least that does the job. Each row's right-hand column is what to add **only when the situation demands it**, not what to add next.

@@ -19,6 +19,7 @@ Everything here is standalone in the sense the [`foundations/` index](../README.
 | 🎓 [`07_COACHING.md`](07_COACHING.md) | What to teach about this discipline -- the questions, the distinctions worth forcing, the practice ladder |
 | 🛡️ [`08_GATES.md`](08_GATES.md) | The `G0`-`G7` namespace, what a gate validates in code, and why an empty diff is `blocked` rather than `pass` |
 | 🎛️ [`09_CONTROL_PLANE_TESTS.md`](09_CONTROL_PLANE_TESTS.md) | The faults a composition must survive before anything runs it unattended |
+| 🏭 [`10_THE_SOFTWARE_FACTORY.md`](10_THE_SOFTWARE_FACTORY.md) | What a factory is, what it is for, and the three properties without which it is only a workflow |
 | 🧱 [`primitives/`](primitives/README.md) | Blueprints -- what each primitive must contain when you create one |
 
 ## The ideas the rest of it rests on

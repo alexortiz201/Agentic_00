@@ -24,6 +24,7 @@ Terms used throughout and defined nowhere else. They are names, not enums -- not
 | `Core Four` | The four things resolved at every agent invocation: **context, model, prompt, tools.** Chosen per call rather than configured once |
 | `primitive` | One of the building blocks an ADW is composed from -- command, spec, phase, composition, module, record, gate, state, trigger, hook, pinned reference, design document |
 | `blueprint` | The document stating what a primitive must contain when one is created. It is a requirement list, not a schema: it validates nothing |
+| `software factory` | The composed set of workflows, with the code and agents that run them, for one subject. Its purpose is leverage on a prompt. Distinct from the autonomy rung, which says how much of it has earned the right to run unattended |
 | `workgroup` | A set of components worked on together and often run together, and the directory that holds them. Members may be repositories, services, external APIs or scripts. Distinct from `workspace`, which is the single checkout one run operates in |
 
 ## Actors -- who performs a step

@@ -30,6 +30,8 @@ Value in engineering work is now created by three actors, and knowing where to p
 | **Engineer** | Intent, tradeoffs, risk acceptance, judgment on ambiguity | Highest, and not scalable | High, and the only actor that can authorize |
 | **Agent** | Research, synthesis, planning, scoped implementation, diagnosis, review | Per invocation, in tokens and latency | Lowest -- capable, and non-deterministic |
 
+**There is also an ownership asymmetry, and it is easy to miss.** Code is owned: it can be read, changed, pinned and relied on to behave the same next year. A model is rented -- it is versioned by someone else, deprecated on someone else's schedule, and changes behaviour without asking. Work expressed as code is durable in a way work expressed as a dependence on a particular model's judgement is not.
+
 **Code is the underweighted one.** It is free per execution, it cannot hallucinate, it behaves identically every time, and it runs at a speed neither other actor approaches. When a step can be expressed as code, expressing it as an agent call buys nothing and costs reliability. The habit worth building is to ask of every step: *does this require judgment?* If it does not, it is code.
 
 This is also why "use an agent for it" is not an architecture. A workflow made entirely of agents is slower, more expensive, and less predictable than the same workflow with its mechanical steps written as code -- and it is harder to test, because a deterministic step can be asserted on and a probabilistic one can only be sampled.

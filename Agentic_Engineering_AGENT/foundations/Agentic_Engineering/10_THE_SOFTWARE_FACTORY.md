@@ -1,0 +1,37 @@
+# 🏭 The software factory
+
+The composed set of workflows, together with the code and agents that run them, for one subject.
+
+## What it is for
+
+**Leverage on a prompt.** That is the whole purpose, and stating it plainly is what keeps a factory from becoming an end in itself. One sentence of intent enters, and a system of code and agents carries it through work that would otherwise be typed, watched and corrected step by step.
+
+**How much leverage is proportional to what has been invested in it.** At the low end, a few agents chained with some configuration do slightly more than one would. At the high end, code and agents together carry work through end to end without a person in the loop, as well as that person would and sometimes better. There is no threshold between those; there is a continuum, and where a factory sits on it is a function of the work put into its workflows.
+
+This also gives the honest answer to "is this worth building yet". A factory is worth what it saves across every future run, so the calculation is never about the run in front of you. **Design for the thousandth execution, not the first or the tenth.** A workflow that is barely worth the effort once is obviously worth it a thousand times, and one that cannot survive a thousand runs was never a factory, only a long prompt.
+
+## The three properties
+
+A factory that lacks any one of these stops being a factory and becomes a workflow that happened to work once.
+
+**Observable.** Every run exposes what it did: which model ran each phase, the prompts as they were actually compiled, the tools that were available, what each phase cost, what it produced, and what each gate decided. **What is not measured cannot be improved**, and a system whose behaviour can only be inferred from its output is one whose defects can only be found by suffering them. Observability is not a dashboard; it is the precondition for the improvement loop existing at all.
+
+**Customizable.** Every phase resolves its own context, model, prompt and tools. The defaults shipped with a factory are the author's, and the author's tests, thresholds and quality bars are not the adopter's -- so a factory that cannot be re-specified per phase forces its origin's judgement onto every subject it touches.
+
+**Reusable.** It deploys into another subject. A factory that only works where it was born is not a factory; it is one project's workflow, and the investment argument above never pays back because there is no second use to amortise it against.
+
+## Agentic access
+
+A factory must be operable **by an agent**, not only by a person. That means its operations are discoverable, its inputs are stateable in a sentence, and an agent can select and run the right workflow without a human translating intent into invocations.
+
+The reason is the same reason the factory exists. If a person must drive it, the factory's throughput is bounded by that person's typing, and the leverage stops at whatever they can personally supervise. **Anything routinely done by hand is a candidate for being taught**, and the only work that should remain manual is building the system that does the rest.
+
+The practical shape is progressive disclosure: a small always-loaded description of what the factory is and what it can do, plus a routing table from a stated request to the detailed procedure for it, with the detail loaded only when that path is taken. That is the same context discipline applied to operating the system rather than to doing the work -- and it matters more here, because the operating surface is loaded on every single run.
+
+## What a factory is not
+
+**It is not a rung on the autonomy ladder.** The factory is the thing; the rungs describe how much of it has earned the right to run unattended. A factory can be excellent and still correctly sit at the lowest rung because nothing about it has been proven yet, and conflating the two produces a system whose maturity is asserted from its architecture rather than from its record.
+
+**It is not a multi-agent orchestration.** Parallel agents are one technique inside it. A factory that is only agents has declined the cheapest, fastest and most reliable actor available to it, for no reason but fashion.
+
+**It is not finished.** A factory is the thing that is improved, which is why observability is listed first: the loop that improves it is fed by what it reports about itself.
