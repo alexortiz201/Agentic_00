@@ -2,22 +2,13 @@
 # see the README's "Local folders" section for which is which.
 # Both spellings of memory are ignored so a folder created under either name cannot leak.
 #
-# Anchored with a leading slash: these ignore the real folders at the repository root and
-# NOT the copies under templates/layout/, which exist precisely to be committed and handed
-# to an adopter. Unanchored, git matches the name at any depth and silently swallows the
-# templates -- which it did, until this was caught.
+# Anchored with a leading slash on purpose. Unanchored, git matches the name at ANY depth
+# and silently swallowed templates/layout/, whose whole purpose is to be committed and
+# handed to an adopter. The failure was invisible until something checked.
 /.memory/
 /memory/
-*.memory.md
 /.profile/
 /.workgroup/
 
-# A global gitignore on this machine also ignores `.memory/` at any depth, and a repo rule
-# is read after it, so the templates are re-included explicitly. The directory must be
-# un-ignored before its contents can be: git will not look inside an excluded directory.
-!templates/layout/.memory/
-!templates/layout/.memory/**
-!templates/layout/.profile/
-!templates/layout/.profile/**
-!templates/layout/.workgroup/
-!templates/layout/.workgroup/**
+# Agent scratchpad. Declared here rather than globally, for the same reason as above.
+*.memory.md
