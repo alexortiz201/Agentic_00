@@ -24,9 +24,25 @@ A factory that lacks any one of these stops being a factory and becomes a workfl
 
 A factory must be operable **by an agent**, not only by a person. That means its operations are discoverable, its inputs are stateable in a sentence, and an agent can select and run the right workflow without a human translating intent into invocations.
 
+**Agents only command what they can reach.** A capability that exists but is not exposed programmatically does not exist as far as the factory is concerned, and the gap shows up as a specific, diagnosable waste: work an agent performs **only because** it lacks direct access to the thing it needs. Re-deriving state nothing exposes, driving an interface built for a person because no programmatic one exists, reconstructing by inference what could have been read. Every one of those is effort spent on the absence of an interface rather than on the task, and it is paid again on every run.
+
 The reason is the same reason the factory exists. If a person must drive it, the factory's throughput is bounded by that person's typing, and the leverage stops at whatever they can personally supervise. **Anything routinely done by hand is a candidate for being taught**, and the only work that should remain manual is building the system that does the rest.
 
 The practical shape is progressive disclosure: a small always-loaded description of what the factory is and what it can do, plus a routing table from a stated request to the detailed procedure for it, with the detail loaded only when that path is taken. That is the same context discipline applied to operating the system rather than to doing the work -- and it matters more here, because the operating surface is loaded on every single run.
+
+## Running it unattended is an economic decision, not only a safety one
+
+The autonomy ladder governs whether a factory is *safe* to run without supervision. A second question governs whether it is *worth* it, and skipping it produces systems that are trusted, harmless and pointless.
+
+Three levels, in order, and each is a bad place to stop:
+
+1. **Spend.** Run enough work through it to learn anything at all. Necessary, and on its own it is just consumption.
+2. **Make the spending useful.** Establish that what comes out is worth having -- work that would otherwise have been done by hand, done at a standard that holds.
+3. **Attribute the value.** Know what that output is worth, well enough that more spending is a decision rather than a hope.
+
+**Only after the third does continuous running make sense.** A factory that runs on a schedule without producing attributable value is a cost with a timetable, and it will be discovered as one eventually, by someone who cancels it along with everything next to it.
+
+The inversion is worth stating because it reads as counterintuitive: once value is attributed, **a rising bill is a signal of throughput rather than a problem to be managed.** Before it is attributed, the same rising bill is only a rising bill. Spending more is not a strategy; spending more *on work whose value is known* is.
 
 ## What a factory is not
 

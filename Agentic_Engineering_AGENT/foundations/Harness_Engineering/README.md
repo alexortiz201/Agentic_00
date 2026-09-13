@@ -30,6 +30,14 @@ Almost all of portability is holding three things apart, and almost all of the d
 
 **The test for whether the seams are real:** can you name the file you would have to change to run on a different harness? If the answer is "several, and I would have to look", the adapter does not exist yet.
 
+## Control over the harness is a ceiling on specialization
+
+A harness you cannot modify decides, on your behalf, what your agents are able to do. Everything you might specialize -- a purpose-built agent for one domain, a verification pass that always runs, a delegation shape, a fallback when a model is unavailable -- exists only if the harness admits it. **The degree of control you hold over the harness therefore bounds the ceiling of what you can build, regardless of how good your workflows are.**
+
+That is not an argument for building one. It is an argument for knowing which ceiling you are under, because the cost of the constraint is invisible until you try to exceed it and discover the attempt was never possible. A harness that cannot be extended is a fine place to start and a poor place to finish, and the honest question is whether the thing you cannot do yet is a thing you will need.
+
+**Specialization is where the advantage is.** A general-purpose agent is available to everyone; an agent shaped around one domain's failure modes, conventions and checks is not. Where the harness permits it, that shaping is the highest-return investment available -- and where it does not, the [capability surface](01_THE_CAPABILITY_SURFACE.md) is how you find out before committing to it.
+
 ## What conformance means here
 
 A harness is not evaluated on its feature list. It is evaluated against [the capability surface](01_THE_CAPABILITY_SURFACE.md) -- the set of things a workflow is allowed to depend on. A harness either satisfies a capability, satisfies it differently, or does not satisfy it.
