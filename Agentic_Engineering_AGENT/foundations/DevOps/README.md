@@ -24,6 +24,9 @@ Concretely: isolation and sandboxes, environments and the movement of data betwe
 
 ## Topics in scope but not yet written
 
-Named so a reader can tell missing from hidden. If you want one of these, it is not here yet: CI gating, and the observability of running systems.
+**Observability of a running system** is defined in [`Software_Engineering/04_OBSERVABILITY.md`](../Software_Engineering/04_OBSERVABILITY.md), because the definition holds with agents removed. What belongs here when it is written is the *operational* half -- where signals are collected, how long they are retained, what alerts on them.
+
+
+Named so a reader can tell missing from hidden. If you want one of these, it is not here yet: CI gating of running systems.
 
 Material for both currently sits in [`Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md`](../Agentic_Engineering/03_AUTHORITY_AND_SAFETY.md) and [`04_VERIFICATION.md`](../Agentic_Engineering/04_VERIFICATION.md), and moves here as each topic is worked in depth rather than all at once. A topic earns a file when it is being dug into, not when it is mentioned.
