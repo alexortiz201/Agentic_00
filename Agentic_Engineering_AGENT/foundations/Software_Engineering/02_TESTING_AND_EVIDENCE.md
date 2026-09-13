@@ -85,6 +85,14 @@ This passes every check that only asks whether the test failed, which is most of
 
 The same question closes the other half of it: **if the defect were present, would this assertion produce a different result?** A check that cannot fail is worse than no check, and the concrete tell is an assertion whose expected and actual values are equal by construction -- it will hold whatever the code does.
 
+## What a test cannot do
+
+Everything above assumes the thing under test returns the same answer twice. Where it does not -- a step whose output is generated rather than computed -- an assertion is the wrong instrument, and forcing one produces either a test so loose it cannot fail or one so tight it fails on acceptable output.
+
+**A test asserts; an evaluation measures.** The deterministic parts of a system are tested and the probabilistic parts are evaluated, and a system with both needs both. See [`Agentic_Engineering/12_EVALUATIONS.md`](../Agentic_Engineering/12_EVALUATIONS.md).
+
+The boundary is worth policing in both directions. A deterministic step measured statistically is a test someone declined to write. A probabilistic step asserted against is a flaky test that will be re-run until it passes.
+
 ## Flake adjudication
 
 ### Do not create the contention you will then have to adjudicate

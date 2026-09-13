@@ -19,6 +19,7 @@ Everything here is standalone in the sense the [`foundations/` index](../README.
 | 🎓 [`07_COACHING.md`](07_COACHING.md) | What to teach about this discipline -- the questions, the distinctions worth forcing, the practice ladder |
 | 🛡️ [`08_GATES.md`](08_GATES.md) | The `G0`-`G7` namespace, what a gate validates in code, and why an empty diff is `blocked` rather than `pass` |
 | 🎛️ [`09_CONTROL_PLANE_TESTS.md`](09_CONTROL_PLANE_TESTS.md) | The faults a composition must survive before anything runs it unattended |
+| 📊 [`12_EVALUATIONS.md`](12_EVALUATIONS.md) | Measuring what cannot be asserted, and comparing two models honestly |
 | 🔬 [`11_OBSERVABILITY.md`](11_OBSERVABILITY.md) | What changes when the subject is a run, and when the observer is the run itself |
 | 🏭 [`10_THE_SOFTWARE_FACTORY.md`](10_THE_SOFTWARE_FACTORY.md) | What a factory is, what it is for, and the three properties without which it is only a workflow |
 | 🧱 [`primitives/`](primitives/README.md) | Blueprints -- what each primitive must contain when you create one |

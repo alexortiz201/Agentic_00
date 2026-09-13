@@ -72,6 +72,8 @@ The usual argument for deterministic orchestration is control: gates hold, state
 
 **A workflow whose context, prompts and tooling are assembled deterministically can be measured.** Swap the model and the only thing that changed is the model, so the comparison means something. Version the prompt and the diff is reviewable, because the prompt is a file rather than a thing that was typed once. Replay the run and it replays, because nothing load-bearing lived in a conversation nobody kept.
 
+The instrument that turns that property into an actual number is an [evaluation](12_EVALUATIONS.md); deterministic assembly is what makes one possible.
+
 None of that is available to a workflow assembled by hand each time. Two runs differ in ways nobody recorded, so a better result proves nothing and a worse one diagnoses nothing. **Reproducibility is what turns an opinion about a workflow into a finding about it.**
 
 ## Bounded autonomy
