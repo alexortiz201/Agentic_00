@@ -32,6 +32,10 @@ Phase and gate records carry four status-like vocabularies, deliberately disjoin
 
 `G2` and `G6` are not ADW-only. A supervised session delegating to a subagent runs `G2` by hand; a supervised session that changed an interface runs `G6` in the `documenting` state. A gate with no phase to run in is a gate that does not exist.
 
+## A run may hold several workspaces
+
+Each gate records **which workspace it observed**. In a single-workspace run that field is bookkeeping. In a run spanning several components it is the thing that separates a real pass from a confident pass over the wrong tree, and the wrong tree is no longer an unlikely accident -- it is one resolution mistake away, every time.
+
 ## A deferral is gated on its side effect, never on its report
 
 **A deferral's return value is not a contract.** When a phase invokes a workflow it does not own, the thing that comes back is whatever that workflow chose to say -- frequently model-generated prose, shaped by nothing the caller declared. For a prompt you authored the fix is an output contract; for a deferral there is no contract to declare, because you do not own the callee.

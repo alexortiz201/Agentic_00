@@ -19,6 +19,8 @@ The move this discipline asks for: **template your engineering and teach agents 
 
 That is also the test of where something belongs. **If deleting the agentic layer would take the product with it, it was built in the wrong place.**
 
+**A workflow is validated by the thing it operates on.** That subject may be a codebase, a running system, a set of external services, or a machine -- what it may not be is nothing. A layer built at a distance from its own subject can be read and not run, and every assumption it encoded is tested at once on first contact with the real thing, which is the most expensive moment to discover them. Note that the subject need not be an application: a workflow whose subject is a set of external services is validated by those services, on the same terms.
+
 ## The twelve leverage points
 
 A diagnostic checklist, not twelve services to build.

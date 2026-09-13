@@ -75,6 +75,12 @@ That is enough to do real work. Everything else is added when something forces i
 
 **Read that table as a growth path, not a checklist.** Each row names the evidence that justifies the addition; adding a row without its evidence is building a platform before there is a project.
 
+## A layer above other layers
+
+A workgroup's layer owns only what it alone can know: which components are involved, what must be running, and the order across them. Everything specific to a component is **invoked** from that component's own layer and never restated above it. A higher layer that knows how to test a component has become a second definition of that component's tests, and two definitions drift -- this is the invoke-rather-than-restate rule at a different altitude, and it fails the same way.
+
+Before acting across components, a run resolves which of them the work actually touches. Bringing everything up is waste; bringing the wrong subset up produces a reproduction that is not one. **The cheapest check on that resolution is usually the work itself** -- a reproduction that fails because the wrong components were running fails diagnostically, so no separate gate is needed to confirm the scope was chosen correctly.
+
 ## Context size is model selection
 
 Decomposition is usually argued from maintainability and blast radius. There is a harder constraint underneath, and it decides things the other arguments cannot.

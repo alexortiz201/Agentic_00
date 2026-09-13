@@ -49,6 +49,7 @@ This table drifts the moment a file is added without updating it. If it disagree
 | `adws/` | Where ADWs are today versus where they are going |
 | `proposals/` | Proposed changes to this package, each promotable to a spec |
 | `package_cleanup.md` | The in-progress cleanup -- what is settled, what is still open |
+| `running_context.md` | What is true about this package right now -- shape, standing rules, gates. Outlives a run |
 | `todo_list.md` | The run in progress. Wiped at the end of every run |
 | `engineer_growth.md`, `engineer_preferences.md` | Who this package is being operated by, and what they have asked for |
 | `foundations_audit.md` | `foundations/` measured against the external manual it answers to |
@@ -60,7 +61,9 @@ One topic per file. Keep them short and current -- **correct a stale fact in pla
 
 What belongs: facts about the target environment that would otherwise be rediscovered -- its de-facto tooling, known limits of the current approach, gaps between where things are and where they are going -- plus the working state of the run in progress. What does not: anything that belongs in this package's tracked documentation, because a decision recorded only here is a decision nobody else can review.
 
-**`todo_list.md` is the run's working plan.** It is written before the work starts, worked top to bottom, rewritten as the work reveals things, and **wiped clean at the end of every run**. The wipe is the part that matters: a list left behind is read by the next session as outstanding work, and a stale list is worse than no list because it looks authoritative. Finishing the work and clearing the list are one step.
+**`running_context.md` carries what a fresh session needs and `todo_list.md` carries the run.** The first holds durable state -- the package's shape, the rules in force, where the gates stand -- and is corrected in place rather than appended to. Keep it to a screen; longer than that and it has become a log.
+
+**`todo_list.md` is the run's working plan**, as bulleted actionable steps. It is written before the work starts, worked top to bottom, rewritten as the work reveals things, and **wiped clean at the end of every run**. The wipe is the part that matters: a list left behind is read by the next session as outstanding work, and a stale list is worse than no list because it looks authoritative. Finishing the work and clearing the list are one step.
 
 A generated workflow running out of a target project keeps its own run state under its own run artifacts, not here.
 
