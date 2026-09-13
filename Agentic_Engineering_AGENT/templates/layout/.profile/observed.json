@@ -1,0 +1,10 @@
+{
+  "_comment": "Facts about this machine, written by the walkthrough from what it probed. Not hand-authored: a hand-written fact is a belief. Every entry carries when it was seen, because a fact with no observation date cannot be told from a stale one.",
+  "schema_version": 1,
+  "observed_at": null,
+  "workgroup_root": null,
+  "members": {},
+  "tools": {},
+  "version_managers": {},
+  "harnesses": {}
+}
