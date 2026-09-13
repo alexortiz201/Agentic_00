@@ -34,6 +34,24 @@ How a result is scored matters more than how many cases are scored, because a ba
 
 Where a model judge is used anyway, and sometimes it is the only option: fix its prompt and model as carefully as the thing under test, calibrate it against human judgments on a subset, and re-calibrate whenever either model changes. **An uncalibrated judge is an opinion with a number attached.**
 
+## Identity leaks, and it changes behaviour
+
+When several actors see each other's work -- in a debate, a judgment, a review -- **do not reveal which model produced which output.** Name the participants neutrally and keep the mapping outside what they can see.
+
+Identity is not inert information. Where a model can tell whose answer it is looking at, behaviour shifts in ways that have nothing to do with the content: deference to a name it recognises as stronger, contrarianism toward a name it treats as a rival, and agreement driven by provenance rather than by argument. The effect is a confound running through every comparison built on top of it, and it is invisible in the output, because a position stated for the wrong reason reads exactly like one stated for the right reason.
+
+This is the same defect as an uncalibrated judge, arriving by a different route. There, the scorer's preferences contaminate the score; here, the participants' preferences about each other contaminate what is being scored.
+
+**The practical rule: an actor sees the content and never the source.** That includes indirect leaks -- a house style, a signature preamble, a distinctive output shape. If the participants can identify each other from the text alone, the anonymisation is decorative.
+
+## Convergence is evidence only when it is independent
+
+Several actors reaching the same conclusion is worth something, and worth **much less** once they have seen each other. Independent agreement is corroboration: no shared influence explains it, so the explanation is likely the thing itself. Agreement after exposure may be nothing more than the first confident answer propagating.
+
+So record which regime produced the agreement, and prefer the independent pass when the question is *what is true*. Reserve the shared pass for *what survives challenge*, which is a different and also useful question.
+
+**Persistent disagreement is a result, not a failure of the method.** Actors that hold their positions under challenge have located a genuine ambiguity, and reporting it as unresolved is more useful than forcing a consensus the evidence does not support.
+
 ## One run is not a sample
 
 A single execution of a non-deterministic step tells you very little, and the instinct carried over from testing -- run it, read the result -- is wrong here in a way that produces confident nonsense.

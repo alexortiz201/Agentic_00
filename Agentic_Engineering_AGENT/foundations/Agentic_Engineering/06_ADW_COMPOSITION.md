@@ -87,6 +87,8 @@ Decomposition is usually argued from maintainability and blast radius. There is 
 
 **What a step must load before it can run determines which models it can run on.** A step that needs forty thousand tokens of library in front of it can never run on a small fast model -- not because its reasoning is hard, but because its preamble is big. A monolithic context forces a monolithic model choice, and that choice is then made for every step in the composition by whichever step needs the most.
 
+Cost does not scale smoothly with it either. Providers commonly price a long context at a higher rate past some threshold, so the same work can cost several times more for crossing a line nothing in the workflow mentions. A step sitting just under such a threshold is one careless addition to its preamble away from a step that costs double, and nothing will report the change except the bill.
+
 It decides concurrency too. **Small-context steps fan out; large-context steps serialize**, whether or not the work is logically parallel, because the constraint is what each invocation has to carry rather than what it has to do.
 
 So the question to ask of every step is: **what is the minimum an agent must load to perform this correctly?** That number is simultaneously the composition boundary and the model-tier boundary. Where it is large for a step whose work is mechanical, the boundary is drawn in the wrong place.
@@ -94,6 +96,18 @@ So the question to ask of every step is: **what is the minimum an agent must loa
 The corollary for shared material: **centralize the contract, decentralize the content.** A step declares the shape of the context it needs and the caller supplies it. What genuinely belongs in one place is anything whose cardinality is greater than one -- a thing that must agree across callers. Everything else is payload, and payload carried centrally is paid for by every step that did not need it.
 
 A worked case, from a real in-house workflow library: roughly four hundred and forty markdown files totalling about three quarters of a million tokens, with single entry points pulling sixty to seventy thousand tokens before doing any work. Boundaries there had been drawn by topic -- one kind of ticket, one file -- rather than by what has to load together, and the effect was that the cheapest, most mechanical phases were priced at the same tier as the most demanding one.
+
+## Several agents against one question
+
+Parallelism in this package has meant independent work split across workers. The other kind runs **several agents against the same question** and treats the relationship between their answers as the output. Three shapes, in increasing cost and increasing power:
+
+- **Independent opinion.** Each answers alone, seeing nothing from the others. Cheap, fully parallel, and the result is a spread rather than an answer. **Agreement between actors that could not influence each other is real evidence**; agreement between actors that saw each other's work is much weaker, and the difference is worth protecting deliberately.
+- **Debate.** Each sees the others' positions and may revise, across rounds. More expensive, and the useful output is not the final answer but **what moved and what did not** -- a position held under challenge is a different claim from one asserted once.
+- **Collaboration.** Each proposes a plan, one synthesizes them into an assigned sequence, then the work is executed against it. The most expensive and the only one that produces a build rather than a judgment.
+
+**Put the strongest model on synthesis, not on production.** Where one actor reconciles several proposals, that seat decides what the whole exercise yields, and a weaker model there wastes everything spent on the proposals. The inverse is also true: strong models generating parallel drafts that a weak one then reconciles is the most expensive way to get a mediocre answer.
+
+**These cost multiples of a single run.** Reserve them for decisions whose blast radius justifies it -- a choice that binds for months, an irreversible migration, an architecture that everything else will be built against. For everything else, one competent actor and a real check is the better trade.
 
 ## A stack of models, not a model
 
