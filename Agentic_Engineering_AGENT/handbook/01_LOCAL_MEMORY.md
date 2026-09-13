@@ -67,6 +67,50 @@ What belongs: facts about the target environment that would otherwise be redisco
 
 A generated workflow running out of a target project keeps its own run state under its own run artifacts, not here.
 
+## `clean_up_hook`
+
+**Event: a todo item entering the closed state.** Not the end of the run, and not a periodic tidy. The transition is the trigger, so the sweep happens while the person or agent that made the change still knows what it touched.
+
+It is an [observing hook](../foundations/Agentic_Engineering/primitives/hook.md) and follows that primitive: it never raises, and a failure inside it must not take the run with it. It guards nothing and blocks nothing -- by the time it fires, the work is already done.
+
+### What it sweeps
+
+Every local store, not only the one the work happened in:
+
+- `.memory/` -- `running_context.md`, `todo_list.md`, and every topic note.
+- `.profile/` -- where a completion changed what the operator's setup actually is.
+- `.workgroup/<member>/` -- including `PRs/` and any todo list held there.
+
+### The three motions
+
+Only the first happens by itself, which is why the other two are named.
+
+- **Update** what is still true but now says something outdated: a revision that moved, a count that changed, a status that advanced, a figure read before the thing it measured changed.
+- **Clean** what has become misleading: a caveat that no longer applies, a "not built" beside something now built, a workaround for a problem since fixed, a risk that has been retired.
+- **Delete** what the completion made pointless. A note whose entire purpose was to remember an unfinished thing has no purpose once it is finished, and leaving it makes true and false entries indistinguishable at a glance.
+
+### Rules
+
+- **Verify before retiring.** A record is closed against the source it describes -- the tracker, the forge, the working tree -- never against the belief that the work was finished. An item retired on an assumption is the same defect the sweep exists to prevent, committed by the thing meant to prevent it.
+- **Say what was dropped and why**, in the store, when a reader might later go looking for it. A deletion nobody can account for reads as loss rather than as cleanup.
+- **Do not let the sweep write new claims.** It reconciles existing records against what is now true; anything genuinely new belongs in a note of its own, authored deliberately.
+
+### Why the trigger is the transition
+
+Deferring it to the end of the run is what produces the stale file. By then the completions are recalled in the order they are memorable rather than the order they touched things, and the note nobody thinks of is exactly the one nothing else will correct.
+
+The cost is paid on read rather than on write, which is what makes the interruption worth it. These folders are loaded at the start of the next session and treated as current, so a stale line is not clutter -- it is a false premise the next run reasons from before anyone thinks to check it against the repository. That is the same defect as [an inherited claim treated as an input](../foundations/Agentic_Engineering/04_VERIFICATION.md), arriving through your own notes instead of through a handoff.
+
+## Per-ticket records live under `PRs/`
+
+Work tied to a tracker item gets **its own file, addressed by the ticket**: `.workgroup/<member>/PRs/<TICKET>.md`.
+
+The ticket identifier is the filename rather than the pull-request number, because the ticket is the stable identity -- one ticket may open several pull requests, a closed one may be reopened, and a ticket often exists before any PR does. The PR number is a field inside the file.
+
+This is what makes `clean_up_hook` able to do its job. State buried inside one long running document cannot be retired by ticket, because nothing can find the boundary of what a given closure made obsolete. **A per-ticket file has an obvious end state: the ticket closes, the file is reconciled against the tracker and then removed.**
+
+Each file holds what the next person needs before touching that work: the tracker and pull-request identifiers with the state each was last **observed** in and when, the branch or worktree, what actually changed, what review has said, and anything known to be wrong in the ticket's own write-up. Not a narrative of the work -- the diff and the tracker hold that.
+
 ## Artifacts
 
 Anything longer than a note -- a proposal, a design, an investigation -- goes in a topic folder under the same rules, so nothing is lost and each piece stays promotable on its own:
