@@ -32,6 +32,14 @@ Phase and gate records carry four status-like vocabularies, deliberately disjoin
 
 `G2` and `G6` are not ADW-only. A supervised session delegating to a subagent runs `G2` by hand; a supervised session that changed an interface runs `G6` in the `documenting` state. A gate with no phase to run in is a gate that does not exist.
 
+## A deferral is gated on its side effect, never on its report
+
+**A deferral's return value is not a contract.** When a phase invokes a workflow it does not own, the thing that comes back is whatever that workflow chose to say -- frequently model-generated prose, shaped by nothing the caller declared. For a prompt you authored the fix is an output contract; for a deferral there is no contract to declare, because you do not own the callee.
+
+So the gate binds to **the side effect the deferral was invoked to produce** -- the artifact on disk, the record in the system, the state that changed -- read back independently, and never to the callee's own account of having produced it. **A deferral with no independent read of its side effect has no gate at all**, however confident the text it returned.
+
+This is the same rule as refusing to parse a path out of arbitrary prose, applied one level up: there, the defect is trusting the shape of the output; here, it is trusting that the output describes reality.
+
 ## Validate handoffs in code
 
 - Match schema version, task/run/phase/attempt, configured model/tools/cwd and expected artifact kinds.

@@ -42,7 +42,7 @@ Loading everything contradicts this package's own rule about context, so the res
 | 🗂️ [`handbook/02_RUN_ARTIFACTS.md`](handbook/02_RUN_ARTIFACTS.md) | Write anything into `runs/<run_id>/` |
 | 🩺 [`handbook/03_STRUCTURAL_CHECK.md`](handbook/03_STRUCTURAL_CHECK.md) | Confirm a move or rename did not break the package |
 
-This package **describes** how workflows are constructed and where they go, and it generates them into a target project -- it does not hold them. It ships no workflows of its own and no application code. The one thing it does execute is its own [structural check](handbook/03_STRUCTURAL_CHECK.md). Generated output belongs to the target project.
+This package **describes** how workflows are constructed and where they go. **It does not hold them, scaffold them, or execute them** -- that was decided explicitly, not by omission, and it has no runtime and should not grow one. A workflow built for an organization lives in that organization's own library; what this package contributes is the discipline it was built against. The one thing here that executes is its own [structural check](handbook/03_STRUCTURAL_CHECK.md).
 
 ## Starting a session cold
 

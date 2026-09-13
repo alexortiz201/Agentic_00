@@ -34,6 +34,25 @@ Test for a conformant review record: a gate can decide using `disposition` alone
 
 **Reviewer output is advisory until an independent gate accepts it** -- the rule is in [`Software_Engineering/03_CODE_REVIEW.md`](../Software_Engineering/03_CODE_REVIEW.md), and agents are what make it a live risk rather than a formality. An agent review returns on every run, returns quickly, and returns something that reads like a decision; at that volume an approval consumed as a gate result is the path of least resistance, and approval quietly becomes authorization. The reviewing agent cannot authorize its own findings any more than the building agent can authorize its own work.
 
+## An inherited claim is a hypothesis, not an input
+
+Everything above governs claims a run **emits**. The symmetric case is more common and has no rule: a phase reads what a work item, a predecessor phase or a prior agent said, and reasons from it. No gate is involved and no rule is broken, and every conclusion downstream now rests on a claim nobody tested.
+
+**A claim arrives at the provenance it was recorded with** -- usually `asserted` or `documented`. A phase that acts on it either promotes it by observing independently and records that, or carries it forward still marked unverified. Reading a predecessor's prose and treating it as established is promoting a weaker claim into a stronger one, which is prohibited everywhere else and is easy to miss here because it happens by reading rather than by writing.
+
+Agentic work makes this acute: every phase boundary hands over fluent, confident prose, and compact handoffs deliberately strip the context a reader would need in order to doubt it.
+
+- **Enumerate the distinct claims before testing any of them.** A report naming a symptom, a cause, and the link between them is three claims, not one, and they fail independently.
+- **Say which claims remain unexplained.** A pass where every stated claim resolved but a symptom is still unaccounted for is not finished, and reporting it as finished is how a wrong diagnosis survives into the fix.
+
+## Verify by prediction, not by observation
+
+Everything this document asks for is retrospective -- it validates records of things that already ran. That is exactly the gap a fluent post-hoc account walks through, because the actor writing the record is the one that chose what to put in it.
+
+**State a falsifiable prediction before the run, then run it.** This configuration fails, that one passes, and the discriminator is the named thing. A diagnosis that only explains results after seeing them is not a diagnosis yet; it is a story that fits. The finding is confirmed when one variable separates every pass from every fail with no exceptions, and a single exception is the whole result.
+
+This is the one instrument that structurally prevents narrating a conclusion into place, and it costs one sentence written down before the evidence exists.
+
 ## Test the control plane, not the files
 
 For workflow implementation, also test the [control-plane failure cases](09_CONTROL_PLANE_TESTS.md) before unattended adoption. **Static file/link validation is not an end-to-end ADW test** -- it establishes that the workflow is well-formed, not that it runs, and the failures that matter unattended are the ones that only appear when it does.

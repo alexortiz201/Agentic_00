@@ -66,4 +66,4 @@ The port-contract-in-a-file detail is worth keeping deliberately: the contract l
 
 ## Where ADWs live for a given project
 
-**This package generates ADWs; it does not hold them.** The output goes to the target project's own agentic layer. Record the target and its layout in `.memory/` when it differs from the above.
+**This package describes how ADWs are built; it neither holds nor generates them.** What it describes is built in the adopting organization's own library, and lives there.

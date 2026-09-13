@@ -77,6 +77,14 @@ Re-running until green is one way. **Weakening the assertion is the commoner one
 
 Add or update tests without weakening what they assert to obtain green. Do not delete or skip assertions, do not widen a tolerance to swallow the failure, and do not redefine acceptance so the current behaviour qualifies. A check that was changed to pass is evidence about the check, not about the code.
 
+## Never manufacture a red either
+
+The mirror of the section above, and the one nothing checks. A reproduction is supposed to fail **because the defect is present**. A test that errors because a module does not exist yet, an import is wrong, a fixture is missing or a path is stale is not a reproduction -- it proves nothing about the defect, and it will go green the moment the unrelated mistake is fixed, which reads exactly like a fix.
+
+This passes every check that only asks whether the test failed, which is most of them. **Read the failure, not the status.** A red whose message is not the defect's message is a red for the wrong reason.
+
+The same question closes the other half of it: **if the defect were present, would this assertion produce a different result?** A check that cannot fail is worse than no check, and the concrete tell is an assertion whose expected and actual values are equal by construction -- it will hold whatever the code does.
+
 ## Flake adjudication
 
 ### Do not create the contention you will then have to adjudicate
