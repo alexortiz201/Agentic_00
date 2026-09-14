@@ -12,7 +12,21 @@ Distinct from [code review](03_CODE_REVIEW.md), which evaluates whether a change
 
 So: if a bullet needs a paragraph to justify it, the paragraph belongs somewhere else. The test is whether a line describes **what moved** or **why it should have**.
 
-**Nothing that is not what changed belongs in the message.** This is the general rule that covers generated footers, tooling signatures and authorship markers: none of them describe the change, so none of them are the message's content.
+**Nothing that is not what changed belongs in the message.** Generated footers, tooling signatures and authorship markers describe the circumstances of the writing rather than the change, so none of them are the message's content.
+
+### Never append authorship
+
+**A version control system already records who authored a commit.** It is a field on the commit, it is what every tool reads to answer the question, and where commits are signed it is the only answer that can be trusted. **A footer naming an author, a tool or a model duplicates a field that already exists** -- and a duplicate of an identity is worse than no duplicate, because the two can disagree and only one of them is authoritative.
+
+So it is not a matter of taste. The trailer:
+
+- **Restates the author field**, less reliably, in a place nothing queries.
+- **Can contradict it**, at which point a reader has to know which to believe.
+- **Cannot be corrected**, since the message cannot be edited, while the author field travels with a commit that can be re-signed.
+- **Accumulates**, because it is appended by default rather than written on purpose, until every message in a history carries the same lines and none of them carry information.
+
+**A message ends on its last substantive line.** Where tooling appends such a trailer by default, that default is turned off; a convention that adds noise to every commit in a repository is not a convention worth inheriting.
+
 
 ## What must never appear
 
