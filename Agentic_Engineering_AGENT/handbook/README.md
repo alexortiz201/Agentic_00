@@ -45,6 +45,7 @@ The worked example, because it is the most common arrival and every other kind o
 | 📋 [`08_GATE_ENFORCEMENT_CENSUS.md`](08_GATE_ENFORCEMENT_CENSUS.md) | Counting what actually holds each gate shut, so enforcement can be watched over time |
 | 🚪 [`09_ADOPTING_A_REPOSITORY.md`](09_ADOPTING_A_REPOSITORY.md) | Arriving somewhere new: observe, scaffold, wrangle, replace, factory — and where to stop |
 | [`10_OBSERVING_A_PROCESS.md`](10_OBSERVING_A_PROCESS.md) | Record work as it happens, so a workflow can be derived from what occurred rather than from what was recalled |
+| [`11_VERIFYING_IN_A_BROWSER.md`](11_VERIFYING_IN_A_BROWSER.md) | Check a change in the running application — why the browser phase serialises, what to capture, and how to leave nothing behind |
 
 ## The split with `foundations/`
 
