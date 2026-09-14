@@ -11,6 +11,7 @@ The agentic side rests on this area rather than restating it. Where a rule here 
 | 📐 [`01_SDLC_SOFTWARE_DEVELOPMENT_LIFECYCLE.md`](01_SDLC_SOFTWARE_DEVELOPMENT_LIFECYCLE.md) | What the software development life cycle is, what each phase is *for*, and why naming it correctly matters |
 | ⚖️ [`02_TESTING_AND_EVIDENCE.md`](02_TESTING_AND_EVIDENCE.md) | Which checks establish what, what order to spend them in, what a record of a check has to contain, and how a failure that may not be about the code is adjudicated |
 | 🔭 [`04_OBSERVABILITY.md`](04_OBSERVABILITY.md) | Answering questions about a running system from what it already emits |
+| 📝 [`05_CONTRIBUTING_A_CHANGE.md`](05_CONTRIBUTING_A_CHANGE.md) | What a change publishes about itself -- message form, what must never appear in one, and why history is not editable |
 | 🔎 [`03_CODE_REVIEW.md`](03_CODE_REVIEW.md) | What a review inspects, what a finding carries, and why an approving review is a finding rather than a decision |
 
 ## What belongs here

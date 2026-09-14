@@ -6,6 +6,7 @@ Handling a credential is not the same as needing one. **Inspect names and file e
 
 - **Redact secrets from commands, logs, URLs, screenshots, state and handoffs.** Every one of those is a durable surface that outlives the run and is read by people and systems the run never enumerated. A secret in a URL is a secret in a proxy log.
 - **Never persist secrets in source, task artifacts or version control.** History is the worst place to put one, because removing it later requires rewriting the history rather than deleting a line, and every copy taken in the interim is already gone.
+- **A commit message, a pull request body and a changelog entry are each such a surface**, and none of them is covered by whatever guards the files -- ignore rules and fenced directories operate on content, not on what is said about it. See [`Software_Engineering/05`](../Software_Engineering/05_CONTRIBUTING_A_CHANGE.md).
 
 ## Moving data between environments
 
