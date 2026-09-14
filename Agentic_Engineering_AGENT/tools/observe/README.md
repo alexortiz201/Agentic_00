@@ -13,12 +13,15 @@ bun tools/observe/observe.ts open   --subject <s> [--model <m>] [--harness <h>] 
 bun tools/observe/observe.ts add    --kind <kind> --what <text> [--effect read|write] [--step <s>] [--out-of-band] [--<field> <v> ...]
 bun tools/observe/observe.ts label  --seq <n> --step <s>
 bun tools/observe/observe.ts close  [--why completed|abandoned|interrupted]
-bun tools/observe/observe.ts status
+bun tools/observe/observe.ts status [--obs <id>]
+bun tools/observe/observe.ts brief  [--subject <ticket>]
 ```
 
 `OBSERVE_DIR` sets where recordings land -- point it at the subject's own workgroup folder, since the subject owns its recordings. Default is `./observations`.
 
 Unrecognised flags ride along as kind-specific fields, so `--cmd`, `--exit`, `--surface`, `--asked`, `--outcome`, `--to` and `--reconciled_by` need no special casing. `exit` and `reconciled_by` are coerced to numbers; nothing else is, because blanket coercion turns a version like `1.20` into `1.2`.
+
+**`brief` is how a caller instructs a recorder.** It prints the current recording instructions, so a prompt references this command instead of pasting its own copy. The copy is the failure mode: three prompts were once written with the instructions typed in, and the first change to the gap contract made all three wrong without any of them noticing.
 
 ## Two behaviours worth knowing
 

@@ -212,6 +212,45 @@ const status = async (flags: Record<string, string | true>): Promise<void> => {
     console.log(`  record: ${recordPath(obsId)}`);
 };
 
+
+/**
+ * Prints the instructions a recorder is given. It exists so that a caller hands out a
+ * *reference* rather than pasted text: instructions retyped into each prompt go stale the
+ * first time this tool changes, and nothing announces that they have.
+ */
+const brief = async (flags: Record<string, string | true>): Promise<void> => {
+    const subject = typeof flags.subject === 'string' ? flags.subject : '<ticket>';
+    const dir = root();
+    console.log(`## Record what you do, as you do it
+
+Open a recording before anything else, and use the id it prints on every later call:
+
+\`\`\`
+export OBSERVE_DIR=${dir}
+cd ${process.cwd()}
+bun tools/observe/observe.ts open --subject ${subject} --model <model> --harness <harness> --workspace <path>
+\`\`\`
+
+Then record each discrete thing you do:
+
+\`\`\`
+observe add --obs <id> --kind command  --what "<why you ran it>" --cmd "<command>" --exit <code> --effect read|write
+observe add --obs <id> --kind decision --what "<what you concluded>" --among "<options>" --chose "<choice>"
+observe add --obs <id> --kind prompt   --what "<what you asked for>" --asked "<the ask>" --outcome "<what actually happened>"
+observe add --obs <id> --kind ui       --what "<what you did>" --surface "<where>"
+observe add --obs <id> --kind handoff  --what "<what you handed off>" --to "<who>" --reconciled_by <seq|null>
+observe add --obs <id> --kind gap      --what "<what you could not see>" --why "<reason>" --tool "<what could not look>" --disposition deferred|unobservable|not_permitted
+\`\`\`
+
+Rules:
+
+- **A gap requires \`--tool\` and \`--disposition\`.** \`deferred\` = a later phase can see it. \`unobservable\` = nothing available can. \`not_permitted\` = the instrument declined — which reads exactly like an absent value and is the one that misleads.
+- **Record dead ends and false starts.** A record of only the successful path produces a workflow that cannot recover, which is the most common way these fail.
+- **Mark a digression \`--out-of-band\`** rather than leaving it out. How often work is interrupted is itself a finding.
+- **A \`prompt\` carries its \`outcome\`**, not just the ask — the ask does not determine the result, so the result is the fact.
+- **Close it when you finish**: \`observe close --obs <id> --why completed|abandoned|interrupted\`. A recording with no terminator cannot be told from one still running.`);
+};
+
 const USAGE = `observe — record work as it happens, so a workflow can be derived from it
 
   open   --subject <ticket> [--model <m>] [--harness <h>] [--workspace <p>]   → prints <ticket>_<id>
@@ -219,6 +258,7 @@ const USAGE = `observe — record work as it happens, so a workflow can be deriv
   label  --seq <n> --step <s> [--obs <id>]     assign a step to an earlier entry
   close  [--why ${CLOSE_REASONS.join('|')}] [--obs <id>]
   status [--obs <id>]
+  brief  [--subject <ticket>]                  print the instructions to hand a recorder
 
 Writes to $OBSERVE_DIR (default ./observations). Off unless opened.
 Several recordings may be open at once, including several on one ticket. --obs is optional
@@ -233,7 +273,8 @@ const main = async (): Promise<void> => {
         add: () => add(flags),
         label: () => label(flags),
         close: () => close(flags),
-        status: () => status(flags)
+        status: () => status(flags),
+        brief: () => brief(flags)
     };
     const route = routes[command ?? ''];
     if (!route) {
