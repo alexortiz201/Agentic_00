@@ -85,6 +85,18 @@ This passes every check that only asks whether the test failed, which is most of
 
 The same question closes the other half of it: **if the defect were present, would this assertion produce a different result?** A check that cannot fail is worse than no check, and the concrete tell is an assertion whose expected and actual values are equal by construction -- it will hold whatever the code does.
 
+## An empty result is a claim, and nothing announces when it is wrong
+
+A search that returns nothing reads as *there are none*, which is a finding. It is indistinguishable from a search that was never able to return anything, because **both produce the same output**: silence.
+
+This is the failure mode of every narrowing option -- a type or format restriction, an exclusion rule, a scope argument pointing one level too deep, an ignore list quietly removing exactly the matches being looked for. **All of them fail silently, and all of them fail in the direction of confidence**, because zero results is a legitimate answer to a well-formed question and carries no signal that the question was malformed.
+
+It is the mirror of the section above. There the red was real and its cause was not; here the absence is real and its cause is not. Neither is caught by reading the status.
+
+**Before an absence is trusted, run the query once with the narrowing removed.** If the broad form is also empty, the absence is a finding. If it is not, the filter was the finding. This costs one repetition and is the only cheap way to tell a true absence from a broken instrument.
+
+The general rule, and the one worth carrying past searching: **an instrument that can report "nothing" must be exercised against a case where it should report something.** Until it has been, a silent instrument and a working one look the same, and every absence it reports is unfalsifiable. The same reasoning that makes a check which cannot fail worse than no check makes a query which cannot match worse than no query -- it supplies the shape of evidence without any of its content.
+
 ## What a test cannot do
 
 Everything above assumes the thing under test returns the same answer twice. Where it does not -- a step whose output is generated rather than computed -- an assertion is the wrong instrument, and forcing one produces either a test so loose it cannot fail or one so tight it fails on acceptable output.
