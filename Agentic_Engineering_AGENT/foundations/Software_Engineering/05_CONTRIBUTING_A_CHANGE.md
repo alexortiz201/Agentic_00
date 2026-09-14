@@ -4,9 +4,34 @@ What a change publishes about itself, and to whom. The commit message, the pull 
 
 Distinct from [code review](03_CODE_REVIEW.md), which evaluates whether a change is right. This is about what the change says it is.
 
-## The message says what changed
+## The form
 
-**A short subject naming the change, then bullets -- one per thing that moved.** Someone reading history is scanning to locate a change, not being persuaded it was a good one, and prose defeats scanning in a way bullets do not.
+```
+<type>(<scope>): <one-line title>
+
+- <what moved>
+- <what moved>
+```
+
+**The type says what kind of change this is**, and it is the field that makes a history filterable -- which is the whole reason a message has a grammar rather than only a style.
+
+| Type | For |
+|---|---|
+| `feat` | New behaviour someone can use |
+| `fix` | Broken behaviour now correct |
+| `refactor` | Structure changed, behaviour deliberately unchanged |
+| `perf` | Same behaviour, measurably faster or cheaper |
+| `test` | Tests added or changed, with no production code change |
+| `docs` | Documentation only |
+| `build` / `ci` | The build, the dependencies, or the pipeline |
+| `chore` | Mechanical maintenance with no behavioural effect |
+| `revert` | Undoes an earlier change, naming it |
+
+**Scope is optional and names the area touched**, not the file list. Use it where a repository has areas a reader would filter by, and leave it empty where it would only repeat the type.
+
+**One type per commit.** A change needing two is two commits -- the type is a claim about the whole commit, and a commit that is both a fix and a refactor makes the history unfilterable and the fix unrevertable.
+
+**The title is one line, in the imperative, and says what changed.** Then bullets, one per thing that moved. Someone reading history is scanning to locate a change, not being persuaded it was a good one, and prose defeats scanning in a way bullets do not.
 
 **Over-explaining is the common failure, and it is not a harmless one.** Reasoning put into a message is reasoning put where it cannot be read in context, cannot be corrected, and will not be found by anyone looking for it. Why a change is right belongs in the changed files, in a design document, or in the discussion attached to the change -- all three of which can be revised when the reasoning turns out to be wrong. A message cannot.
 
@@ -31,7 +56,18 @@ So it is not a matter of taste. The trailer:
 ## What must never appear
 
 - **Credentials and secrets.** Already stated at [`DevOps/02`](../DevOps/02_CREDENTIALS_AND_ENVIRONMENTS.md) and not restated here -- except for the part that file is about the files: **the message is a surface of its own.**
+- **The mechanism of a weakness that was just fixed.** See below.
 - **Anything belonging to an owner other than the repository's owner.** An organization's name, an identifier from its tracker, an internal hostname, a path from its infrastructure, a colleague's name. Where one repository is used to work on subjects belonging to several owners, this is the boundary, and the message is the half of it most easily forgotten.
+
+### Describe the change, not the weakness
+
+**A fix is a disclosure.** The commit that repairs a vulnerability also documents it, and it documents it against **every copy of the code that has not taken the fix yet** -- other deployments, older releases, forks, anything on a slower upgrade path. A message precise enough to be helpful is precise enough to be a set of instructions.
+
+So the bullets carry **what changed**, not what was possible before it changed. A message saying a parameter is now validated describes the change; one naming the parameter, the payload shape and what it reached describes the exploit, and that second half buys a reader nothing they cannot get from the diff once they are entitled to it.
+
+The rule follows from the surface rather than from the subject matter: **a message is published at once, to everyone, permanently, and cannot be edited.** A diff can sit behind an embargo, a private repository or a delayed release; the message describing it travels with the commit. That asymmetry is the whole argument -- **the right place for the detail is the advisory that ships on the disclosing party's schedule**, not the history that ships on the commit's.
+
+This is not an argument for vague messages generally. It is narrow: **detail about how something could be abused is the part that is withheld**, and everything else stays as specific as it always should be.
 
 ## The message is not covered by whatever guards the files
 
