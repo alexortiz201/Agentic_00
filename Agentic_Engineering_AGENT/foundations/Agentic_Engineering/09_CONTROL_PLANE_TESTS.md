@@ -14,6 +14,7 @@ What a composition must survive before anything runs it unattended. These are in
 | Review claims approval while listing an unresolved `blocker` disposition | Blocks pending repair or explicit waiver; `risk_accepted` must name a human |
 | Repair changes checked files | Invalidates and reruns affected downstream gates |
 | Timeout, process crash, cancellation, partial external write | Preserves evidence; inspects effects before retry; stops owned workers |
+| Completion signalled but not delivered -- the event is lost, emitted twice, or raised before the work settled | A bounded wait expires and the controller reads the phase's actual state independently rather than waiting further; silence is never read as in progress and never as success; a repeated signal advances the phase exactly once |
 | Duplicate trigger or occupied workspace/port | Atomic claim/reservation prevents double execution; reports conflict |
 | Denied capability, hook failure, agent attempts to alter gate policy | No unauthorized action; fails closed at the actual enforcement boundary |
 | Invalid/expired waiver or unapproved destructive/shipping step | Blocks and asks for exact human authorization |

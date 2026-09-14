@@ -52,6 +52,14 @@ What a run should be able to ask about itself: what it was actually given, what 
 
 The practical division: **introspection informs the run's decisions, and independent observation decides its gates.** A run that inspects its own output and concludes it passed has performed a self-assessment, which the gate rules already exclude by name.
 
+## Observable is not interruptible
+
+Everything above concerns what a run emits and what can be reconstructed from it afterwards. A second property is routinely assumed to arrive with it and does not: whether someone watching a run go wrong can act on that observation **while it is still running**.
+
+A run that can only be read offers two moves once it is visibly off course -- let it finish, or end it -- and both discard the run. A run that can be attached to offers a third: correct it at the point the defect appeared, for the cost of the correction rather than the cost of the whole execution. **Watching a step without being able to reach into it is spectating**, and it delivers the observation at the moment it is least actionable. The supervised end of the autonomy ladder assumes the third move is available; nothing else in a run's design provides it.
+
+The property has a price, which is why it is a decision rather than a default. An attachable run is one more thing that can be perturbed, so **an intervention is a change to the run and belongs in its record like any other** -- who, at which step, what was changed, and what the run was about to do instead. An unrecorded intervention is the most expensive kind of missing record: the run afterwards is no longer the run its configuration describes, and nothing downstream can tell it apart from a run that needed no help. That is also how a workflow acquires a reputation for working which belongs to the person who kept rescuing it.
+
 ## What must be capturable
 
 The minimum for a run to be explicable afterwards by someone who was not watching:

@@ -86,6 +86,12 @@ So a borrowed instruction is read before it is adopted, at the depth code taking
 
 This is also the unlisted obligation of a deferral. Wrapping an external workflow adopts its instructions along with its behaviour, and the call site that names the dependency is the place to record that the dependency was read.
 
+**The third arrival is lateral: an instruction from a peer actor.** Where actors can prompt each other, a message from a peer is neither the information the first rule governs nor the pre-trusted direction the second one does. It arrives shaped like a task, from something holding the same standing as the receiver, and it is the one surface where one agent's output becomes another agent's instruction with no person in between.
+
+Treat it as data with a proposal inside it. **A peer cannot widen scope, grant a capability, authorize an effect, or raise the rank of anything it reports**, because it holds none of those to give. A peer message requiring any of them is escalated rather than obeyed, naming the peer, the request and the authority it would need. This is the untrusted-input rule with the loop closed: an actor that may be directed by another actor has an authority path beginning at whatever text either of them happened to read.
+
+Peer messaging is worth having anyway, and the reason is that a topology where every exchange must transit the actor above it makes that actor a bottleneck and a summarization boundary at the same time. The rule is not that peers may not talk. It is that **talking is coordination and never authorization**, and a design that cannot tell the two apart has granted every actor the authority of the most privileged one that will listen to it.
+
 Secret hygiene -- inspecting names rather than values, redacting, and never persisting one -- is in [`DevOps/02_CREDENTIALS_AND_ENVIRONMENTS.md`](../DevOps/02_CREDENTIALS_AND_ENVIRONMENTS.md).
 
 ## Capability

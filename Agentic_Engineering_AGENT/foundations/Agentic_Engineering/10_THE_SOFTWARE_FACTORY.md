@@ -30,6 +30,10 @@ The reason is the same reason the factory exists. If a person must drive it, the
 
 The practical shape is progressive disclosure: a small always-loaded description of what the factory is and what it can do, plus a routing table from a stated request to the detailed procedure for it, with the detail loaded only when that path is taken. That is the same context discipline applied to operating the system rather than to doing the work -- and it matters more here, because the operating surface is loaded on every single run.
 
+**The same test applies to what the factory chooses to depend on.** A capability reachable only through an interface built for a person is one the factory pays a driver for -- on every run, indefinitely, in a form that breaks whenever that interface is restyled. That cost belongs in the selection decision, where it is cheap to act on, rather than surfacing after the dependency is load-bearing, where it is not: a programmatic surface can be wrapped, narrowed and defaulted from outside, and an absent one can only be simulated.
+
+**The absolute form of that rule is wrong, and is worth refusing explicitly.** Discarding every candidate without a programmatic surface assumes a substitute always exists, and sometimes the capability is available nowhere else. The honest move there is to take the dependency, record the driver as a standing per-run cost rather than a one-off integration, and hold it behind a single boundary -- so that the day a programmatic surface appears, adopting it is a local change instead of an excavation.
+
 ## Running it unattended is an economic decision, not only a safety one
 
 The autonomy ladder governs whether a factory is *safe* to run without supervision. A second question governs whether it is *worth* it, and skipping it produces systems that are trusted, harmless and pointless.

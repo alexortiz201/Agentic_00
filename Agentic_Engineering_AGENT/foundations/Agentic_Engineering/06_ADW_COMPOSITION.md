@@ -113,6 +113,28 @@ The discard list is the one that disappears unless it is demanded, and it is the
 
 **These cost multiples of a single run.** Reserve them for decisions whose blast radius justifies it -- a choice that binds for months, an irreversible migration, an architecture that everything else will be built against. For everything else, one competent actor and a real check is the better trade.
 
+## Racing several actors to one answer
+
+A fourth arrangement runs several actors on the same question and keeps **whichever result arrives first and passes the check**. It is not a variant of the three above, and treating it as one is the mistake: those three treat the relationship between the answers as the output, and a race discards every answer but one. What a race buys is not a better answer, it is an earlier one.
+
+**A race needs a mechanical acceptance check, or it is not a race.** Without one, "first" means first to *claim*, which selects for whichever actor was most willing to declare itself done rather than for the one that finished the work. The check is what converts arrival into acceptance, which makes it the precondition rather than a refinement: where success has no mechanical consequence, this shape does not apply and one of the three above does. This is the same limit that bounds authoring a gate in advance, arriving from the other direction.
+
+**Vary the configuration, not only the instance.** Several copies of one context, model, prompt and tool set re-sample one distribution -- they share a blind spot, and what they buy is a faster draw from it rather than a wider one. Varying the Core Four across entrants is what makes the spread real, and it is the independence argument from [evaluations](12_EVALUATIONS.md) spent on latency instead of on corroboration.
+
+**The losers are cancelled, and cancellation is an obligation rather than an outcome.** Every entrant still running when the race is decided holds a workspace, a process and a share of the budget. It is stopped, its partial effects are inspected rather than assumed absent, and it emits a phase result with execution status `cancelled` -- an entrant that was terminated having written nothing and one that half-applied an edit are indistinguishable until someone reads them. The retry accounting is unaffected: a race is one attempt made several ways, not several attempts.
+
+**The currency is latency, and it is named before the race starts.** A race is worth what the waiting would otherwise have cost -- a stalled release, an open incident, a person idle on the result. Where nothing is waiting on it, a race spends the price of several runs to obtain the answer one run would have produced, and that same compute buys strictly more as a spread.
+
+## Delegation depth is a context decision, and every tier costs fidelity
+
+A composition may delegate through intermediate actors -- one actor directing leads, each lead directing workers -- and the reason to add a tier is the reason to draw any other boundary: what each actor has to load. A tier exists to hold the context its workers would otherwise each carry a copy of, and to spare the actor above it from carrying the workers' detail. That is the context-size argument above, applied to the shape of the delegation rather than to the split of the work.
+
+**Each tier is also a summarization boundary, and summarization is where evidence rank is lost.** A worker's result summarized by its lead and summarized again above it arrives at the top as prose about prose -- an `asserted` claim twice removed, with exactly the detail a reader would need in order to doubt it deliberately stripped out. Depth therefore trades context economy against evidence fidelity, and the trade is one-way: no amount of re-reading the top-level account recovers what the middle discarded.
+
+**A tier is affordable only where the layer beneath it can still be observed directly.** An actor reachable only through its parent's account of it cannot be checked, and therefore cannot be improved, because the defect and the report of the defect have the same author. Delegating into a surface that is observable only at its boundary is a reasonable place to start and a poor place to finish; what makes depth safe is a path to every level that does not run through the level above it.
+
+**Contexts do not add up across actors.** Several actors each holding a large context hold several separate contexts, not one larger one. What crosses between them is whatever one of them chose to write down, bounded by the handoff rather than by either window -- so a tree of actors buys parallel attention and pays a summarization boundary for it. Reading it as aggregate capacity mistakes the sum of the windows for the size of the shared one, and the arithmetic flatters the design at precisely the point where the design is weakest.
+
 ## A stack of models, not a model
 
 The question "which model is best" is the wrong question for a composition, and it gets less useful as the field moves. A workflow runs many phases with different demands, and the useful object is a **stack**: a small roster of models held at distinct capability, cost and latency points, with each phase assigned the cheapest one that can do its work.
