@@ -4,11 +4,19 @@ How to check that a change does what it claims **in the running application**, a
 
 The blueprint for what a check must bind to is [`primitives/gate.md`](../foundations/Agentic_Engineering/primitives/gate.md); what the instrument can and cannot do is [`foundations/Software_Engineering/02`](../foundations/Software_Engineering/02_TESTING_AND_EVIDENCE.md), whose probabilistic-instrument section governs every claim made from a screen.
 
-## The browser is one resource, and that decides the shape
+## Two paths, and the default is the automated one
+
+**A headless browser is the default.** It gives an isolated session per run, so checks fan out like anything else, and it contends with nobody's workspace.
+
+**Driving a person's real browser is the exception**, reserved for checks that genuinely need a human-driven session — an identity only that profile holds, or evidence someone wants to watch being produced. Everything in the next section is a property of *that* path, and none of it should be paid for on the automated one.
+
+Keep the two separated by name as well as by rule. A single flow that silently switches between them inherits the strictest constraints of both and nobody can tell which applies.
+
+## The real browser is one resource, and that decides the manual path
 
 **One instance, one storage partition, one logged-in identity.** Tabs and tab groups organise a run's pages; they do not isolate its state. Two runs driving the browser at the same time are driving one session — one run's navigation lands in the other's page, and a login performed by one changes what the other sees.
 
-So: **the browser phase serialises, and everything else does not.** Reading code, forming a hypothesis, writing a test, running a suite — all of that fans out freely. Only the phase that touches the live application is a single resource, and a workflow that treats it as anything else produces interference indistinguishable from a product defect.
+So: **the manual path serialises, and everything else does not.** Reading code, forming a hypothesis, writing a test, running a suite — all of that fans out freely. Only the phase that touches the live application is a single resource, and a workflow that treats it as anything else produces interference indistinguishable from a product defect.
 
 A step needing two identities — two roles, two tenants, signed-in versus anonymous — **logs out and back in between them**. It does not assume isolation that is not there.
 
