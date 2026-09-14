@@ -13,12 +13,21 @@ One line per action, appended as it happens. Not what the run *checked* and not 
 | `write` | An artifact was produced. Carry its path |
 | `acquire` | A resource was created and must be released |
 | `release` / `release_failed` | What teardown did, and what it could not do |
+| `intervention` | A person changed the run while it was running. Carry **who**, the step, **what was changed**, and **what the run was about to do instead** |
 
 ## It earns its place twice
 
 **It is the account a failure needs.** A phase result says where a run ended up; this says how it got there, in order. No conclusion-shaped record can answer that.
 
 **It is the inventory of what this run started.** Every `acquire` is already written down, so teardown releases its own resources rather than guessing from what happens to be listening on a port. Guessing in that direction eventually stops something a person deliberately left running, and that is indistinguishable from a crash to whoever was using it.
+
+## An intervention is an event, not a statistic
+
+**A run that was rescued and a run that needed no help are indistinguishable without this.** The history carries a count of interventions because that number says whether autonomy is real; **the count is derived from these entries**, so the two cannot drift apart the way a separately-maintained tally would.
+
+The fourth field is the one that makes an intervention analysable rather than merely logged. **What the run was about to do instead** is the counterfactual -- it is what tells a later reader whether the intervention prevented a failure, or prevented a success nobody waited for. Without it the record says a person touched the run and nothing about why that mattered.
+
+**A run that can be corrected mid-flight is no longer the run its configuration describes**, and an unrecorded correction transfers the credit for a workflow's reliability to whoever kept quietly rescuing it.
 
 ## The defect to avoid
 

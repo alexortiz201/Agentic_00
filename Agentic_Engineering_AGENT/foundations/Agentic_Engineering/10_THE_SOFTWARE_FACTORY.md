@@ -44,6 +44,8 @@ Three levels, in order, and each is a bad place to stop:
 2. **Make the spending useful.** Establish that what comes out is worth having -- work that would otherwise have been done by hand, done at a standard that holds.
 3. **Attribute the value.** Know what that output is worth, well enough that more spending is a decision rather than a hope.
 
+The attribution is **recorded**, in the append-only record described at [`primitives/run_history.md`](primitives/run_history.md) -- authored by whoever can make the judgement, naming its basis, and coarser than a single run. A condition with nowhere to record its satisfaction can only ever be claimed.
+
 **Only after the third does continuous running make sense.** A factory that runs on a schedule without producing attributable value is a cost with a timetable, and it will be discovered as one eventually, by someone who cancels it along with everything next to it.
 
 The inversion is worth stating because it reads as counterintuitive: once value is attributed, **a rising bill is a signal of throughput rather than a problem to be managed.** Before it is attributed, the same rising bill is only a rising bill. Spending more is not a strategy; spending more *on work whose value is known* is.

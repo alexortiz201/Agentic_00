@@ -69,6 +69,6 @@ The minimum for a run to be explicable afterwards by someone who was not watchin
 - The tools actually available, and the workspace actually resolved.
 - What each phase produced, and what each gate decided while observing what.
 - What it cost and how long it took.
-- Every point where a human intervened.
+- Every point where a human intervened. Each one is an **entry in the run's action log**, carrying who, the step, what was changed, and what the run was about to do instead; the history's intervention count is derived from those entries rather than tracked beside them.
 
 **If a defect can be present without any of these changing, none of them is observing it.** That question is worth asking of each signal before adding it, and it is the same counterfactual a check has to pass.
