@@ -16,3 +16,7 @@
 
 # Agent scratchpad. Declared here rather than globally, for the same reason as above.
 *.memory.md
+
+# Recordings are raw material -- bulky, disposable, and full of workspace paths.
+# What outlives one is what was distilled out of it, which lives in .memory/.
+observations/

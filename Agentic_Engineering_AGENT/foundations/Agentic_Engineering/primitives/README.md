@@ -19,6 +19,7 @@ They are requirements, not tutorials -- the reasoning lives in the rest of `foun
 | 🪝 [`hook.md`](hook.md) | Code that observes or blocks at a lifecycle event |
 | 📌 [`pinned_reference.md`](pinned_reference.md) | External documentation frozen in the repository |
 | 📐 [`design_document.md`](design_document.md) | Why the system is shaped this way -- outlives any run |
+| 🔭 [`observation.md`](observation.md) | A bounded recording of work being performed, from which a workflow can be derived |
 
 ## Prove it at the consuming interface
 
