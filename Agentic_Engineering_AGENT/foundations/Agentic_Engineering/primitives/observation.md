@@ -8,7 +8,7 @@ Its subject is the process, not the code. Every other primitive here describes s
 
 **On the observation itself**, written once when it opens:
 
-- **An identity.** Everything the observation produces is addressed by it, which is what makes the raw material removable later without hunting.
+- **An identity, formed from the subject and a discriminator.** The subject half makes a recording findable by the work it belongs to; the discriminator half is what stops **two recorders watching the same subject** from writing into one record. Everything the observation produces is addressed by the whole, which is what makes the raw material removable later without hunting.
 - **The subject** -- what is being worked on, named the way the workgroup names it.
 - **The attribution that explains behaviour**: the model and the harness in use, and the workspace observed. Behaviour attributed to a process that was actually a property of the model or the harness is the most expensive kind of wrong conclusion, because it survives the change that would have disproved it.
 - **When it opened.**
@@ -33,6 +33,7 @@ Alongside the kind, record whether the entry **changed anything**. A step that o
 
 ## Rules
 
+- **Several may be open at once, and none of them owns a global "current" slot.** A single pointer naming the open recording cannot represent two, and a recorder that writes to "the open one" will silently append another's work to its own. Openness is a property **derived from each record** -- it has no terminator yet -- not state held beside them. Where more than one is open, an instruction that does not name which **refuses rather than guesses**.
 - **It is off unless deliberately opened.** Recording everything continuously produces a volume nobody triages, and an untriaged recording is indistinguishable from none. The explicit open is the cost control; the explicit close is what makes the stopping point a fact.
 - **Labels are applied by the recorder, after the fact -- never requested from the subject.** Asking someone to declare which step they are on makes them work in steps, and the recording then measures itself. Grouping entries into steps is a second pass over the record, and it is revisable.
 - **An interruption is part of the process.** Work is not linear, and entries that belong to something else are **marked, not deleted.** How often the work is interrupted is itself a finding, and a record with the digressions removed describes a flow that never occurred.

@@ -22,12 +22,12 @@ Unrecognised flags ride along as kind-specific fields, so `--cmd`, `--exit`, `--
 
 ## Two behaviours worth knowing
 
-**One recording at a time.** A second `open` refuses rather than silently starting a parallel record, and `add` refuses when nothing is open. The single open pointer is the cost control -- recording is meant to be a deliberate act, not the default state.
+**Several recordings at once, addressed by `<ticket>_<id>`.** Two agents on the same ticket each get their own record, which is the collision this naming exists to prevent. There is **no global "currently open" pointer** -- openness is derived by reading each record for a terminator, so nothing beside the records can go stale or be corrupted by a concurrent writer. `--obs` is optional while exactly one is open and **required once more than one is**: where the answer is ambiguous the tool refuses rather than guessing, because guessing appends one agent's work to another's file.
 
 **A label is appended, never patched in.** `label` writes a new line assigning a step to an earlier entry, because the record is append-only and a step assignment is a later opinion about an earlier fact. Both belong in the file, in that order.
 
 ## Exercised at the consuming interface
 
-Per [`primitives/README.md`](../../foundations/Agentic_Engineering/primitives/README.md): valid; missing input refuses and names what was missing; malformed `--kind` refuses without appending; labelling a non-existent entry refuses; a second open refuses; adding after close refuses; and **a pointer naming a record that is not on disk refuses rather than starting a new recording** -- the wrong-workspace case, which is the one worth having.
+Per [`primitives/README.md`](../../foundations/Agentic_Engineering/primitives/README.md): valid; missing input refuses and names what was missing; malformed `--kind` refuses without appending; labelling a non-existent entry refuses; adding to a closed or unknown recording refuses; **two recordings opened on one ticket receive distinct identities and neither sees the other's entries**; and **an unqualified instruction with two recordings open refuses and lists them** rather than picking one -- the collision case, which is the one worth having.
 
 Not exercised, because the surface does not exist: authorization and timeout. There is nothing to authorize and nothing long-running to time out. Recorded here rather than left as an apparent omission.

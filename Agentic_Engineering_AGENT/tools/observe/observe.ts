@@ -21,7 +21,14 @@ type Effect = (typeof EFFECTS)[number];
 const root = (): string => process.env.OBSERVE_DIR ?? `${process.cwd()}/observations`;
 const dirFor = (obsId: string): string => `${root()}/${obsId}`;
 const recordPath = (obsId: string): string => `${dirFor(obsId)}/observation.jsonl`;
-const pointerPath = (): string => `${root()}/.open`;
+
+/**
+ * Identity is `<subject>_<id>`. The subject makes a recording findable by the ticket it belongs
+ * to; the id keeps two agents working the SAME ticket from writing into one file. There is no
+ * global "currently open" pointer -- openness is derived by reading each record for a close
+ * event, so two recordings can be open at once and neither can corrupt the other's state.
+ */
+const slug = (s: string): string => s.replace(/[^A-Za-z0-9._-]+/g, '-').replace(/^-+|-+$/g, '');
 
 const isKind = (v: string): v is Kind => (KINDS as readonly string[]).includes(v);
 const isCloseReason = (v: string): v is CloseReason => (CLOSE_REASONS as readonly string[]).includes(v);
@@ -43,18 +50,38 @@ const parseFlags = (argv: string[]): Record<string, string | true> =>
         return acc;
     }, {});
 
-const readOpenId = async (): Promise<string | null> => {
-    const f = Bun.file(pointerPath());
-    return (await f.exists()) ? (await f.text()).trim() || null : null;
+const isClosed = async (obsId: string): Promise<boolean> =>
+    (await lines(obsId)).some((l) => l.event === 'close');
+
+const listObservations = async (): Promise<string[]> => {
+    const glob = new Bun.Glob('*/observation.jsonl');
+    const found: string[] = [];
+    for await (const hit of glob.scan({ cwd: root() })) found.push(hit.split('/')[0]);
+    return found.sort();
 };
 
-const requireOpen = async (): Promise<string> => {
-    const id = await readOpenId();
-    if (!id) refuse('no observation is open. `observe open --subject <s>` first.');
-    if (!(await Bun.file(recordPath(id!)).exists())) {
-        refuse(`pointer names ${id}, but its record is missing. Refusing rather than starting a new one.`);
+const listOpen = async (): Promise<string[]> => {
+    const all = await listObservations();
+    const open: string[] = [];
+    for (const id of all) if (!(await isClosed(id))) open.push(id);
+    return open;
+};
+
+/**
+ * `--obs` is optional while exactly one recording is open, and required once more than one is.
+ * Guessing between two open recordings is the collision this exists to prevent.
+ */
+const resolveOpen = async (flags: Record<string, string | true>): Promise<string> => {
+    const named = typeof flags.obs === 'string' ? flags.obs : null;
+    if (named) {
+        if (!(await Bun.file(recordPath(named)).exists())) refuse(`no recording named ${named}.`);
+        if (await isClosed(named)) refuse(`${named} is already closed.`);
+        return named;
     }
-    return id!;
+    const open = await listOpen();
+    if (open.length === 0) refuse('no recording is open. `observe open --subject <ticket>` first.');
+    if (open.length > 1) refuse(`${open.length} recordings are open — name one with --obs:\n  ${open.join('\n  ')}`);
+    return open[0]!;
 };
 
 const append = async (obsId: string, entry: Record<string, unknown>): Promise<void> => {
@@ -74,11 +101,12 @@ const nextSeq = async (obsId: string): Promise<number> =>
     (await lines(obsId)).filter((l) => typeof l.seq === 'number').length;
 
 const open = async (flags: Record<string, string | true>): Promise<void> => {
-    if (await readOpenId()) refuse('an observation is already open. Close it before opening another.');
     const subject = flags.subject;
     if (typeof subject !== 'string') refuse('--subject is required, and names what is being worked on.');
 
-    const obsId = `obs-${now().replace(/[:.]/g, '-')}`;
+    // <subject>_<id>. Several may be open at once, including several on the same subject.
+    const obsId = `${slug(subject)}_${now().replace(/[:.]/g, '-')}`;
+    if (await Bun.file(recordPath(obsId)).exists()) refuse(`${obsId} already exists.`);
     await append(obsId, {
         event: 'open',
         at: now(),
@@ -88,12 +116,11 @@ const open = async (flags: Record<string, string | true>): Promise<void> => {
         harness: typeof flags.harness === 'string' ? flags.harness : null,
         workspace: typeof flags.workspace === 'string' ? flags.workspace : process.cwd()
     });
-    await Bun.write(pointerPath(), obsId);
     console.log(obsId);
 };
 
 const add = async (flags: Record<string, string | true>): Promise<void> => {
-    const obsId = await requireOpen();
+    const obsId = await resolveOpen(flags);
     const kind = flags.kind;
     if (typeof kind !== 'string' || !isKind(kind)) refuse(`--kind must be one of: ${KINDS.join(', ')}`);
     if (typeof flags.what !== 'string') refuse('--what is required: what was actually done.');
@@ -104,7 +131,7 @@ const add = async (flags: Record<string, string | true>): Promise<void> => {
     // Everything not consumed above rides along as kind-specific fields. Flags arrive as
     // strings; the fields a consumer does arithmetic or joins on are coerced, and only those
     // -- blanket coercion would turn a version like "1.20" into a number and lose it.
-    const reserved = new Set(['kind', 'what', 'effect', 'step', 'out-of-band']);
+    const reserved = new Set(['kind', 'what', 'effect', 'step', 'out-of-band', 'obs']);
     const numericFields = new Set(['exit', 'reconciled_by']);
     const extra = Object.fromEntries(
         Object.entries(flags)
@@ -129,7 +156,7 @@ const add = async (flags: Record<string, string | true>): Promise<void> => {
 
 /** The second pass. Labels are revisable; the record is not rewritten, a correction is appended. */
 const label = async (flags: Record<string, string | true>): Promise<void> => {
-    const obsId = await requireOpen();
+    const obsId = await resolveOpen(flags);
     const seq = Number(flags.seq);
     if (!Number.isInteger(seq)) refuse('--seq must name the entry being labelled.');
     if (typeof flags.step !== 'string') refuse('--step is required.');
@@ -140,21 +167,30 @@ const label = async (flags: Record<string, string | true>): Promise<void> => {
 };
 
 const close = async (flags: Record<string, string | true>): Promise<void> => {
-    const obsId = await requireOpen();
+    const obsId = await resolveOpen(flags);
     const why = typeof flags.why === 'string' ? flags.why : 'completed';
     if (!isCloseReason(why)) refuse(`--why must be one of: ${CLOSE_REASONS.join(', ')}`);
 
     await append(obsId, { event: 'close', at: now(), why, entries: await nextSeq(obsId) });
-    await Bun.write(pointerPath(), '');
     console.log(`${obsId} closed: ${why}`);
 };
 
-const status = async (): Promise<void> => {
-    const obsId = await readOpenId();
-    if (!obsId) {
-        console.log('no observation open');
+const status = async (flags: Record<string, string | true>): Promise<void> => {
+    const open = await listOpen();
+    if (open.length === 0) {
+        const total = (await listObservations()).length;
+        console.log(total === 0 ? 'no recordings' : `no recording open (${total} closed)`);
         return;
     }
+    if (open.length > 1 && typeof flags.obs !== 'string') {
+        console.log(`${open.length} recordings open:`);
+        for (const id of open) {
+            const n = (await lines(id)).filter((l) => typeof l.seq === 'number').length;
+            console.log(`  ${id} — ${n} entries`);
+        }
+        return;
+    }
+    const obsId = typeof flags.obs === 'string' ? flags.obs : open[0]!;
     const all = await lines(obsId);
     const entries = all.filter((l) => typeof l.seq === 'number');
     const digressions = entries.filter((l) => l.in_band === false).length;
@@ -170,13 +206,15 @@ const status = async (): Promise<void> => {
 
 const USAGE = `observe — record work as it happens, so a workflow can be derived from it
 
-  open   --subject <s> [--model <m>] [--harness <h>] [--workspace <p>]
-  add    --kind <${KINDS.join('|')}> --what <text> [--effect read|write] [--step <s>] [--out-of-band] [--<field> <v> ...]
-  label  --seq <n> --step <s>          assign a step to an earlier entry
-  close  [--why ${CLOSE_REASONS.join('|')}]
-  status
+  open   --subject <ticket> [--model <m>] [--harness <h>] [--workspace <p>]   → prints <ticket>_<id>
+  add    --kind <${KINDS.join('|')}> --what <text> [--effect read|write] [--step <s>] [--out-of-band] [--obs <id>] [--<field> <v> ...]
+  label  --seq <n> --step <s> [--obs <id>]     assign a step to an earlier entry
+  close  [--why ${CLOSE_REASONS.join('|')}] [--obs <id>]
+  status [--obs <id>]
 
-Writes to $OBSERVE_DIR (default ./observations). Off unless opened.`;
+Writes to $OBSERVE_DIR (default ./observations). Off unless opened.
+Several recordings may be open at once, including several on one ticket. --obs is optional
+while exactly one is open and required once more than one is.`;
 
 const main = async (): Promise<void> => {
     const [command, ...rest] = process.argv.slice(2);
@@ -186,7 +224,7 @@ const main = async (): Promise<void> => {
         add: () => add(flags),
         label: () => label(flags),
         close: () => close(flags),
-        status: () => status()
+        status: () => status(flags)
     };
     const route = routes[command ?? ''];
     if (!route) {

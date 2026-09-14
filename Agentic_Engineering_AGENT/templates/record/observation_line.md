@@ -7,7 +7,7 @@ Obeys [`primitives/observation.md`](../../foundations/Agentic_Engineering/primit
 ## Open, once
 
 ```json
-{ "schema_version": 1, "obs_id": "<identity>", "event": "open", "at": "<iso8601>", "subject": "<what is being worked on>", "model": "<model>", "harness": "<harness>", "workspace": "<observed path>" }
+{ "schema_version": 1, "obs_id": "<subject>_<discriminator>", "event": "open", "at": "<iso8601>", "subject": "<what is being worked on>", "model": "<model>", "harness": "<harness>", "workspace": "<observed path>" }
 ```
 
 ## Entries
@@ -34,7 +34,7 @@ Obeys [`primitives/observation.md`](../../foundations/Agentic_Engineering/primit
 
 ## Why each field is not optional
 
-- **`obs_id` on every line** — it is the handle that makes the raw material removable once what mattered has been distilled out of it. Without it, cleanup means reading.
+- **`obs_id` on every line**, formed as `<subject>_<discriminator>` — the subject half makes a recording findable by the work it belongs to and removable when that work ends; the discriminator half keeps two recorders on the same subject out of each other's file. Without it, cleanup means reading.
 - **`model` and `harness`** — behaviour credited to a process that was really a property of the model or the harness is the most durable kind of wrong conclusion, because the change that would disprove it never gets made.
 - **`in_band`** — work is interrupted, and the interruptions are part of it. `false` marks a digression so it can be excluded from the flow **without being deleted from the record**.
 - **`step` is nullable, and assigned later** — it is the recorder's label from a second pass, not something the subject was asked for. Asking makes the subject work in steps and the recording measures itself.
