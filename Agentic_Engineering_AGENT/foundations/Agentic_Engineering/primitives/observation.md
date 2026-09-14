@@ -37,7 +37,15 @@ Alongside the kind, record whether the entry **changed anything**. A step that o
 - **It is off unless deliberately opened.** Recording everything continuously produces a volume nobody triages, and an untriaged recording is indistinguishable from none. The explicit open is the cost control; the explicit close is what makes the stopping point a fact.
 - **Labels are applied by the recorder, after the fact -- never requested from the subject.** Asking someone to declare which step they are on makes them work in steps, and the recording then measures itself. Grouping entries into steps is a second pass over the record, and it is revisable.
 - **An interruption is part of the process.** Work is not linear, and entries that belong to something else are **marked, not deleted.** How often the work is interrupted is itself a finding, and a record with the digressions removed describes a flow that never occurred.
-- **Record what could not be seen.** A recorder sees only what passes through it; anything else -- another terminal, an interface it is not driving, thinking that was never said aloud -- is invisible. Where a gap is noticed it is written down as a gap. A recording that silently omits part of the work yields a workflow with missing steps and no way to discover which.
+- **Record what could not be seen, and say why it could not be seen.** A recorder sees only what passes through it; anything else -- another terminal, an interface it is not driving, thinking never said aloud -- is invisible. Where a gap is noticed it is written down as a gap.
+
+  **A gap carries two things beyond its description: the instrument, and the disposition.** Naming the instrument says *what* was unable to look, which is the difference between a limit of the process and a limit of one tool that may be replaced tomorrow. The disposition says what kind of absence it is, and there are three that behave differently:
+
+  - **deferred** -- a later phase can see it. The gap is an agenda item, and it is the cheapest input that phase will get.
+  - **unobservable** -- nothing available can see it. This is a finding about the workflow's reach, and it is what justifies building a new instrument.
+  - **not permitted** -- the instrument declined rather than failed. **This is the one that masquerades as data**: a value refused looks identical to a value absent, so a check that reads it and finds nothing concludes the wrong thing with full confidence.
+
+  A recording that silently omits part of the work yields a workflow with missing steps and no way to discover which. One that records gaps without their disposition yields a workflow that cannot tell which gaps it should try to close.
 - **Attribution travels with the entries, and changes are entries.** When the model or the harness changes mid-recording, that is a recorded event, because every conclusion drawn after it has a different provenance from every conclusion before it.
 - **No secrets and no payloads.** References to evidence, never the evidence.
 

@@ -23,7 +23,7 @@ Obeys [`primitives/observation.md`](../../foundations/Agentic_Engineering/primit
 | `handoff` | `to`, and `reconciled_by` — the `seq` of the entry where the result landed, or null while outstanding |
 | `prompt` | `asked`, and **`outcome`** — the ask does not determine the result, so the result is the fact |
 | `decision` | `among` and `chose`. No external effect; this is where the agentic half lives |
-| `gap` | `why` — time passed and the recorder could not see it |
+| `gap` | `why`, plus **`tool`** (what was unable to look) and **`disposition`** — `deferred` (a later phase can see it), `unobservable` (nothing available can), or `not_permitted` (the instrument declined). The last is the dangerous one: a refused value reads exactly like an absent one |
 | `meta_change` | what changed, from and to. Model and harness changes are events |
 
 ## Close, once
@@ -41,6 +41,7 @@ Obeys [`primitives/observation.md`](../../foundations/Agentic_Engineering/primit
 - **`effect`** — a step that only reads may be repeated freely by a workflow, which is a different thing to know from how it was performed.
 - **`outcome` on `prompt`** — without it the record holds the request and not the result, which is the half that is actually a fact.
 - **`why` on close** — an observation with no terminator cannot be told from one still running.
+- **`tool` and `disposition` on a gap** — without them a gap says only that something was missed. With them it says whether the next phase should look, whether an instrument needs building, or whether the silence was a refusal rather than an answer.
 
 ## Rules
 

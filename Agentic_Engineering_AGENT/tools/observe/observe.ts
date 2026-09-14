@@ -133,6 +133,14 @@ const add = async (flags: Record<string, string | true>): Promise<void> => {
     // -- blanket coercion would turn a version like "1.20" into a number and lose it.
     const reserved = new Set(['kind', 'what', 'effect', 'step', 'out-of-band', 'obs']);
     const numericFields = new Set(['exit', 'reconciled_by']);
+    // A gap that does not say which instrument could not look, and what kind of absence it is,
+    // records only that something was missed.
+    if (kind === 'gap' && (typeof flags.tool !== 'string' || typeof flags.disposition !== 'string')) {
+        refuse('a gap needs --tool (what could not look) and --disposition (deferred|unobservable|not_permitted).');
+    }
+    if (kind === 'gap' && !['deferred', 'unobservable', 'not_permitted'].includes(String(flags.disposition))) {
+        refuse('--disposition must be one of: deferred, unobservable, not_permitted');
+    }
     const extra = Object.fromEntries(
         Object.entries(flags)
             .filter(([k]) => !reserved.has(k))
@@ -214,7 +222,8 @@ const USAGE = `observe — record work as it happens, so a workflow can be deriv
 
 Writes to $OBSERVE_DIR (default ./observations). Off unless opened.
 Several recordings may be open at once, including several on one ticket. --obs is optional
-while exactly one is open and required once more than one is.`;
+while exactly one is open and required once more than one is.
+A --kind gap also requires --tool and --disposition (deferred|unobservable|not_permitted).`;
 
 const main = async (): Promise<void> => {
     const [command, ...rest] = process.argv.slice(2);
