@@ -22,6 +22,7 @@ Everything here is standalone in the sense the [`foundations/` index](../README.
 | 📊 [`12_EVALUATIONS.md`](12_EVALUATIONS.md) | Measuring what cannot be asserted, and comparing two models honestly |
 | 🔬 [`11_OBSERVABILITY.md`](11_OBSERVABILITY.md) | What changes when the subject is a run, and when the observer is the run itself |
 | 🏭 [`10_THE_SOFTWARE_FACTORY.md`](10_THE_SOFTWARE_FACTORY.md) | What a factory is, what it is for, and the three properties without which it is only a workflow |
+| 🧠 [`13_MEMORY.md`](13_MEMORY.md) | What survives a run ending -- the tiers, what earns a write, eviction, and queue discipline for open work |
 | 🧱 [`primitives/`](primitives/README.md) | Blueprints -- what each primitive must contain when you create one |
 
 ## The ideas the rest of it rests on
