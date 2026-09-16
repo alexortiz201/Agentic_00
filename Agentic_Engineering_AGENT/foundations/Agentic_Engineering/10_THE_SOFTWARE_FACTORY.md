@@ -34,6 +34,23 @@ The practical shape is progressive disclosure: a small always-loaded description
 
 **The absolute form of that rule is wrong, and is worth refusing explicitly.** Discarding every candidate without a programmatic surface assumes a substitute always exists, and sometimes the capability is available nowhere else. The honest move there is to take the dependency, record the driver as a standing per-run cost rather than a one-off integration, and hold it behind a single boundary -- so that the day a programmatic surface appears, adopting it is a local change instead of an excavation.
 
+## Its output is shippable work, not merely working code
+
+A factory that emits functionally-correct output which somebody then has to rewrite has not produced output. It has produced **rework**, and rework is worse than nothing, because the reviewer now pays the cost of reading it as well as the cost of redoing it. The leverage argued for above is a claim about work that lands, and output that does not land is not a smaller amount of leverage -- it is negative.
+
+So the conventions a subject already holds are a **first-class constraint on generation, not a polish pass applied afterwards.** Stated where it is most visible, on generated interface work:
+
+- **Compose what already exists before authoring anything new.** A factory that reaches for a fresh component whenever one is not immediately to hand grows a second, parallel vocabulary next to the design system -- each piece defensible alone, the set incoherent.
+- **Take styling from the declared tokens rather than from literal values.** A hard-coded colour is not a small deviation; it is a value that will not move when the system moves, and it is invisible until the day the system does.
+- **A genuinely new shared component arrives with the artifacts the subject expects of one** -- its stories, its coverage, its documentation entry. Arriving without them puts it *beside* the system rather than *in* it, which is how a design system acquires a shadow.
+- **Written copy is governed too.** Voice and product vocabulary constrain the words a factory emits exactly as code conventions constrain its syntax, and copy is the output most often treated as exempt.
+
+The same logic runs well past interface work: the factory honours the codebase's conventions, the team's delivery gates and the shape its tracker expects. **Whatever a reviewer would have sent back is a constraint on generation**, and the question to ask of any convention is not whether it is important but whether its absence would cause the work to be returned.
+
+**This is why the constraint belongs in the factory rather than in a review gate.** A gate that rejects off-convention output is correct and arrives too late: the work is already made, the run is already paid for, and the repair is a second pass that the first pass could have avoided by loading the convention as a [context asset](../../LANGUAGE.md) before generating. Catching it later is strictly more expensive than not producing it, and at a thousand runs the difference is the whole argument.
+
+**The honest limit.** Conventions loaded as standing context are weighted, not enforced -- the same limit every instruction carries. Where a convention genuinely must hold, it is a gate as well, and the two are complements: the context asset is what makes the gate rarely fire, and the gate is what makes the context asset's failures visible instead of silent.
+
 ## Running it unattended is an economic decision, not only a safety one
 
 The autonomy ladder governs whether a factory is *safe* to run without supervision. A second question governs whether it is *worth* it, and skipping it produces systems that are trusted, harmless and pointless.

@@ -19,6 +19,7 @@ Same idea, different name. Where the row says the formats match, an artifact gen
 | Named prompt | Slash command, `.claude/commands/*.md` | Prompt template, default `.pi/prompts/*.md`, path configurable | **Yes** -- body and positional args both port; point Pi at the directory |
 | Delegated agent | Subagent, `.claude/agents/*.md`, built in | Not built in; an extension spawns a child process | Definition format matches; the mechanism does not |
 | Gate before a tool runs | `PreToolUse` hook -- an external command | `pi.on("tool_call")` -- a typed function in-process | Same shape, different substrate |
+| Command fired on an event | Hook -- a `hooks` entry in settings, matched on an event | `pi.on("<event>")` -- an extension subscribing to it | Same mechanism, different substrate; the command body ports, the wiring does not |
 | Declarative permission policy | `permissions` in settings | None | **No.** Build it or bound the tool set |
 | Response shaping | Output style | `SYSTEM.md` / `APPEND_SYSTEM.md` | Concept ports, format does not |
 | External tool integration | Tool protocol servers, built in | Not built in; CLI tools surfaced as skills | The CLI-tool approach works on both |
@@ -108,6 +109,27 @@ return { block: true, reason: "..." };
 ```
 
 Both prevent execution and feed the reason back to the model. In Pi, **throwing also blocks**, deliberately -- the dispatcher does not catch, so a broken gate fails closed.
+
+### Firing a command on an event, rather than blocking one
+
+> **Added 2026-09-16.** This section recombines the events and substrates verified above; no product behaviour was verified beyond what the tables already carry.
+
+A rule of the form *"whenever Y happens, run X"* is, on both harnesses, a subscription to one of the lifecycle events above -- the same surface a gate uses, asked to fire rather than to deny. The concept and the decision of what belongs there are in [`foundations/Harness_Engineering/04_MECHANIZED_TRIGGERS.md`](../foundations/Harness_Engineering/04_MECHANIZED_TRIGGERS.md); this is the per-harness fact.
+
+| | Claude world | Pi world |
+|---|---|---|
+| How it is declared | A `hooks` entry in `.claude/settings.json`: an event name, an optional matcher, a command to run | `pi.on("<event>", handler)` inside a TypeScript extension |
+| What actually runs | An external command -- JSON on stdin, answers by exit code and stdout | A typed function in the agent's own process |
+| Firing points that suit a trigger | `SessionStart`, `UserPromptSubmit`, `PreToolUse` / `PostToolUse`, `Stop`, `SessionEnd`, `PreCompact` / `PostCompact` | `session_start`, `input`, `tool_call` / `tool_result`, `turn_end`, `agent_settled`, `session_shutdown` |
+| Narrowing which occurrences fire | A matcher on the event, plus whatever the command decides for itself | The handler receives the typed event and decides |
+| Feeding text back into the run | Hook stdout enters context on `UserPromptSubmit` and `SessionStart`, or structured via `additionalContext` | Return from `input`, or inject through `context` / `before_agent_start` |
+
+**The shape people arrive with is a script that checks whether the event has happened and, if so, runs the command** -- polling, because nothing was watching on its behalf. Both harnesses replace the checking half: the runtime already knows the event occurred and hands it over. **What ports is the command; what does not is the polling**, and dropping it is the point rather than a detail of the translation.
+
+Two consequences specific to these two harnesses:
+
+- **Claude's is configuration, Pi's is code.** A trigger on Claude Code can be added without a build step and is language-agnostic; the same trigger on Pi shares a type system with the controller and can read the typed event. Neither is better in general and the difference decides how much of the trigger's logic sits in the wiring versus in the command.
+- **Pi has no session-scoped "run finished" distinct from the turn.** `agent_settled` is the honest end-of-run point, not `agent_end`, which may still retry or compact -- a trigger hung on the wrong one of those fires early and looks intermittent.
 
 ## The asymmetries worth knowing before you build
 

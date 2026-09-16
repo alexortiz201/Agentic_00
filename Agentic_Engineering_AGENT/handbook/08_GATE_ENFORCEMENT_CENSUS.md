@@ -26,6 +26,14 @@ One value per gate, and take the **weakest** thing that is genuinely doing the w
 
 **The common inflation is labelling `agent_checked` as `code_enforced`** because the controller calls the agent. Calling an actor is not enforcement; refusing its answer is. The test: if the actor returned a confident, well-formed lie, would anything stop the transition? If not, the gate is `agent_checked`.
 
+**The second inflation is an axis confusion, and it is the one that survives review.** How a *step* is performed and what holds a *gate* shut are different questions, and a workflow that labels both is one careless read away from treating an answer to the first as an answer to the second.
+
+The disambiguating case is worth carrying explicitly, because it is the one that looks wrong and is not: **a deterministic step can sit behind an `agent_checked` gate.** Running a command is perfectly reproducible; deciding that its output was good enough is not, and the gate is the second thing. A step whose label says `deterministic` therefore establishes nothing at all about its gate -- and the reverse also holds, since an agent-performed step can sit behind a gate the controller refuses to pass. Neither label constrains the other, which is exactly why both are recorded.
+
+The test to apply is the one above, unchanged: if the actor returned a confident, well-formed lie, would anything stop the transition? That question is about the gate, and the step's label never answers it.
+
+**Re-count after changing any gate.** A tally carried forward from before an edit is a measurement presented as current, which is the specific class of claim the census exists to replace.
+
 ### 3. Label what each one bound to
 
 Independently of enforcement, because a perfectly enforced gate that observed nothing is still worth nothing:
@@ -44,6 +52,14 @@ Report two more alongside it, because the ratio alone flatters a workflow that g
 ### 5. Write it where it accumulates
 
 A census taken once is an opinion about a workflow on a Tuesday. Put the numbers in the run history so the ratio can be watched, since **watching it move is the whole point** -- a workflow whose enforcement ratio is falling while its run count climbs is being trusted more and verifying less.
+
+## A worked census, and what the number meant
+
+Taken across two authored workflows carrying thirty-two gate declarations between them -- some counted twice, where a command decided a result and an actor decided what the result meant -- the split was **27 `agent_checked`, 7 `code_enforced`, 2 `human_approved`**. An enforcement ratio near a fifth.
+
+The finding was not the ratio; it was the explanation. **Those workflows had no controller.** Nothing existed that *could* refuse a transition, so every gate that was not a bare command's exit status resolved to an actor checking itself, and no amount of care in writing the gates would have changed that. The census turned "these workflows feel under-enforced" into a number and a cause, and the cause was structural rather than a matter of authoring quality.
+
+That is the census working as intended, and it is also the reason the count is not an embarrassment to be corrected before publishing. **Each `agent_checked` gate is a standing candidate for the mechanism that would make it `code_enforced`**, the list of them is a build queue ordered by the rule below, and a workflow that reported a flattering ratio instead would have had no queue at all.
 
 ## What the census decides
 

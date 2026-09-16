@@ -1,0 +1,29 @@
+# stopping_phrases.txt -- phrases that mean "the session is stopping".
+#
+# One extended regular expression (ERE) per line. Matched case-insensitively
+# against the prompt you just submitted. Lines starting with # are comments;
+# blank lines are ignored.
+#
+# EDIT THIS FILE to add a trigger -- no JSON, no restart of anything.
+# Keep each pattern specific enough that it does not fire mid-work: the cost of
+# a false positive is a wasted sweep, which is small but not free.
+
+closing up shop
+end of (the )?day
+that'?s (it|me) for (the day|today|tonight)
+logging off
+log(ging)? off for
+signing off
+sign(ing)? off for
+call(ing)? it a day
+call(ing)? it (a )?night
+wrap(ping)? up for (the day|today|tonight)
+we'?ll (pick|continue) (this|it) (up )?(later|tomorrow)
+pick (this|it) up (again )?(later|tomorrow|next time|in the morning)
+continue (this|it) (later|tomorrow)
+back at (this|it) tomorrow
+see you tomorrow
+good ?night
+heading (out|home)
+shutting down for
+done for (the day|today|tonight)

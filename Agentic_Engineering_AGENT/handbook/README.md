@@ -9,6 +9,7 @@ When a task arrives -- a bug ticket, a feature, a chore, a workflow to build -- 
 | You have | Start at | The discipline it leans on |
 |---|---|---|
 | **A bug ticket** | [Working a defect](#working-a-defect) | 🏗️ [SDLC](../foundations/Software_Engineering/01_SDLC_SOFTWARE_DEVELOPMENT_LIFECYCLE.md) for the shape; 🔬 [verification](../foundations/Agentic_Engineering/04_VERIFICATION.md) for what counts as proof it is fixed |
+| **A bug that will not reproduce, or a cause nobody can locate** | 🧵 [`12_TRACING_A_DEFECT.md`](12_TRACING_A_DEFECT.md) | 🔬 [verification](../foundations/Agentic_Engineering/04_VERIFICATION.md) for predicting before observing; ⚖️ [testing and evidence](../foundations/Software_Engineering/02_TESTING_AND_EVIDENCE.md) for what a degraded environment does to a result |
 | **A feature or chore** | The same lifecycle, sized down | 🔄 [workflow](../foundations/Agentic_Engineering/02_WORKFLOW.md) -- the flow-sizing table is the first thing to read |
 | **A workflow to build** | 🛠️ [`06_BUILDING_AN_ADW.md`](06_BUILDING_AN_ADW.md) | 🧩 [composition](../foundations/Agentic_Engineering/06_ADW_COMPOSITION.md) and 🧱 [the primitive you are creating](../foundations/Agentic_Engineering/primitives/README.md) |
 | **A workflow to trust** | 🧪 [`07_VALIDATING_A_WORKFLOW.md`](07_VALIDATING_A_WORKFLOW.md) | 🔬 [verification](../foundations/Agentic_Engineering/04_VERIFICATION.md), and ⚖️ [testing and evidence](../foundations/Software_Engineering/02_TESTING_AND_EVIDENCE.md) |
@@ -46,6 +47,7 @@ The worked example, because it is the most common arrival and every other kind o
 | 🚪 [`09_ADOPTING_A_REPOSITORY.md`](09_ADOPTING_A_REPOSITORY.md) | Arriving somewhere new: observe, scaffold, wrangle, replace, factory — and where to stop |
 | [`10_OBSERVING_A_PROCESS.md`](10_OBSERVING_A_PROCESS.md) | Record work as it happens, so a workflow can be derived from what occurred rather than from what was recalled |
 | [`11_VERIFYING_IN_A_BROWSER.md`](11_VERIFYING_IN_A_BROWSER.md) | Check a change in the running application — why the browser phase serialises, what to capture, and how to leave nothing behind |
+| 🧵 [`12_TRACING_A_DEFECT.md`](12_TRACING_A_DEFECT.md) | Trace a write from the system of record to the rendered output and name the first boundary that disagrees — for defects that will not reproduce, or whose cause nobody can locate |
 
 ## The split with `foundations/`
 

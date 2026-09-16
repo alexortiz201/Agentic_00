@@ -41,17 +41,19 @@ Loading everything contradicts this package's own rule about context, so the res
 | 🧪 [`handbook/07_VALIDATING_A_WORKFLOW.md`](handbook/07_VALIDATING_A_WORKFLOW.md) | Check a workflow does what it claims, before trusting it |
 | 📋 [`handbook/08_GATE_ENFORCEMENT_CENSUS.md`](handbook/08_GATE_ENFORCEMENT_CENSUS.md) | Count what actually holds each gate shut, and watch the ratio move |
 | 🚪 [`handbook/09_ADOPTING_A_REPOSITORY.md`](handbook/09_ADOPTING_A_REPOSITORY.md) | Take this into a repository that has never seen it, without breaking what is there |
+| 🧵 [`handbook/12_TRACING_A_DEFECT.md`](handbook/12_TRACING_A_DEFECT.md) | Work a defect that will not reproduce, or whose cause nobody can locate -- trace it boundary by boundary |
 | 🧱 [`templates/`](templates/README.md) | Starting points copied into a target — beginning with the three local folders an adopter would otherwise receive empty |
+| ⚙️ [`config/`](config/README.md) | Restore **this maintainer's own bench** on a new machine. One person's real values, not a starting point — an adopter wants [`templates/claude_home/`](templates/claude_home/README.md). Read [`config/EXCLUDED.md`](config/EXCLUDED.md) before trusting a bench built from it |
 | 🏗️ [`handbook/05_AGENTIC_LAYER_LAYOUT.md`](handbook/05_AGENTIC_LAYER_LAYOUT.md) | Decide where something goes in a target project |
 | 🗺️ [`handbook/04_ARTIFACT_MAP.md`](handbook/04_ARTIFACT_MAP.md) | Find which file here defines a concept the discipline names |
 | 🗂️ [`handbook/02_RUN_ARTIFACTS.md`](handbook/02_RUN_ARTIFACTS.md) | Write anything into `runs/<run_id>/` |
 | 🩺 [`handbook/03_STRUCTURAL_CHECK.md`](handbook/03_STRUCTURAL_CHECK.md) | Confirm a move or rename did not break the package |
 
-This package **describes** how workflows are constructed and where they go. **It does not hold them, scaffold them, or execute them** -- that was decided explicitly, not by omission, and it has no runtime and should not grow one. A workflow built for an organization lives in that organization's own library; what this package contributes is the discipline it was built against. The one thing here that executes is its own [structural check](handbook/03_STRUCTURAL_CHECK.md).
+This package **describes** how workflows are constructed and where they go, and it **may execute workflows that author, scaffold or validate other workflows** -- that is what a workbench is for. **What it does not hold is any one organization's workflows** -- that was decided explicitly, not by omission, and it has no runtime and should not grow one. A workflow built for an organization lives in that organization's own library; what this package contributes is the discipline it was built against. The one thing here that executes is its own [structural check](handbook/03_STRUCTURAL_CHECK.md).
 
 ## Starting a session cold
 
-If [`.memory/`](handbook/01_LOCAL_MEMORY.md) exists, **read `.memory/package_cleanup.md` first.** It records what is settled, what is still open, and what was deliberately deferred -- which is the fastest way to avoid re-deciding something already decided.
+If [`.memory/`](handbook/01_LOCAL_MEMORY.md) exists, **read [`.memory/README.md`](handbook/01_LOCAL_MEMORY.md) first** -- it indexes every file in the store and says when each is read. It records what is settled, what is still open, and what was deliberately deferred -- which is the fastest way to avoid re-deciding something already decided.
 
 Then the rest of `.memory/`: the `.md` files at its root, then its topic folders. It is never committed, so a clone will not have it. Treat everything there as a **prior snapshot to verify against current sources**, never as authority.
 

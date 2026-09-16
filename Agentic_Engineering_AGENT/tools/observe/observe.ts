@@ -8,15 +8,31 @@
  * Writes compact JSONL. Off unless opened; the open and close are what bound the cost.
  */
 
-const SCHEMA_VERSION = 1;
+/**
+ * 2 -- gaps split `disposition` (why it could not be seen) from `status` (what became of it),
+ *      recorder failures moved out of `meta_change` into their own kind, and `close` gained a
+ *      free-text `note` beside its enum. Records written under 1 stay readable: every field
+ *      added here is optional on read, and nothing that existed was removed or renamed.
+ */
+const SCHEMA_VERSION = 2;
 
-const KINDS = ['command', 'ui', 'handoff', 'prompt', 'decision', 'gap', 'meta_change'] as const;
+const KINDS = ['command', 'ui', 'handoff', 'prompt', 'decision', 'gap', 'meta_change', 'instrument_fault'] as const;
 const CLOSE_REASONS = ['completed', 'abandoned', 'interrupted'] as const;
 const EFFECTS = ['read', 'write'] as const;
+
+/** Why the instrument could not look. Fixed at the moment the gap was noticed; never changes. */
+const DISPOSITIONS = ['deferred', 'unobservable', 'not_permitted'] as const;
+/** What has become of the gap since. Changes later, which is what `observe gap` is for. */
+const GAP_STATUSES = ['open', 'corrected', 'worked_around', 'escalated', 'resolved'] as const;
+/** The attributions a `meta_change` can be about. A recorder failure is not one of them. */
+const META_FIELDS = ['model', 'harness', 'workspace'] as const;
 
 type Kind = (typeof KINDS)[number];
 type CloseReason = (typeof CLOSE_REASONS)[number];
 type Effect = (typeof EFFECTS)[number];
+type Disposition = (typeof DISPOSITIONS)[number];
+type GapStatus = (typeof GAP_STATUSES)[number];
+type MetaField = (typeof META_FIELDS)[number];
 
 const root = (): string => process.env.OBSERVE_DIR ?? `${process.cwd()}/observations`;
 const dirFor = (obsId: string): string => `${root()}/${obsId}`;
@@ -33,6 +49,9 @@ const slug = (s: string): string => s.replace(/[^A-Za-z0-9._-]+/g, '-').replace(
 const isKind = (v: string): v is Kind => (KINDS as readonly string[]).includes(v);
 const isCloseReason = (v: string): v is CloseReason => (CLOSE_REASONS as readonly string[]).includes(v);
 const isEffect = (v: string): v is Effect => (EFFECTS as readonly string[]).includes(v);
+const isDisposition = (v: string): v is Disposition => (DISPOSITIONS as readonly string[]).includes(v);
+const isGapStatus = (v: string): v is GapStatus => (GAP_STATUSES as readonly string[]).includes(v);
+const isMetaField = (v: string): v is MetaField => (META_FIELDS as readonly string[]).includes(v);
 
 const now = (): string => new Date().toISOString();
 
@@ -119,6 +138,52 @@ const open = async (flags: Record<string, string | true>): Promise<void> => {
     console.log(obsId);
 };
 
+/**
+ * A gap answers two questions that a single slot cannot hold, and the corpus proved it: of 27
+ * recorded gaps, 12 carried no usable disposition -- six sat outside the enum (`worked-around`,
+ * `accepted`, `corrected -- ...`) and six were absent. The off-enum values were *more* informative
+ * than the enum, which is the signal: recorders needed to say what BECAME of the gap and only had
+ * the field that says why it was invisible. The cost is mechanical: a gap whose `what` begins
+ * "RESOLVED" while its `disposition` reads `unobservable` is counted open by any consumer that
+ * trusts the field.
+ *
+ *   --disposition  why the instrument could not look. True at the moment of the gap, forever.
+ *   --status       what has happened to it since. Defaults to `open`, and is revised by `observe gap`.
+ */
+const validateGap = (flags: Record<string, string | true>): GapStatus => {
+    if (typeof flags.tool !== 'string') refuse('a gap needs --tool: what could not look.');
+    if (typeof flags.disposition !== 'string') {
+        refuse(`a gap needs --disposition (${DISPOSITIONS.join('|')}): why it could not be seen.`);
+    }
+    if (!isDisposition(String(flags.disposition))) {
+        refuse(
+            `--disposition must be one of: ${DISPOSITIONS.join(', ')} — it says why the gap could not be seen. ` +
+                `What became of it goes in --status (${GAP_STATUSES.join('|')}).`
+        );
+    }
+    const status = typeof flags.status === 'string' ? flags.status : 'open';
+    if (!isGapStatus(status)) refuse(`--status must be one of: ${GAP_STATUSES.join(', ')}`);
+    return status as GapStatus;
+};
+
+/**
+ * `meta_change` is for a change in what explains the behaviour -- the model, the harness, the
+ * workspace -- because every conclusion after one has a different provenance from every conclusion
+ * before it. Both of its recorded uses were instead a *recorder* failure, which describes the
+ * instrument rather than the work. Requiring the two fields that define an attribution change is
+ * what makes the misuse impossible rather than merely discouraged; `instrument_fault` is where the
+ * misused entries belonged.
+ */
+const validateMetaChange = (flags: Record<string, string | true>): void => {
+    if (typeof flags.field !== 'string' || !isMetaField(flags.field)) {
+        refuse(
+            `a meta_change needs --field (${META_FIELDS.join('|')}): which attribution changed. ` +
+                'A failure of the recorder itself is --kind instrument_fault, not a meta_change.'
+        );
+    }
+    if (typeof flags.to !== 'string') refuse('a meta_change needs --to: the value the attribution changed to.');
+};
+
 const add = async (flags: Record<string, string | true>): Promise<void> => {
     const obsId = await resolveOpen(flags);
     const kind = flags.kind;
@@ -131,16 +196,15 @@ const add = async (flags: Record<string, string | true>): Promise<void> => {
     // Everything not consumed above rides along as kind-specific fields. Flags arrive as
     // strings; the fields a consumer does arithmetic or joins on are coerced, and only those
     // -- blanket coercion would turn a version like "1.20" into a number and lose it.
-    const reserved = new Set(['kind', 'what', 'effect', 'step', 'out-of-band', 'obs']);
+    const reserved = new Set(['kind', 'what', 'effect', 'step', 'out-of-band', 'obs', 'status']);
     const numericFields = new Set(['exit', 'reconciled_by']);
-    // A gap that does not say which instrument could not look, and what kind of absence it is,
-    // records only that something was missed.
-    if (kind === 'gap' && (typeof flags.tool !== 'string' || typeof flags.disposition !== 'string')) {
-        refuse('a gap needs --tool (what could not look) and --disposition (deferred|unobservable|not_permitted).');
-    }
-    if (kind === 'gap' && !['deferred', 'unobservable', 'not_permitted'].includes(String(flags.disposition))) {
-        refuse('--disposition must be one of: deferred, unobservable, not_permitted');
-    }
+    // A gap that does not say which instrument could not look, what kind of absence it is, and
+    // what has become of it, records only that something was missed.
+    const gapStatus = kind === 'gap' ? validateGap(flags) : null;
+    if (kind === 'meta_change') validateMetaChange(flags);
+    // `status` is reserved, so on any other kind it would be dropped without a word -- and a flag
+    // that vanishes silently is the same failure class this split exists to close.
+    if (kind !== 'gap' && typeof flags.status === 'string') refuse(`--status belongs to a gap, not a ${kind}.`);
     const extra = Object.fromEntries(
         Object.entries(flags)
             .filter(([k]) => !reserved.has(k))
@@ -157,6 +221,7 @@ const add = async (flags: Record<string, string | true>): Promise<void> => {
         step: typeof flags.step === 'string' ? flags.step : null,
         in_band: flags['out-of-band'] !== true,
         what: flags.what,
+        ...(gapStatus ? { status: gapStatus } : {}),
         ...extra
     });
     console.log(`${obsId} #${seq} ${kind}`);
@@ -174,13 +239,80 @@ const label = async (flags: Record<string, string | true>): Promise<void> => {
     console.log(`${obsId} #${seq} -> ${flags.step}`);
 };
 
+/**
+ * What became of a gap is known later than the gap itself -- which is exactly why one field could
+ * not hold both halves. So a status change is appended as a new opinion about an earlier entry, the
+ * same shape `label` uses and for the same reason: the record is append-only, and overwriting the
+ * entry would destroy the fact that the status ever moved.
+ */
+const gap = async (flags: Record<string, string | true>): Promise<void> => {
+    const obsId = await resolveOpen(flags);
+    const seq = Number(flags.seq);
+    if (!Number.isInteger(seq)) refuse('--seq must name the gap entry whose status changed.');
+    if (typeof flags.status !== 'string' || !isGapStatus(flags.status)) {
+        refuse(`--status must be one of: ${GAP_STATUSES.join(', ')}`);
+    }
+
+    const target = (await lines(obsId)).find((l) => l.seq === seq);
+    if (!target) refuse(`no entry #${seq} in ${obsId}.`);
+    if (target!.kind !== 'gap') refuse(`#${seq} is a ${String(target!.kind)}, not a gap — only a gap carries a status.`);
+
+    await append(obsId, {
+        event: 'gap_status',
+        at: now(),
+        gap: seq,
+        status: flags.status,
+        ...(typeof flags.note === 'string' ? { note: flags.note } : {})
+    });
+    console.log(`${obsId} #${seq} -> ${flags.status}`);
+};
+
+/**
+ * The enum is kept, and a note is added beside it. The drift it was drifting toward was real --
+ * one recording closed with "built, gated and committed; stopped at the reproduction gap for an
+ * operator decision", which is more informative than any of three words -- but the remedy is a slot
+ * for the prose, not an open field. An enum is the only form a close reason can be counted in, and
+ * a corpus that cannot be counted cannot say whether recordings are finishing. So: the enum carries
+ * the machine-readable fact, the note carries what the enum cannot, and the note is required
+ * whenever the recording did not simply finish.
+ */
 const close = async (flags: Record<string, string | true>): Promise<void> => {
     const obsId = await resolveOpen(flags);
     const why = typeof flags.why === 'string' ? flags.why : 'completed';
-    if (!isCloseReason(why)) refuse(`--why must be one of: ${CLOSE_REASONS.join(', ')}`);
+    if (!isCloseReason(why)) {
+        refuse(`--why must be one of: ${CLOSE_REASONS.join(', ')} — anything the enum cannot say goes in --note.`);
+    }
+    const note = typeof flags.note === 'string' ? flags.note : null;
+    if (why !== 'completed' && !note) {
+        refuse(`--note is required when --why is ${why}: the enum says it stopped, the note says what stopped it.`);
+    }
 
-    await append(obsId, { event: 'close', at: now(), why, entries: await nextSeq(obsId) });
-    console.log(`${obsId} closed: ${why}`);
+    await append(obsId, { event: 'close', at: now(), why, note, entries: await nextSeq(obsId) });
+    console.log(`${obsId} closed: ${why}${note ? ` — ${note}` : ''}`);
+};
+
+/**
+ * A gap's status is the latest `gap_status` event for it, else the status written with the entry.
+ * Absent in neither place means the record predates the split -- reported as `unrecorded`, never
+ * defaulted to `open`, because assuming a gap is open when nothing says so is the same wrong
+ * confidence the split was made to remove. `disposition` is printed verbatim, including values
+ * outside today's enum, because older records hold some and the drift is evidence.
+ */
+const gapLedger = (all: Record<string, unknown>[]): string[] => {
+    const latest = new Map<number, string>();
+    for (const l of all) {
+        if (l.event === 'gap_status' && typeof l.gap === 'number') latest.set(l.gap, String(l.status));
+    }
+    return all
+        .filter((l) => l.kind === 'gap')
+        .map((l) => {
+            const seq = Number(l.seq);
+            const written = typeof l.status === 'string' ? l.status : 'unrecorded';
+            const now_ = latest.get(seq) ?? written;
+            const disp = typeof l.disposition === 'string' ? l.disposition : 'unrecorded';
+            const what = String(l.what ?? '').slice(0, 64);
+            return `  #${seq} ${now_} [${disp}] ${what}`;
+        });
 };
 
 const status = async (flags: Record<string, string | true>): Promise<void> => {
@@ -209,6 +341,8 @@ const status = async (flags: Record<string, string | true>): Promise<void> => {
     }, {});
     console.log(`${obsId} open — ${entries.length} entries (${digressions} out of band)`);
     console.log(Object.entries(byKind).map(([k, n]) => `  ${k}: ${n}`).join('\n') || '  (none yet)');
+    const gaps = gapLedger(all);
+    if (gaps.length > 0) console.log(`gaps:\n${gaps.join('\n')}`);
     console.log(`  record: ${recordPath(obsId)}`);
 };
 
@@ -239,16 +373,25 @@ observe add --obs <id> --kind decision --what "<what you concluded>" --among "<o
 observe add --obs <id> --kind prompt   --what "<what you asked for>" --asked "<the ask>" --outcome "<what actually happened>"
 observe add --obs <id> --kind ui       --what "<what you did>" --surface "<where>"
 observe add --obs <id> --kind handoff  --what "<what you handed off>" --to "<who>" --reconciled_by <seq|null>
-observe add --obs <id> --kind gap      --what "<what you could not see>" --why "<reason>" --tool "<what could not look>" --disposition deferred|unobservable|not_permitted
+observe add --obs <id> --kind gap      --what "<what you could not see>" --why "<reason>" --tool "<what could not look>" --disposition deferred|unobservable|not_permitted [--status open|corrected|worked_around|escalated|resolved]
+observe add --obs <id> --kind meta_change      --what "<why it changed>" --field model|harness|workspace --to "<new value>"
+observe add --obs <id> --kind instrument_fault --what "<how the recording itself failed or was corrected>"
+\`\`\`
+
+And when a gap you recorded earlier is later closed, worked around or escalated, say so — do not rewrite the entry:
+
+\`\`\`
+observe gap --obs <id> --seq <n> --status corrected --note "<what closed it>"
 \`\`\`
 
 Rules:
 
-- **A gap requires \`--tool\` and \`--disposition\`.** \`deferred\` = a later phase can see it. \`unobservable\` = nothing available can. \`not_permitted\` = the instrument declined — which reads exactly like an absent value and is the one that misleads.
+- **A gap carries \`--tool\`, \`--disposition\` and \`--status\`, and the last two are different questions.** \`--disposition\` is **why it could not be seen**, fixed forever at the moment you noticed it: \`deferred\` = a later phase can see it; \`unobservable\` = nothing available can; \`not_permitted\` = the instrument declined, which reads exactly like an absent value and is the one that misleads. \`--status\` is **what has become of it**, defaults to \`open\`, and is revised later with \`observe gap\`. **Never put an outcome in \`--disposition\`** — a gap whose text begins "RESOLVED" while its disposition says \`unobservable\` is counted as still open by everything that reads it.
+- **\`meta_change\` is only for a change of attribution** — the model, the harness or the workspace changed mid-recording, so everything after it has a different provenance from everything before. **A failure of the recorder itself is \`instrument_fault\`**: it describes the instrument, not the work, and mixing the two makes neither countable.
 - **Record dead ends and false starts.** A record of only the successful path produces a workflow that cannot recover, which is the most common way these fail.
 - **Mark a digression \`--out-of-band\`** rather than leaving it out. How often work is interrupted is itself a finding.
 - **A \`prompt\` carries its \`outcome\`**, not just the ask — the ask does not determine the result, so the result is the fact.
-- **Close it when you finish**: \`observe close --obs <id> --why completed|abandoned|interrupted\`. A recording with no terminator cannot be told from one still running.`);
+- **Close it when you finish**: \`observe close --obs <id> --why completed|abandoned|interrupted [--note "<detail>"]\`. A recording with no terminator cannot be told from one still running. \`--why\` stays one of the three words so closes can be counted; **\`--note\` is required unless you closed \`completed\`**, and is where anything the three words cannot say belongs.`);
 };
 
 const USAGE = `observe — record work as it happens, so a workflow can be derived from it
@@ -256,14 +399,22 @@ const USAGE = `observe — record work as it happens, so a workflow can be deriv
   open   --subject <ticket> [--model <m>] [--harness <h>] [--workspace <p>]   → prints <ticket>_<id>
   add    --kind <${KINDS.join('|')}> --what <text> [--effect read|write] [--step <s>] [--out-of-band] [--obs <id>] [--<field> <v> ...]
   label  --seq <n> --step <s> [--obs <id>]     assign a step to an earlier entry
-  close  [--why ${CLOSE_REASONS.join('|')}] [--obs <id>]
+  gap    --seq <n> --status <${GAP_STATUSES.join('|')}> [--note <t>] [--obs <id>]
+                                               record what became of an earlier gap
+  close  [--why ${CLOSE_REASONS.join('|')}] [--note <text>] [--obs <id>]
   status [--obs <id>]
   brief  [--subject <ticket>]                  print the instructions to hand a recorder
 
 Writes to $OBSERVE_DIR (default ./observations). Off unless opened.
 Several recordings may be open at once, including several on one ticket. --obs is optional
 while exactly one is open and required once more than one is.
-A --kind gap also requires --tool and --disposition (deferred|unobservable|not_permitted).`;
+
+A --kind gap requires --tool and --disposition (${DISPOSITIONS.join('|')}) -- why it could not be
+seen -- and carries --status (${GAP_STATUSES.join('|')}, default open) for what became of it.
+A --kind meta_change requires --field (${META_FIELDS.join('|')}) and --to; a failure of the
+recorder itself is --kind instrument_fault.
+--why on close stays an enum so closes can be counted; --note carries what it cannot say, and is
+required whenever --why is not completed.`;
 
 const main = async (): Promise<void> => {
     const [command, ...rest] = process.argv.slice(2);
@@ -272,6 +423,7 @@ const main = async (): Promise<void> => {
         open: () => open(flags),
         add: () => add(flags),
         label: () => label(flags),
+        gap: () => gap(flags),
         close: () => close(flags),
         status: () => status(flags),
         brief: () => brief(flags)

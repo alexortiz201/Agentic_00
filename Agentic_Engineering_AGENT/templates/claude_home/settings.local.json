@@ -1,0 +1,6 @@
+{
+  "_comment": "Personal overrides, not shared. Kept minimal on purpose: anything here is invisible to the settings.json that a reader inspects, which is a good property for a preference and a bad one for a control.",
+  "permissions": {
+    "allow": []
+  }
+}

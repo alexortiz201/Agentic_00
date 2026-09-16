@@ -48,6 +48,25 @@ Authoring in advance is also the only moment when **writing each failure for its
 
 Each gate records **which workspace it observed**. In a single-workspace run that field is bookkeeping. In a run spanning several components it is the thing that separates a real pass from a confident pass over the wrong tree, and the wrong tree is no longer an unlikely accident -- it is one resolution mistake away, every time.
 
+## An exit code is the typed failure value a gate routes on
+
+A deterministic step returns an exit code, and the usual allocation -- `0` for success and `1` for everything else -- throws away the only structured thing the step produced. The gate above it then has two bad options: treat every failure identically, or recover the distinction by matching strings in the step's output, which couples the gate to wording nobody versioned.
+
+**Allocate a distinct non-zero code per failure class, and the exit code becomes a typed return.** The gate reads *which* thing went wrong and routes accordingly, with no parsing and nothing to drift. This is the same discipline the package applies to records, arriving at the one boundary where a record is not available: a process can only answer in an integer, so the integer carries the vocabulary.
+
+What makes an allocation good is that its classes correspond to **different routes**, not to different messages:
+
+- A failure the run can retry, versus one that will recur identically until something outside the run changes.
+- A failure of the subject, versus a failure of the instrument -- a suite that ran and found a real defect is a different event from a suite that could not run, and a gate that conflates them reports a defect that does not exist.
+- A precondition that was not met, versus a check that was performed and failed. The first routes back to setup; the second routes to repair. `return_to` names the state responsible for the failure, and the exit code is frequently the only evidence of which state that was.
+- Usage error, which is a defect in the *workflow* rather than in the subject, and should never be reported as a failing check.
+
+**Allocate the codes once, across the whole tool set, and write the allocation down where the tools are indexed.** Per-tool numbering means `3` means something different in every step, which is the string-matching problem with extra steps. A shared table is what makes several tools composable into one workflow rather than several tools that happen to sit in one directory.
+
+**An allocation a tool has never returned is a comment, not a contract.** This is the same status-claim rule the package applies everywhere else, and it bites hardest here because the declaration is so cheap to write and so easy to read as a fact. A gate branching on code `6` from a script that has never once exited `6` is an `agent_checked` gate wearing a `code_enforced` costume: the branch is real code, and nothing has ever established that the condition it tests can occur. Record which codes have actually been observed, separately from which are declared, and treat the first real run as the test -- **a script that has not been run is a hypothesis**, however carefully its header documents it.
+
+The corollary for the census: a tool with a real exit-code allocation is the cheapest available upgrade from `agent_checked` to `code_enforced`, because the mechanism is already there and only the gate's willingness to refuse is missing.
+
 ## A deferral is gated on its side effect, never on its report
 
 **A deferral's return value is not a contract.** When a phase invokes a workflow it does not own, the thing that comes back is whatever that workflow chose to say -- frequently model-generated prose, shaped by nothing the caller declared. For a prompt you authored the fix is an output contract; for a deferral there is no contract to declare, because you do not own the callee.

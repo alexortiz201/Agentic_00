@@ -53,6 +53,12 @@ So it is not a matter of taste. The trailer:
 **A message ends on its last substantive line.** Where tooling appends such a trailer by default, that default is turned off; a convention that adds noise to every commit in a repository is not a convention worth inheriting.
 
 
+## A derived title is written from what was confirmed
+
+Where the title of a change is derived from an originating report -- a defect record, a request, a ticket -- **compose it from the mechanism that was confirmed, and never copy the report's own title across.** That title states the guess somebody made before anyone looked, and it is frequently the claim the investigation refuted.
+
+The cost is asymmetric, which is why this is worth a rule rather than a preference. A wrong sentence in a comment is read once; a wrong title is the most-read, longest-lived and least-re-examined surface the change has, and it will be the thing quoted back years later by people who never opened the diff.
+
 ## What must never appear
 
 - **Credentials and secrets.** Already stated at [`DevOps/02`](../DevOps/02_CREDENTIALS_AND_ENVIRONMENTS.md) and not restated here -- except for the part that file is about the files: **the message is a surface of its own.**

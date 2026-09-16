@@ -1,0 +1,65 @@
+{
+  "_comment": "The publishable subset of the operator's real ~/.claude/settings.json, captured 2026-09-16. Real values, not placeholders -- except __HOME__, which is substituted by restore.sh. This file is INCOMPLETE on purpose: the autoMode key is excluded and must be restored from elsewhere. See ../EXCLUDED.md before trusting a bench built from this.",
+  "model": "opus[1m]",
+  "theme": "auto",
+  "extraKnownMarketplaces": {
+    "__MARKETPLACE_NAME__": {
+      "source": {
+        "source": "github",
+        "repo": "__MARKETPLACE_REPO__"
+      },
+      "autoUpdate": true
+    }
+  },
+  "enabledPlugins": {
+    "sdlc@__MARKETPLACE_NAME__": true
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "__HOME__/.claude/hooks/guard_claude_md.sh",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "startup|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "__HOME__/.claude/hooks/boot_memory.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "__HOME__/.claude/hooks/cleanup_on_stop_phrase.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(git *)",
+            "command": "__HOME__/.claude/hooks/cleanup_on_git.sh",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

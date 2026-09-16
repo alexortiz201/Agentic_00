@@ -31,6 +31,23 @@ The important structural difference from Pi: **a Claude Code hook is a configure
 
 **Interactive affordances exist and unattended runs do not get them.** Permission prompts assume a human. In headless runs the permission mode decides, and there is a flag that bypasses prompts entirely -- which is a real gate removed, not a formality, and belongs nowhere near an unattended run that can write.
 
+### Hook mechanics, verified by building four of them
+
+> **Verified 2026-09-16**, by writing and installing a working set against this harness. Stronger than the rest of this file, which rests on documentation -- these were established by observing what did and did not reach the model.
+
+**What a hook returns depends on the event, and getting it wrong fails silently.**
+
+- `SessionStart` and `UserPromptSubmit` inject **plain stdout** straight into context. Print text and it arrives.
+- `PostToolUse` does **not**. Plain stdout from a `PostToolUse` hook is discarded; only `hookSpecificOutput.additionalContext` reaches the model, and it must be **nested under `hookSpecificOutput`** -- a top-level `additionalContext` key is accepted and silently ignored. A hook written the obvious way runs, exits cleanly, logs nothing wrong, and does nothing at all.
+
+**Timeouts are not uniform.** `UserPromptSubmit` gets roughly **30 seconds**, where other events get on the order of ten minutes. A hook on that event has to be genuinely fast, and should bail early on input that is obviously not its case -- a very long prompt is pasted material rather than a sign-off, and checking its length is cheaper than matching patterns against it.
+
+**Exit status is the blocking channel.** Exit `2` blocks the action; anything else does not. A hook that only observes should therefore **always exit `0`**, including on its own internal errors, so that a broken observer degrades to doing nothing rather than to blocking work. That is the [fail-open rule for observing hooks](../foundations/Agentic_Engineering/primitives/hook.md) with a concrete number attached.
+
+**Declarative narrowing exists and should not be the only filter.** A `PostToolUse` entry can carry a matcher plus a further condition narrowing which invocations fire it. Useful, and worth pairing with the same check inside the script: if the declarative form is unsupported in a given version, or its shape changes, the script's own check still keeps it silent on every call it does not care about. The cost of the redundancy is one process spawn; the cost of relying on the declarative form alone is a hook that quietly fires on everything or on nothing.
+
+**Verification is available and worth using**, because every failure above is silent. `/hooks` lists what is registered in a live session, and running the harness in debug mode shows each hook executing. A hook can also be exercised directly by piping it a payload on stdin, which is how to tell "my hook is wrong" apart from "my hook is not wired up".
+
 ## Configuration
 
 - **`CLAUDE.md`** is the project instruction file, discovered in the working directory and ancestors, plus `~/.claude/CLAUDE.md` for personal global instructions and a managed policy location for organisation-wide ones. **It enters as a message in the conversation, not as part of the system prompt** -- which is why it is re-read from disk and re-injected after compaction rather than simply persisting.

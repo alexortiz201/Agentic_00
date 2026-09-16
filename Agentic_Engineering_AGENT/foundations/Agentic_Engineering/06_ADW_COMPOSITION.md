@@ -53,6 +53,14 @@ Rules a conformant salvage pass can be checked against:
 
 A phase-result record and a gate-decision record are illustrative shapes, not schemas or validators. Implement consumer-tested types before machine use; reject placeholder records. Keep diagnostics off machine-consumed stdout; never parse the last plausible-looking path out of arbitrary prose. The four status-like vocabularies these records write are deliberately disjoint; [gates](08_GATES.md) holds them, alongside the validation a gate performs on the records that carry them.
 
+### Bind a decided value once, and carry it
+
+Some of a run's values are **decisions** rather than observations -- which base a change targets, which branch it is built on, which workspace is authoritative. A decision is made at one step, and every later step that re-derives it instead of reading it is silently answering a different question, because the environment moved in between. That is how a change ends up proposed against a base it was never cut from, and nothing errors: both derivations are locally correct.
+
+So bind each such value once, at the step that decides it, record it in the run's state, and have every later step read it from there. **A value re-derived downstream is a second decision wearing the first one's name.**
+
+The same rule at the boundary with anything the workflow calls: **pass every parameter the thing defaults**, and most of all its working directory and which runner or sub-command it invokes. A default resolved from the ambient environment is a value nobody set, it is invisible in the invocation, and it changes when the environment does -- so the failure it produces is both silent and intermittent. A variable read from the ambient environment and a variable never bound at all are indistinguishable at the call site, and the second is the more common of the two.
+
 ## Start minimal, grow on evidence
 
 A first agentic layer is **three things**:
@@ -74,6 +82,62 @@ That is enough to do real work. Everything else is added when something forces i
 | Durable storage | a fact must outlive a single run |
 
 **Read that table as a growth path, not a checklist.** Each row names the evidence that justifies the addition; adding a row without its evidence is building a platform before there is a project.
+
+## How material becomes a workflow
+
+A workflow is rarely authored from a blank page. It is usually a process that was already performed by hand and is being written down afterwards, and the path from the one to the other has three stages worth naming, because each fails differently.
+
+**Capture.** A note written while the process is still fresh, holding what was actually done -- including the wrong turns, which are the part that decays fastest and the part [step 11](#authoring-process) above says is worth the most. This is a [scratchpad](../../LANGUAGE.md), and being provisional is its defining property rather than a defect in it.
+
+**Decompose.** Identify the pieces the note actually contains -- this one a tool, that one a context asset, that one a prompt -- and move each to where it belongs. The work here is *dissolving* the note, not polishing it: a capture that survives decomposition intact was not decomposed, it was filed.
+
+**Compose.** A workflow references those pieces in order, so each improves once and every caller inherits the improvement.
+
+**Nothing in a scratchpad may be referenced by a workflow -- extract the piece first.** A rough note that acquires a caller becomes a dependency while still carrying the notice that it is provisional, and that notice is exactly what stops anyone from repairing it. The reference is what quietly converts "unfinished, and known to be" into "load-bearing, and still labelled unfinished".
+
+## Fragment in response to an observed boundary, never in anticipation of one
+
+Reuse being earned is stated in the area README as a rule about extraction. It has a sharper form that applies to **splitting** as well as to lifting, and the sharper form is the one that gets violated, because splitting a long document feels like hygiene rather than like a design decision.
+
+Do not divide a workflow into files, or lift a prompt into its own asset, until the workflow has been executed and something has actually crossed the boundary being proposed. A seam introduced before the first run encodes a guess about where the joints are, and a wrong guess there is not merely untidy -- **a seam hides whatever spans it**, because the two sides are never read adjacently again.
+
+**A worked case, and the defects are the argument.** A workflow covering one ticket type end to end was authored as four files -- a sequencer plus three phase documents -- before it had ever been run once. Nothing had crossed those seams, and merging the four back into a single document that reads top to bottom exposed four defects on the first adjacent read: a pull request created from a body file that a *later* phase wrote, so the ordering was impossible; six variables used but never bound anywhere; a failing test written into a checkout that the isolated workspace never sees; and an escalation declared in a header that no step performed. Each one is obvious when the two sides sit on the same page, and each one had survived every prior review of the individual files.
+
+The same argument retired a directory of five prompt bodies in the same library. Each had exactly one caller, no executed run had ever quoted one, and the directory was asserting a category ahead of its members. **A piece is extracted once a second consumer genuinely exists, and a category is created once it has members** -- both of which are facts about what happened, not predictions about what will.
+
+The counter-pressure is real and should be named rather than dismissed: a single long document is harder to load, and [context size is model selection](#context-size-is-model-selection) argues for smaller units. Both are true, and the ordering resolves them. Split on a boundary the run demonstrated, and the split serves both concerns at once; split on a boundary imagined in advance, and it serves neither, because the pieces are the wrong pieces and they still have to be loaded together.
+
+## A document that sequences, binds and routes is a controller written in prose
+
+The fragmentation rule above answers *where* to split a workflow. It does not answer a prior question, and mistaking the two sends the repair in the wrong direction: **some of what a workflow document contains is not documentation at all.** Sequencing, variable binding, gate evaluation and failure routing are things code owns. Written in prose they are still a controller -- just one that nothing can execute, type-check or fail.
+
+**The diagnosis this corrects was wrong twice, in opposite directions.** A workflow document that had grown to 788 lines was first blamed on fragmentation and merged, which produced a longer document; the merge was the right move for the reason given above, but it did not fix what was actually wrong. **A single long prose document and four shorter prose documents are the same mistake at different granularities.** Neither is a program, and the axis that matters is not how many files there are but which parts of the content were never prose to begin with.
+
+The test is mechanical. For each passage, ask what would have to be true for it to fail. A passage describing an outcome fails when the outcome is wrong, and that is documentation. A passage deciding what runs next, binding a value, or routing an error fails when a *step* misbehaves -- and a thing that fails when a step misbehaves belongs in the layer that can observe the step.
+
+**The same conflation inflates a workflow with work it does not do.** Most of those 788 lines restated what a deferred-to workflow already performed. Describing a callee's behaviour in the caller's own document is not composition; it is duplication with drift built in, and the drift is one-directional and silent -- the callee changes, the description does not, and nothing fails. **Name the deferral and state what it is relied upon to produce; never restate how it does it.** What a caller legitimately owns about a deferral is the [side effect it gates on](08_GATES.md), which is a fact about the caller's requirements rather than a copy of the callee's implementation.
+
+## A step is exactly one of three kinds
+
+Every step inside a phase resolves to one of three, and the phase says which:
+
+| Kind | What runs | What the controller reads |
+|---|---|---|
+| **Deterministic** | a command or API call | the exit code |
+| **Agentic** | a prompt handed to an agent through the agent module | the response, validated against a schema |
+| **Deferral** | an existing workflow the author does not own | the side effect, read back independently -- never the report |
+
+**The third is the one that gets missed, and it is frequently the majority.** Every earlier statement of this distinction here had two values, because deterministic-versus-agentic is the split that is visible while authoring a single step. Deferral only becomes visible when a workflow is assembled against an ecosystem it did not write, at which point a workflow built around existing tooling can be mostly deferrals with a few original phases threaded between them.
+
+Stating the kind at the call site is the part that earns its keep. A reader of a phase should be able to see which work is the author's and which is borrowed without leaving the file, because the two carry different obligations: the author's steps are gated on what they assert, and a deferral is gated on a side effect precisely because its report is not a contract.
+
+> **Open conflict, recorded rather than resolved.** [`LANGUAGE.md`](../../LANGUAGE.md) defines an ADW as phases that are *"each deterministic code or a bounded agent call"* -- a two-value axis -- and the opening of this file uses the same pairing. The three-kind classification above was derived later, from assembling a workflow against an owned plugin, and it is short by one against the vocabulary rather than the other way round. **Both statements stand until the operator decides.** Retiring the two-value form is a vocabulary change that would ripple through every file that writes to it, which is exactly the kind of half-applied rename the package warns fails silently at the consuming phase.
+
+## One place names the model and the harness, and it cannot be retrofitted
+
+**Exactly one module may name a model or a harness, and everything else reaches it through that module.** This is the property that makes [swapping the model a measurement](01_PRINCIPLES.md) rather than a rewrite, and it is what lets the same workflow run under a different harness at all.
+
+It belongs on the list of things built before there is demand for it, which is a short list and normally argued against here. The reason it qualifies is that **the property is not recoverable later.** A model named in one phase is a local edit; named across a dozen phases and a handful of prompts, it is a migration whose cost is paid exactly when a comparison would otherwise have been cheap. Every other piece of scaffolding can wait for a second consumer to prove it; this one is a constraint on where a name may appear, and a constraint is only free while nothing has violated it yet.
 
 ## A layer above other layers
 
@@ -112,6 +176,14 @@ Parallelism in this package has meant independent work split across workers. The
 The discard list is the one that disappears unless it is demanded, and it is the one that matters most. Without it, a synthesis that dropped the correct answer is indistinguishable from one that dropped a wrong one -- both emit a confident merged result, and nothing in the artifact says which happened. It is also what lets a later reader reopen the decision without re-running the exercise.
 
 **These cost multiples of a single run.** Reserve them for decisions whose blast radius justifies it -- a choice that binds for months, an irreversible migration, an architecture that everything else will be built against. For everything else, one competent actor and a real check is the better trade.
+
+### Disagreement can be a difference of depth rather than a contradiction
+
+When two independent actors return opposite verdicts on the same question, the reflex is to decide which one is wrong. Often neither is. **Ask how deep each of them looked before treating the disagreement as an error**, because two actors can both be correct at different depths and still disagree at the surface: one confirms that a path exists and is reachable, the other traces what that path does on the failing input and finds that it cannot produce the result. Both answered honestly, and they answered different questions.
+
+The practical consequence is that **reconciling the depths is the work, and it is what produces the answer** -- not picking a winner, and not averaging two verdicts into a hedge. A synthesis recording only that the actors disagreed has thrown away the finding, in the same way the discard list above disappears unless it is demanded.
+
+It also gives the brief a lever. Where the question is whether a stated mechanism is real, **say at what depth each actor must work**, and require the evidence that proves it worked there -- a trace of the failing input along the path, rather than a reference to the symbol's existence. A depth left unspecified is chosen by whichever actor stopped first.
 
 ## Racing several actors to one answer
 
@@ -170,6 +242,10 @@ Every agent call is four choices: **context, model, prompt, tools.** Select a mo
 **How a tool is surfaced is part of the tools choice.** The same capability reached through a tool protocol server -- MCP being the common one -- and reached as a command-line tool are not equivalent, and the difference is paid on every run. A protocol server's schemas load into context whether or not the step calls them, so the cost scales with what is *connected* rather than with what is *used*; its shape is its author's, so the available operations are the ones they chose to expose; and it cannot be wrapped, so local defaults must be restated in the prompt on every call. A command-line tool costs nothing until it is invoked, is described in whatever depth the step actually needs, and can be wrapped so the defaults that matter are applied once instead of requested each time.
 
 This is not an argument against protocol servers. They are the right answer for a capability with no command-line surface, for one that must hold a session the caller cannot, and wherever the protocol is the only integration on offer. It is an argument about the **default**: reach for the command-line form first, and connect a protocol server where the capability genuinely needs one. Either way the cost belongs in the same accounting as context size, because **a connection is a standing charge against every step in the run, including every step that had no use for it.**
+
+**A deferral carries the same standing charge, and it is easy to miss because it looks like a function call.** Invoking an existing external workflow loads that workflow's whole body before it does anything, and the load is paid on every invocation rather than once. Measured on a real one: a bare *help* invocation of a single wrapped workflow -- doing no work at all -- cost around fifty-four thousand tokens of context construction, roughly a third of a dollar, and five seconds. Chaining seven phases as seven separate invocations pays that seven times, and none of it is visible in the composition, which reads as seven ordinary steps.
+
+Two consequences follow, and they point in different directions. In the short term, look for whether the harness can hold a session across calls rather than reconstructing one per call, and **measure it rather than assuming either shape is cheaper**. In the longer term this is the cost that makes a deferral transitional: it is recovered when the mechanism being wrapped is extracted into code the workflow calls directly, alongside the typed return and the caller-chosen model that extraction also recovers.
 
 **Prompt shape:** purpose -> named variables -> constraints -> relevant files -> ordered workflow -> exact report. Add examples, delegation or loops only where they earn their place.
 

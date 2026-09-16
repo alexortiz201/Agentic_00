@@ -20,11 +20,83 @@ So: **the manual path serialises, and everything else does not.** Reading code, 
 
 A step needing two identities — two roles, two tenants, signed-in versus anonymous — **logs out and back in between them**. It does not assume isolation that is not there.
 
+**What the path buys, and the one thing it costs the operator.** Inheriting a real profile means inheriting its logged-in identity, so there is no authentication to script — which is most of why the exception exists, and worth stating because it is easy to reach for the manual path for reasons that the automated one would also satisfy. The cost is not technical: driving that browser typically opens a **separate window the operator is not looking at**, so a run that says nothing appears to be doing nothing. **Say which window to watch, at the moment it opens.** Evidence somebody asked to watch being produced is not evidence if they cannot find it, and this is the one failure here that is entirely avoidable by saying a sentence.
+
 ## Before touching the application
 
 **Prove the tree being served is the tree under test.** A development server left running from earlier work answers a port exactly like the real thing, and the result is that a change is verified against code that does not contain it. Ask which tree is being served, not whether something responds.
 
 **The stack is started from where the stack is defined**, which is not necessarily the directory the work is in. A workflow carries both: the workspace it edits, and the working directory that brings services up.
+
+## Proving the tree under test, mechanically
+
+The rule above is stated as a question to ask. Asking it is not a procedure, and a requirement with no mechanism behind it is satisfied by whoever is most confident. The chain below answers it deterministically and costs about a second; every part of it is portable, and the only bindings are the port and the paths of the change being verified.
+
+```bash
+PORT=<the port the application under test is served on>
+APP_URL=<the URL a person would actually open, including any path prefix>
+
+# 1. What process is serving that port, and out of which directory?
+PID="$(lsof -nP -iTCP:"$PORT" -sTCP:LISTEN -t | head -1)"
+[ -n "$PID" ] || { echo "nothing is listening on $PORT"; exit 1; }
+CWD="$(lsof -a -p "$PID" -d cwd -Fn | sed -n 's/^n//p')"
+echo "port $PORT -> pid $PID -> cwd $CWD"
+
+# 2. What revision is that directory on, and is it clean?
+git -C "$CWD" branch --show-current && git -C "$CWD" status --short
+
+# 3. Is the change actually on disk there? Grep the changed symbol.
+#    Never infer this from the branch name -- the branch is a label, the symbol is the fact.
+rg -n '<changed-symbol>' "$CWD/<changed-file>"
+
+# 4. Is the artifact being served the one just built? A 200 does not mean the right page.
+curl -s "$APP_URL" | rg -n '<entry script or known marker>'
+```
+
+**The output is one sentence, and a check that cannot produce it has not passed:** *port P is served by pid X out of directory C, which is on revision B and contains the change, and the client has loaded that build.*
+
+Three things about this are worth stating separately, because each is a distinct failure it closes:
+
+- **The directory is resolved from the listening process, not assumed.** The workspace being edited and the workspace being served are different facts, and a workflow that conflates them verifies the wrong tree while reporting success. This is the same requirement a [gate](../foundations/Agentic_Engineering/primitives/gate.md) records as `workspace`, arriving from the runtime side.
+- **The symbol is grepped rather than inferred.** A branch name says what someone intended; the symbol says what is there. A checkout that was switched but not rebuilt satisfies every check except this one.
+- **Then hard-reload the client exactly once, and stop reloading.** A tab left open survives a server restart and keeps serving the previous build from memory. The single reload is necessary; repeated reloading is actively harmful, because in any defect involving a stale read the reload is also what *hides* it.
+
+## Driving the interface without invalidating the run
+
+The instrument is part of the observation, and three of its properties routinely produce results that look like product defects.
+
+- **Match elements by test id or by target, never by visible text.** Visible text is not unique, it is not stable, and it is shared across navigation chrome and content. A run that matched on text once selected a sidebar navigation item instead of the content tab with the same label, and every observation made afterwards was against the wrong screen -- with nothing in the transcript indicating it.
+- **Click through the interface; do not navigate to URLs.** A browser-level navigation is a hard page load, which destroys in-memory client state. Any change whose whole claim is that state now *persists* across an interaction will look broken when it is not, and the check will have disproved something nobody was asserting.
+- **Screenshot coordinates are scaled relative to the document's own coordinates.** Clicking at a position read off an image lands somewhere else. Act through the document, or through an instrument that owns the mapping itself; do not arithmetic your way between the two.
+
+**Do not run a full test suite while driving a browser.** Load climbs, the browser's script evaluation crosses its timeout -- on the order of forty-five seconds -- and the failure presents as an application fault. The suite and the browser are both legitimate instruments and they are not simultaneous ones. The related tell: two consecutive full-suite runs failing *different, non-overlapping* sets is the signature of resource starvation rather than of a regression, and the remedy is re-running the named suites in isolation before believing either verdict.
+
+## Instrument from outside the application before editing it
+
+Where the question is about state rather than about pixels, the reflex is to add logging to the source. Prefer the instrument that requires no source change at all: **subscribe to the application's own state container from the page**, rather than polling the document or reading a devtools panel.
+
+It is better on three counts and the third is the one that decides it. It dirties no workspace, so it cannot collide with a delivery run or leave instrumentation behind. It needs no rebuild. And **a subscriber fires on every change, where polling samples** -- so it sees transient states that nothing else does. A frame lasting tens of milliseconds is invisible to document polling and to a person watching; in the run this is drawn from, a 33-millisecond empty frame was the entire defect.
+
+**Measure the duration of any transient state that appears.** If reproduction correlates with that duration, the defect is a race, and that changes both the fix and the shape of the regression test -- a race cannot be covered by a test that does not force the ordering.
+
+Two warnings that cost real time:
+
+- **Never add a dependency to a memoization or effect while instrumenting.** Doing so changes the behaviour under measurement, and in the direction that *fixes* the thing being measured. This invalidated three consecutive runs in the session this is taken from before it was noticed.
+- **Confirm which request mechanism the application actually uses before patching one.** Instrumenting the wrong transport is silent -- it does not error, it simply never fires, which reads as "the hypothesis was wrong" rather than as "the probe was never installed."
+
+Wrap rather than rewrite, log on change rather than continuously, and log identities and counts rather than only values -- a count that is right and a collection that is the wrong one are indistinguishable from the values alone.
+
+## Three different jobs, and they want different done-conditions
+
+"Driving the application" covers three activities that a single flow tends to conflate, and each has a different trigger and a different definition of done:
+
+| Job | Trigger | Done when |
+|---|---|---|
+| **Planning** | A change to existing interface behaviour is being scoped | Current behaviour is described from observation rather than from the code |
+| **Verification** | An implementation is complete and not yet delivered | The claim holds in the running application, with the pair captured |
+| **Debugging** | A symptom does not reproduce under test | The broken boundary is named, or non-reproduction is recorded as the finding |
+
+They are separated because the done-condition is what a workflow gates on, and a flow that shares one across all three either stops too early on the hardest or grinds on the simplest. Planning is the one most often left undocumented, because it survives as a habit rather than as a step.
 
 ## Capture before and after, as a pair
 

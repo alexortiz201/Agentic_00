@@ -49,6 +49,7 @@ It is also the least portable thing in this document. **Treat dynamic injection 
 - **Is it about this task only?** Conversational content.
 - **Must it hold even if the history is summarized?** Standing instruction, or enforce it in the controller. Preferably both.
 - **Is it large and rarely relevant?** Neither -- put it where it can be fetched on demand, and spend the standing slot on a pointer to it. A pointer costs a line per call; the document costs its whole length per call.
+- **Is it a rule of the form "whenever Y happens, do X"?** Then the prior question is not which injection point but whether the runtime can fire it at all -- see [mechanized triggers](04_MECHANIZED_TRIGGERS.md). A trigger a runtime can observe should not be spending a standing slot.
 - **Does it have to be obeyed rather than considered?** Neither. Instructions are weighted, not enforced. If it must hold, it is a gate, and a gate lives in code.
 
 That last one is the most expensive mistake available here, because it looks solved. **Text is not enforcement**, however privileged its position in the request. A prohibition in a standing instruction is a strong prior and nothing more, and the moment it matters is exactly the moment a prior is not enough.

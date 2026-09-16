@@ -28,6 +28,8 @@ Most of what a run learns should die with it, and a store that accepts everythin
 - **Does it outlive the task that produced it?** Standing constraints and settled decisions survive. The state of a half-finished job does not -- that belongs in a handoff, which is deliberately short-lived and deliberately deleted when the job ends.
 - **Is it legible cold?** The writer has the whole session in context and the reader has none of it. "The fix" and "that issue" resolve to nothing a week later. A durable write names its subject, states the reason and not only the conclusion, and survives being read by someone who was not there.
 
+**A rule the runtime could fire does not earn the slot.** A standing rule of the form "whenever Y happens, do X" can pass all three tests and still be in the wrong place, because what it actually needs from the store is the one thing a store cannot supply -- the noticing. Where the event is one a runtime can observe, the rule belongs in the runtime, and the slot stays free for the rules only a reader can recognise. The split is in [`Harness_Engineering/04_MECHANIZED_TRIGGERS.md`](../Harness_Engineering/04_MECHANIZED_TRIGGERS.md).
+
 **Write it in the same act that learns it.** A correction recorded at the end of a run is recalled in order of memorability rather than of importance, and the item nobody thinks of is exactly the one nothing else will catch.
 
 ## Eviction

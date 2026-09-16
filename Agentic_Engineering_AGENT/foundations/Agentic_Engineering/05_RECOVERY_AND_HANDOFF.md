@@ -47,6 +47,18 @@ This is separate from resumability and is frequently confused with it. A resumab
 
 **The exit is not a failure mode to minimize.** It is the property that makes running the system unattended a reasonable thing to do, because it bounds what an abandoned run can leave behind.
 
+### Reverse what you changed in something you did not create
+
+Teardown releases what the run **started**, and that rule is deliberately narrow: a run that stops a shared service because it happened to be listening has broken someone else's work. But the narrowness leaves a real case uncovered, because **a run routinely changes state it did not create** -- consuming a shared fixture, flipping a flag, leaving a record in a state a later run will read as the starting one. Nothing about that is released by not releasing it.
+
+So the obligation is a reversal rather than a teardown, and it has three parts:
+
+- **Record each mutation at the moment it is made.** A reversal can only cover what was written down, and the end of a run is precisely when the earliest changes are least recoverable.
+- **Re-read the state afterwards and confirm the original values are back.** Issuing the reversing action is not evidence that it took effect, which is the same distinction drawn everywhere else between an action and its result.
+- **Where the reversal cannot be verified, say so.** A shared fixture left in an unknown state is a finding the next run needs, and silence about it is what turns one run's leftovers into another run's irreproducible defect.
+
+The scarcer the shared state, the more this matters: where only one record in an environment exercises a boundary, every run is using the same one, and the first run that consumes it without restoring it removes the ability to test that boundary at all.
+
 ## Make runs resumable
 
 Another agent must be able to identify:

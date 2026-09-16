@@ -85,6 +85,12 @@ This passes every check that only asks whether the test failed, which is most of
 
 The same question closes the other half of it: **if the defect were present, would this assertion produce a different result?** A check that cannot fail is worse than no check, and the concrete tell is an assertion whose expected and actual values are equal by construction -- it will hold whatever the code does.
 
+### Prove it red in the workspace the fix will be built in
+
+A reproduction proven in one checkout says nothing about another. Where the fix is built in an isolated workspace cut from a target base -- which is the tree every subsequent check, review and gate will read -- **the failing test is carried across and re-run there before anything is built on it.** A red that exists only in the checkout it was written in is invisible to the entire rest of the run, and nothing downstream errors: the suite passes, because the test is not there.
+
+**If it fails differently in the workspace, that is a finding about the base, not a reason to adjust the test.** The two trees differ, the diagnosis was made against one of them, and quietly editing the test until it fails the same way in the other discards the only signal that they were not the same tree.
+
 ## An empty result is a claim, and nothing announces when it is wrong
 
 A search that returns nothing reads as *there are none*, which is a finding. It is indistinguishable from a search that was never able to return anything, because **both produce the same output**: silence.

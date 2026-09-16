@@ -60,6 +60,21 @@ A run that can only be read offers two moves once it is visibly off course -- le
 
 The property has a price, which is why it is a decision rather than a default. An attachable run is one more thing that can be perturbed, so **an intervention is a change to the run and belongs in its record like any other** -- who, at which step, what was changed, and what the run was about to do instead. An unrecorded intervention is the most expensive kind of missing record: the run afterwards is no longer the run its configuration describes, and nothing downstream can tell it apart from a run that needed no help. That is also how a workflow acquires a reputation for working which belongs to the person who kept rescuing it.
 
+## Scope a signal to the run, or it is measuring history
+
+A log that is appended to across runs and never rotated holds every run the machine has ever performed. Counting matches over the whole file therefore answers a question nobody asked -- *has anything ever gone wrong here* -- while presenting as an answer to the one that was asked, which is whether anything went wrong **this time**.
+
+The failure is not that the number is imprecise. It is that the number is **confident, specific and about the wrong interval**, which is the combination no reader is equipped to doubt. A count of errors scanned over an unrotated log once produced a firm reading of one hundred and ninety-one errors against a system that was in fact perfectly healthy, and sent an investigation after a defect that had been fixed days earlier. Nothing about the figure looked wrong.
+
+Two remedies, and they are not equivalent:
+
+- **Scan forward from a marker that identifies the start of this run**, and count only after it. This works on a shared resource nobody may rotate, which is the common case.
+- **Rotate before starting**, so the artifact begins empty. Cleaner where the run owns the resource, and unavailable where it does not.
+
+**When neither is possible, report that the signal could not be scoped -- and report no number at all.** This is the general rule about empty results arriving at a specific instrument: an unscoped count and a scoped one are indistinguishable once both are integers, so emitting the unscoped one launders "I could not look at the right interval" into a measurement. A stated inability to measure is a usable input to the next decision. A number about the wrong interval is worse than silence, because silence does not get acted on.
+
+The same question applies to every accumulating signal, not only to logs -- a metric series, a queue depth, an error aggregator, a coverage report over a directory that holds more than the change. **Ask what interval a signal covers before reading it as a result**, and where the answer is "everything that has ever happened", it is not observing this run.
+
 ## What must be capturable
 
 The minimum for a run to be explicable afterwards by someone who was not watching:

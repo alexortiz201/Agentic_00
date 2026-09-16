@@ -45,6 +45,17 @@ Agentic work makes this acute: every phase boundary hands over fluent, confident
 - **Enumerate the distinct claims before testing any of them.** A report naming a symptom, a cause, and the link between them is three claims, not one, and they fail independently.
 - **Say which claims remain unexplained.** A pass where every stated claim resolved but a symptom is still unaccounted for is not finished, and reporting it as finished is how a wrong diagnosis survives into the fix.
 
+### A claim under test has three verdicts, and the third is the common one
+
+Testing an inherited claim looks binary -- it holds or it does not -- and reporting it that way loses the outcome that occurs most often. The contract is **`confirmed` / `refuted` / `partial`**, where `partial` means *the mechanism is real, and the claim describes it incorrectly*. Forced into a binary, that outcome goes to whichever neighbour is wrong: called `confirmed`, it carries a wrong description into the fix; called `refuted`, it throws away a real mechanism. This is the same argument that makes `partially_verified` a handoff outcome rather than a rounding of one, applied to a single claim rather than to a run.
+
+`partial` obliges a statement of **exactly which part is wrong**, or it is a hedge. Four shapes account for most of them, and each is worth checking by name:
+
+- **The wrong field, reference or variable named.** The symptom is real and the thing blamed is a neighbour that is in fact untouched. Check that the thing blamed is the thing written.
+- **An inverted or over-specified branch mapping.** The claim says one condition produces one outcome and another produces a second, when one branch produces both depending on something the claim never mentions. Read the selector and state what it is keyed on.
+- **A second mechanism invented to explain a second symptom.** It is frequently the half that is wrong, and it inherits credibility from the half that is right. Test it separately and with equal suspicion.
+- **A timing-dependent mechanism described as deterministic**, or the reverse. If a race is involved, name the window.
+
 ## Verify by prediction, not by observation
 
 Everything this document asks for is retrospective -- it validates records of things that already ran. That is exactly the gap a fluent post-hoc account walks through, because the actor writing the record is the one that chose what to put in it.
@@ -52,6 +63,14 @@ Everything this document asks for is retrospective -- it validates records of th
 **State a falsifiable prediction before the run, then run it.** This configuration fails, that one passes, and the discriminator is the named thing. A diagnosis that only explains results after seeing them is not a diagnosis yet; it is a story that fits. The finding is confirmed when one variable separates every pass from every fail with no exceptions, and a single exception is the whole result.
 
 This is the one instrument that structurally prevents narrating a conclusion into place, and it costs one sentence written down before the evidence exists.
+
+## A wrong reason is worse than no reason
+
+Every record here demands a reason -- why a check is inapplicable, why a gap exists, why a claim changed. The rule that is missing beside it is what to do when the reason is not known, and the default in that situation is to supply a plausible one, because a blank field reads as carelessness while an explanation reads as work.
+
+**It is the worse of the two, and the mechanism is specific: an explanation closes the question.** Nobody re-opens a gap that already has a cause written next to it, so a wrong reason does not merely fail to inform -- it removes the conditions under which anyone would find out. A blank one is at least legible as an open question.
+
+So `cause unknown` and `not covered` are acceptable entries, and preferable to a guess written in the register of a finding. The same applies to a correction: where the original claim carried a justification and that justification was also wrong, **correct both**, and where the true reason cannot be identified, say it is unknown rather than leaving the refuted one standing as the explanation of record.
 
 ## Test the control plane, not the files
 

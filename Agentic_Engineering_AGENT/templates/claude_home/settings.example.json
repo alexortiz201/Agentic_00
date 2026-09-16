@@ -1,0 +1,45 @@
+{
+  "_comment": "A COMPLETE minimal settings.json for a fresh bench. Machine-, account- and employer-specific keys are deliberately absent -- see README.md, section 'What was excluded and why'. Substitute __HOME__ before use.",
+  "model": "__MODEL__",
+  "theme": "auto",
+  "extraKnownMarketplaces": {
+    "__MARKETPLACE_NAME__": {
+      "source": { "source": "github", "repo": "__MARKETPLACE_REPO__" },
+      "autoUpdate": true
+    }
+  },
+  "enabledPlugins": {
+    "__PLUGIN_NAME__@__MARKETPLACE_NAME__": true
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          { "type": "command", "command": "__HOME__/.claude/hooks/guard_claude_md.sh", "timeout": 10 }
+        ]
+      },
+      {
+        "matcher": "startup|clear",
+        "hooks": [
+          { "type": "command", "command": "__HOME__/.claude/hooks/boot_memory.sh", "timeout": 10 }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          { "type": "command", "command": "__HOME__/.claude/hooks/cleanup_on_stop_phrase.sh", "timeout": 10 }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "if": "Bash(git *)", "command": "__HOME__/.claude/hooks/cleanup_on_git.sh", "timeout": 15 }
+        ]
+      }
+    ]
+  }
+}

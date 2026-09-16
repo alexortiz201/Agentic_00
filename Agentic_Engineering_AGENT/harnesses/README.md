@@ -13,6 +13,8 @@ The discipline is in [`foundations/Harness_Engineering/`](../foundations/Harness
 | 🗺️ [`equivalents.md`](equivalents.md) | The vocabulary map, the injection points, and the lifecycle, side by side |
 | 🔁 [`porting.md`](porting.md) | The mechanism-by-mechanism translation between them |
 
+**What is deliberately not in here: what any one bench actually has installed.** These files say what each harness *can* do, and capability is not deployment -- a port costed from a capability list is costed from the wrong document. The inventory of a real installation is keyed by capability so that it looks up against [`equivalents.md`](equivalents.md) row by row, and its template is [`templates/harness_manifest.md`](../templates/harness_manifest.md). It lives there rather than here because a manifest describes a machine rather than a product, so it is filled in per bench and never committed.
+
 Each conformance report answers the same questions in the same order, so they can be read side by side. **The gaps are the point** -- a feature comparison produces admiration, a conformance report produces a work list.
 
 ## The three questions this folder exists to answer
