@@ -8,11 +8,13 @@ Three folders at the package root, none of them committed. **Create any of them 
 | `.profile/` | Who is operating this package -- preferences, growth direction | As long as that person does |
 | `.workgroup/` | A folder per workgroup this discipline is applied to, plus run scratch | The workgroup, and the run |
 
+**Where a session reads them is not where they live, and since 2026-09-16 they do not share a root.** `.memory/` and `.workgroup/` are real directories in the **workbench home** at `~/.workbench/<org>/`, named directly by every reader — **no symlink**, which was decided explicitly and replaces the earlier plan to surface them at the package root. `.profile/` is still a real directory in the package, awaiting the private operator repository. [`../defaults/defaults.json`](../defaults/defaults.json) carries the arrangement and its `status` fields say which half of each row is built. The conventions below hold either way -- they are about the contents, not the backing store.
+
 `.profile/` is what keeps `foundations/` standalone: anything true of one person goes there rather than into doctrine. `.workgroup/` is distinguished from `.memory/` by subject -- `.memory/` is about this package, a folder in `.workgroup/` is about something this package is applied to, and loose scratch at its root belongs to neither and is cleared when the run ends. The rest of this file is about `.memory/`, which has the most structure.
 
 ## `.memory/`
 
-It is **the agent's scratchpad**. It is never committed: the root `.gitignore` covers `.memory/`, `memory/` and `*.memory.md`.
+It is **the agent's scratchpad**. It is never committed -- but not by an ignore rule in this package any more: since 2026-09-16 it is not in this package at all, so there is nothing here to ignore. This package's root `.gitignore` now covers only `.profile/` and the `*.memory.md` scratchpad-file convention.
 
 Because it is never shared, the *conventions* for it live here, in a committed file, rather than inside it.
 
@@ -58,6 +60,8 @@ This table drifts the moment a file is added without updating it. If it disagree
 ## Writing notes
 
 One topic per file. Keep them short and current -- **correct a stale fact in place** rather than appending a correction beneath it, and delete a file whose topic is resolved. These are notes to act on, not a log.
+
+**In place because this is a record store, and the discriminator is the artifact rather than the correction.** A record store holds what is true now, so a superseded fact here is noise. An **audit-bearing record** -- a ticket, a review, a pull request -- is the opposite artifact: it *is* the trail, so a correction there is **appended**, because deleting what was believed destroys what a reader needs in order to judge the current claim. Everything in `.memory/` is the first kind; nothing in it is the second. Getting this backwards is easy and quiet -- the same instinct has been applied in both directions in one session and been wrong both times -- so decide by asking which artifact is in front of you, not by which motion feels tidier.
 
 What belongs: facts about the target environment that would otherwise be rediscovered -- its de-facto tooling, known limits of the current approach, gaps between where things are and where they are going -- plus the working state of the run in progress. What does not: anything that belongs in this package's tracked documentation, because a decision recorded only here is a decision nobody else can review.
 

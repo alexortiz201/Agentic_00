@@ -46,7 +46,7 @@ One batched pass over every ephemeral store, in this turn:
   - .memory/ -- running_context.md, todo_list.md, every topic note
   - .workgroup/<member>/ -- including PRs/<TICKET>.md and any todo list there
   - .profile/ -- only if the session changed what his setup actually is
-  All three live in __STATE_ROOT__/.
+  .memory/ and .workgroup/ are under __STATE_ROOT__/; .profile/ may be under a different root in this install.
 
 Record, concretely and with identifiers:
   - what is half-done, and where exactly it stopped

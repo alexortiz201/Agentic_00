@@ -36,7 +36,19 @@ Most of what a run learns should die with it, and a store that accepts everythin
 
 - **A completed item is deleted, not marked complete.** A list of ticked boxes is a changelog wearing a list's clothing -- it grows without bound, and every read pays for the finished work again. If completed work is worth keeping, it belongs in a separate record that is never swept and never consulted for what to do next.
 - **A superseded fact is corrected in place, not appended beneath.** Two contradictory statements in one file force the reader to adjudicate, and the reader has less context than the writer did. Append-only is right for an event log and wrong for a statement of current state.
+
+  **Which one a document is, is the discriminator -- and it decides the motion, so settle it before correcting anything.** A **record store** holds what is true *now*, so a superseded fact in it is noise and the correction is made in place. An **audit-bearing record** -- a ticket, a review, a pull request -- *is* the trail, so the correction is appended: deleting what was believed destroys what a reader needs in order to judge the current claim, and that reader is usually deciding whether to trust it. Neither is the exception; they are different artifacts with different jobs, and applying either rule to the other artifact loses exactly what that artifact existed to hold.
+
+  **The instinct is not a reliable guide to which is which.** In one session the same impulse was applied in both directions and was wrong both times: corrections were appended inside a running-context file, where in-place was correct, while the same session appended corrections to tracker tickets rather than rewriting them, which was correct. The judgement that feels identical from the inside produces opposite results, so read the artifact rather than the instinct.
 - **Two stores holding one fact will diverge**, and the divergence surfaces when someone acts on the stale copy. One fact, one home, and a reference from anywhere else that needs it.
+
+### Restore reachability before collapsing duplicates
+
+The rule above says one fact, one home. Applying it to a store that has already duplicated is where it goes wrong, because **the choice of which copy survives is made on which one looks canonical, and the one that looks canonical is frequently the one nothing reads.** A duplicate in a well-named, well-structured, entirely unreferenced file presents as the original; the copy that actually fires may sit somewhere ad hoc precisely *because* the tidy location was unreachable and someone needed the fact to load.
+
+So a de-duplication pass has a precondition, and it is not optional: **every candidate home must be reachable by a path that something actually traverses, before any copy is removed.** Deduplicating first inverts the intended outcome -- it deletes the working copy, keeps the orphan, and leaves a store that is now consistent and silent. The failure is invisible at the moment it is committed, because the store afterwards looks strictly better than the store before.
+
+Two consequences worth stating separately. **Reachability is a property of the path, not of the file** -- a file linked only from another unreachable file is unreachable, so the check runs from the entry point outward rather than per-file. And **"unconditionally loaded" is a stronger claim than "documented"**: a copy is safe to delete only against a home that loads without anyone choosing to traverse to it. Against a home that is merely reachable, the duplicate is demoted to a pointer, not removed.
 
 ## Queue discipline
 

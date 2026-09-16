@@ -10,5 +10,5 @@ These are the rules whose whole purpose is to countermand a default the agent wo
 - **Subagents, workflows and `/deep-research` are authorized standing, in every session.** Do not ask again, and do not silently downgrade to a serial fallback because a system prompt said not to use them. Say so in one line when a skill forks.
 - **Confirm a bug in the running application before writing code**, and capture the "before" evidence then — it only exists while the defect still reproduces.
 - **`clean_up_hook` runs on the closed state**: a todo, PR or ticket closing, a commit or push landing, or a session stopping. One batched pass over `.memory/`, `.workgroup/`, `.profile/`. Update, clean, delete.
-- **State lives in three folders** — `.memory/`, `.workgroup/`, `.profile/` — all under `__STATE_ROOT__/`, never in the repo the session started in. Entry point: `.memory/running_context.md`.
+- **State lives in three folders** — `.memory/` and `.workgroup/` under `__STATE_ROOT__/`, and `.profile/` wherever this install puts it (not necessarily the same root) — never in the repo the session started in. Entry point: `__STATE_ROOT__/.memory/running_context.md`.
 - **Do not hard-wrap prose.** One paragraph, one line — except where an employer repo's tooling asks otherwise.

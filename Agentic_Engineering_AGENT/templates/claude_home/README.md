@@ -13,6 +13,8 @@ They are complements and are easy to mistake for each other.
 
 **And a third thing, which is neither.** [`../../config/`](../../config/README.md) is this package maintainer's *own* bench, committed with its real values so it can be restored verbatim on a new machine. Same machinery, **opposite correctness condition**: this kit is right when every personal value is a placeholder, `config/` is right when every one of them is the real thing. If you are here to set up **your** bench, you are in the right file — `config/` would only install someone else's habits.
 
+**And a fourth, which is where the values come from.** [`../../defaults/`](../../defaults/README.md) records what a sensible value *is* for each placeholder here -- the reason it is sensible, and what breaks without it -- so this kit can stay a shape and the answers can be argued about somewhere else. 🧭 [**The four layers**](../../defaults/README.md) is the one-screen version: the live bench, `config/`, this kit, and the answers, and which one a given change belongs in.
+
 The manifest is the port plan; the kit is the install. **Fill in a manifest for your bench as well** -- the kit reproduces what is in this directory, and the manifest is where the rest of the bench gets recorded: the plugins, the external tools, the linked skills, the account-level integrations. A kit without a manifest reproduces the files and quietly loses everything that was configured somewhere else.
 
 ## What is in here
@@ -38,7 +40,7 @@ Every one of these is substituted by `install.sh`. Substituting by hand is fine;
 | Placeholder | Means | Example shape |
 |---|---|---|
 | `__HOME__` | Absolute home directory. Used only in JSON, because hook command strings are not guaranteed to undergo shell expansion | `/home/you` |
-| `__STATE_ROOT__` | Absolute path to the repository holding the local state folders the sweep reconciles | `/home/you/Projects/state-repo` |
+| `__STATE_ROOT__` | Absolute path to the root holding `.memory/` and `.workgroup/`. **Not** `.profile/` — no script in this kit reads it, so it may live under a different root | `/home/you/.workbench/acme` |
 | `__SOLUTION__` | Name of the multi-repo grouping whose topology map the boot instruction points at | `acme` |
 | `__MODEL__` | Default model identifier | as your harness spells it |
 | `__MARKETPLACE_NAME__` / `__MARKETPLACE_REPO__` / `__PLUGIN_NAME__` | Plugin source and the bundle enabled from it | an org's plugin repository |
@@ -60,7 +62,7 @@ Someone adopting this should be able to take the machinery without the opinions.
 
 **Preference, and safe to drop:**
 
-- `boot_memory.sh` and the whole state-store read order. This assumes a particular three-folder arrangement in a particular repository. Drop it, or repoint `__STATE_ROOT__`.
+- `boot_memory.sh` and the whole state-store read order. This assumes `.memory/` and `.workgroup/` sit together under one root. Drop it, or repoint `__STATE_ROOT__`.
 - The two reconciliation-sweep hooks and `stopping_phrases.txt`. They mechanize one operator's discipline; the *pattern* is general, the sweep being reconciled is not.
 - `SHORTCUTS.md` contents, the model choice, the plugin, and every skill.
 

@@ -45,8 +45,7 @@ Read in this order and stop there — each file links whatever else matters:
 3. `.workgroup/<repo>/README.md` for the repo the work is in, **plus each repo named in its
    `SERVICE_DEPS`**
 
-All three live in `~/Projects/Agentic_00/Agentic_Engineering_AGENT/`, whichever repo the
-session started in — they will not auto-load from anywhere else.
+All three of those live in the **workbench home** at `~/.workbench/__SOLUTION__/`, whichever repo the session started in — they will not auto-load from anywhere else. Note this is the read order, not the store list: the third store, `.profile/`, did **not** move to the workbench home and `boot memory` does not read it — it stayed in the workbench tool at `~/Projects/Agentic_00/Agentic_Engineering_AGENT/` because it is bound for a private operator repo.
 
 Then report in three buckets — **in flight / blocked / next** — every item carrying a concrete
 identifier.
@@ -167,6 +166,7 @@ distilled out of it.
    |---|---|
    | `prompt` | a finished, quoted prompt for an agentic step |
    | `command` | a literal package script or CLI call for a deterministic step |
+   | `deferral` | a hand-off to a workflow you do not own, plus the continuation that resumes the run |
    | `tool` | a script that needs writing |
    | `skill` | a reusable multi-step markdown workflow |
    | `template` | a reusable output shape |

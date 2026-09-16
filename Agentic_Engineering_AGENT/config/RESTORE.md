@@ -27,10 +27,11 @@ export STACK_BOOT_CMD='<cmd> --headless'       # the one command that boots the 
 
 ### 1. Restore the state folders first
 
-`.memory/`, `.profile/` and `.workgroup/` are gitignored, so a fresh clone of this repository arrives with all three **missing** — and the hooks installed in step 2 point straight at them.
+`.profile/` is gitignored, so a fresh clone of this repository arrives **without it** — and the hooks installed in step 2 read it. `.memory/` and `.workgroup/` are no longer part of this repository at all: they moved to the workbench home at `~/.workbench/__SOLUTION__/` on 2026-09-16, are not gitignored here because they are not here, and are restored by cloning that home rather than by seeding this tree.
 
 ```sh
-cp -R templates/layout/.memory  templates/layout/.profile  templates/layout/.workgroup  .
+cp -R templates/layout/.profile .
+cp -R templates/layout/.memory templates/layout/.workgroup ~/.workbench/__SOLUTION__/   # ONLY if the workbench home is missing them
 ```
 
 Those are empty defaults, not your content. Your actual state has to come from wherever you last kept it; if it is gone, the defaults at least mean the hooks point at something real instead of printing a path that does not exist.

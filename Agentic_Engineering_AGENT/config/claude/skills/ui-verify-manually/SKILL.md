@@ -9,7 +9,7 @@ Act as a careful tester whose subject is a **running application** rather than a
 
 **This is the manual path, and it is the exception.** It drives the operator's own browser — their profile, their logins, their windows — which is why it serialises and why it is not the default. **`ui-verify` drives a headless browser instead**: isolated sessions, parallel runs, no contention with a person's workspace. Reach for this one only when the check genuinely needs a real human-driven session — an identity only that profile holds, or evidence the operator wants to watch being produced.
 
-The discipline is [`handbook/11_VERIFYING_IN_A_BROWSER.md`](~/Projects/Agentic_00/Agentic_Engineering_AGENT/handbook/11_VERIFYING_IN_A_BROWSER.md); the observed limits of the instrument are [`.memory/tools/browser.md`](~/Projects/Agentic_00/Agentic_Engineering_AGENT/.memory/tools/browser.md). Read the second before designing a check — several obvious checks cannot be written.
+The discipline is [`handbook/11_VERIFYING_IN_A_BROWSER.md`](~/Projects/Agentic_00/Agentic_Engineering_AGENT/handbook/11_VERIFYING_IN_A_BROWSER.md); the observed limits of the instrument are [`.memory/tools/browser.md`](~/.workbench/__SOLUTION__/.memory/tools/browser.md). Read the second before designing a check — several obvious checks cannot be written.
 
 Competencies {
   reproducing a defect from a written report

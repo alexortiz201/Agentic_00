@@ -21,7 +21,7 @@ Replace the tokens below; everything else is a stated preference you can keep, e
 
 | Token | Is | Example value |
 |---|---|---|
-| `<STATE_ROOT>` | the one repo holding `.memory/`, `.workgroup/` and `.profile/` | `~/Projects/Agentic_00/Agentic_Engineering_AGENT` |
+| `<STATE_ROOT>` | the root holding `.memory/` and `.workgroup/` — the two stores the boot hook reads | `~/.workbench/acme` |
 | `<WORK_ROOT>` | employer solution root — the folder housing all work repos | `~/acme` |
 | `<PERSONAL_ROOT>` | personal and tool-work root | `~/Projects` |
 | `<EMPLOYER>` | employer name, where a rule is genuinely employer-scoped | `Acme` |
@@ -31,7 +31,7 @@ Replace the tokens below; everything else is a stated preference you can keep, e
 
 ```sh
 sed -i '' \
-  -e 's|<STATE_ROOT>|~/Projects/Agentic_00/Agentic_Engineering_AGENT|g' \
+  -e 's|<STATE_ROOT>|~/.workbench/acme|g' \
   -e 's|<WORK_ROOT>|~/acme|g' \
   ~/.claude/CLAUDE.md
 ```
@@ -113,7 +113,7 @@ Subagents, workflows and `/deep-research` are **authorized standing, in every se
 
 ## Where state lives
 
-**Everything written for a future session lives in `.memory/`, `.workgroup/` and `.profile/`, all three under `<STATE_ROOT>`** — never in the repo the session started in. Entry point: `.memory/running_context.md`, gathered automatically at session start by a `SessionStart` hook.
+**Everything written for a future session lives in `.memory/`, `.workgroup/` and `.profile/`** — never in the repo the session started in. `.memory/` and `.workgroup/` are under `<STATE_ROOT>`; `.profile/` need not be, and in this package's own install it is not, so do not assume one root holds all three. Entry point: `.memory/running_context.md`, gathered automatically at session start by a `SessionStart` hook.
 
 **The traversal rules are in `<WORK_ROOT>/CLAUDE.md`** — read order, the stop-there rule, the service-dependency follow-through, and the explicit "do not read every member's file". That is the canonical statement and it loads for every repo beneath it. Do not restate it here.
 
@@ -167,7 +167,7 @@ Working notes you write **for your own use** — running todo lists, scratch sta
 
 ## ADWs
 
-**ADW = Agentic Developer Workflow** — the workflow I would perform myself, same actions in the same order, with the agent standing in only where the flow is not deterministic. The authoring question per step is *"would I do this identically every time?"* Yes → `[deterministic]`, No → `[agentic]`. A deterministic step is a literal command you execute, never prose you interpret; an agentic step is a finished, quoted prompt.
+**ADW = Agentic Developer Workflow** — the workflow I would perform myself, same actions in the same order, with the agent standing in only where the flow is not deterministic. The authoring question per step is *"would I do this identically every time?"* Yes → `[deterministic]`, No → `[agentic]`, and *"it already exists and I hand off to it"* → `[deferral]`. A deterministic step is a literal command you execute, never prose you interpret; an agentic step is a finished, quoted prompt; a **deferral** yields to something you do not own and waits, so it states the continuation — what resumes the run, on what evidence, and what happens if control never comes back.
 
 - **ADWs are TypeScript programs run with `bun`**, not Python and not markdown. The markdown that exists is the prompt payload a controller hands to an agent, never the controller itself.
 - **A phase is a thin composition point** that invokes existing tooling — a package script, an installed skill — rather than a self-contained prose document.

@@ -25,7 +25,7 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-: "${STATE_ROOT:?set STATE_ROOT to the absolute path of the repository holding .memory/, .profile/ and .workgroup/}"
+: "${STATE_ROOT:?set STATE_ROOT to the absolute path of the root holding .memory/ and .workgroup/ -- NOT .profile/, which these scripts never read and which may live under a different root}"
 SOLUTION="${SOLUTION:-solution}"
 STAMP="$(date +%Y%m%d%H%M%S)"
 
@@ -39,7 +39,10 @@ place() {
     echo "SKIP  $rel (exists; re-run with --force to replace)"
     return 0
   fi
-  [ -e "$dst" ] && cp "$dst" "$dst.bak.$STAMP" && echo "      backed up -> $rel.bak.$STAMP"
+  # `command cp` bypasses any `cp -i` alias. An aliased copy waits for a confirmation
+  # that never arrives in a non-interactive run, so the backup silently does not happen
+  # and the install then overwrites a file with no recoverable copy behind it.
+  [ -e "$dst" ] && command cp "$dst" "$dst.bak.$STAMP" && echo "      backed up -> $rel.bak.$STAMP"
   subst < "$src" > "$dst"
   chmod "$mode" "$dst"
   echo "WROTE $rel"

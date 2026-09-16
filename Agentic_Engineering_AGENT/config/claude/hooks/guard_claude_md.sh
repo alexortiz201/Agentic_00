@@ -32,6 +32,15 @@ else
   echo "WARNING: ~/.claude/CRITICAL_RULES.md is missing. The standing overrides (no attribution trailers, confirm before pushing, never write a credential into a document) are NOT loaded. Say so before doing anything that touches git or a document."
 fi
 
+# --- jq presence -------------------------------------------------------------
+# Both clean-up hooks parse stdin with jq and exit 0 when it is absent, so a missing
+# tool never blocks work. The cost is that they then fail SILENTLY -- the sweep simply
+# stops being demanded and nothing says so. This is the one place that can announce it:
+# it runs at session start and does not itself need jq to do so.
+if ! command -v jq >/dev/null 2>&1; then
+  echo "WARNING: jq is not installed. The clean_up_hook triggers (cleanup_on_git, cleanup_on_stop_phrase) parse stdin with jq and exit quietly without it, so the record sweep will NOT be demanded after a commit, a push, or a stopping-point phrase. Install jq to restore them."
+fi
+
 # Dangling or empty global instructions -- the silent failure this guard exists for.
 if [ -L "$GLOBAL" ] && [ ! -e "$GLOBAL" ]; then
   echo

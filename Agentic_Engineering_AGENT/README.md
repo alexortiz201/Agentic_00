@@ -1,10 +1,12 @@
-# 📖 Agentic Engineering Agent
+# 📖 Agentic Engineering Agent -- the workbench tool
 
 A self-contained package for bounded, observable, and repairable software delivery.
 
+**This package is the workbench tool.** It is the public half of a bench; the private half is the [workbench home](#the-workbench-home) at `~/.workbench`. Both names are canonical and defined in [`LANGUAGE.md`](LANGUAGE.md) -- and **`workbench` on its own is ambiguous**, so always say which half.
+
 ## Read these first, in this order
 
-Five files. Together they are what "understanding this tool" means; everything else is loaded because a task asked for it.
+Five files. Together they are what "understanding the workbench tool" means; everything else is loaded because a task asked for it.
 
 1. 📜 [`AGENTS.md`](AGENTS.md) -- the operating contract. What you may do, what needs asking, and what is never granted.
 2. 🔤 [`LANGUAGE.md`](LANGUAGE.md) -- the canonical vocabulary. **Read it in full, before anything that uses it.** Every other file in this package writes these terms exactly as spelled here and **does not link back to explain them**, because by the time they are read the vocabulary is already in context. Most apparent contradictions between two documents turn out to be two spellings of one idea rather than two ideas.
@@ -42,6 +44,8 @@ Loading everything contradicts this package's own rule about context, so the res
 | 📋 [`handbook/08_GATE_ENFORCEMENT_CENSUS.md`](handbook/08_GATE_ENFORCEMENT_CENSUS.md) | Count what actually holds each gate shut, and watch the ratio move |
 | 🚪 [`handbook/09_ADOPTING_A_REPOSITORY.md`](handbook/09_ADOPTING_A_REPOSITORY.md) | Take this into a repository that has never seen it, without breaking what is there |
 | 🧵 [`handbook/12_TRACING_A_DEFECT.md`](handbook/12_TRACING_A_DEFECT.md) | Work a defect that will not reproduce, or whose cause nobody can locate -- trace it boundary by boundary |
+| 🛰️ [`handbook/13_ORCHESTRATING_A_SURVEY.md`](handbook/13_ORCHESTRATING_A_SURVEY.md) | Run several actors over one subject too large to read alone -- survey, assemble, approve, execute -- where the change is broad and partly irreversible |
+| ⚙️ [`defaults/`](defaults/README.md) + [`handbook/14_THE_DEFAULTS_FILE.md`](handbook/14_THE_DEFAULTS_FILE.md) | **Install or reproduce a bench, or add a default.** Store locations and their visibility, ADW output levels, required and recommended tooling with what breaks without each, the harness pieces to place, and the tokens an installer substitutes. Every value marked `default` (right for anyone) or `instance` (this operator's answer). Its README also holds 🧭 **the four layers** -- the live bench, `config/`, `templates/claude_home/` and `defaults/` -- which are confused often enough to be worth reading before touching any of them |
 | 🧱 [`templates/`](templates/README.md) | Starting points copied into a target — beginning with the three local folders an adopter would otherwise receive empty |
 | ⚙️ [`config/`](config/README.md) | Restore **this maintainer's own bench** on a new machine. One person's real values, not a starting point — an adopter wants [`templates/claude_home/`](templates/claude_home/README.md). Read [`config/EXCLUDED.md`](config/EXCLUDED.md) before trusting a bench built from it |
 | 🏗️ [`handbook/05_AGENTIC_LAYER_LAYOUT.md`](handbook/05_AGENTIC_LAYER_LAYOUT.md) | Decide where something goes in a target project |
@@ -49,13 +53,13 @@ Loading everything contradicts this package's own rule about context, so the res
 | 🗂️ [`handbook/02_RUN_ARTIFACTS.md`](handbook/02_RUN_ARTIFACTS.md) | Write anything into `runs/<run_id>/` |
 | 🩺 [`handbook/03_STRUCTURAL_CHECK.md`](handbook/03_STRUCTURAL_CHECK.md) | Confirm a move or rename did not break the package |
 
-This package **describes** how workflows are constructed and where they go, and it **may execute workflows that author, scaffold or validate other workflows** -- that is what a workbench is for. **What it does not hold is any one organization's workflows** -- that was decided explicitly, not by omission, and it has no runtime and should not grow one. A workflow built for an organization lives in that organization's own library; what this package contributes is the discipline it was built against. The one thing here that executes is its own [structural check](handbook/03_STRUCTURAL_CHECK.md).
+This package **describes** how workflows are constructed and where they go, and it **may execute workflows that author, scaffold or validate other workflows** -- that is what a workbench is for, and it is where the name comes from. **What it does not hold is any one organization's workflows** -- that was decided explicitly, not by omission, and it has no runtime and should not grow one. A workflow built for an organization lives in that organization's own library; what this package contributes is the discipline it was built against. The one thing here that executes is its own [structural check](handbook/03_STRUCTURAL_CHECK.md).
 
 ## Starting a session cold
 
-If [`.memory/`](handbook/01_LOCAL_MEMORY.md) exists, **read [`.memory/README.md`](handbook/01_LOCAL_MEMORY.md) first** -- it indexes every file in the store and says when each is read. It records what is settled, what is still open, and what was deliberately deferred -- which is the fastest way to avoid re-deciding something already decided.
+If [`.memory/`](handbook/01_LOCAL_MEMORY.md) exists at `~/.workbench/<org>/.memory/` — it is no longer inside this package — **read its `README.md` first**; it indexes every file in the store and says when each is read. It records what is settled, what is still open, and what was deliberately deferred — which is the fastest way to avoid re-deciding something already decided.
 
-Then the rest of `.memory/`: the `.md` files at its root, then its topic folders. It is never committed, so a clone will not have it. Treat everything there as a **prior snapshot to verify against current sources**, never as authority.
+Then the rest of `.memory/`: the `.md` files at its root, then its topic folders. It lives in the workbench home and is never committed from here, so a clone of this package will not have it. Treat everything there as a **prior snapshot to verify against current sources**, never as authority.
 
 ## Layout
 
@@ -69,7 +73,9 @@ The package separates the vocabulary, the discipline, and the conventions for op
 | 🤖 [`foundations/Agentic_Engineering/`](foundations/Agentic_Engineering/README.md) | What changes when agents and code perform the phases -- principles, lifecycle, authority, verification, recovery, composition, gates | A lesson proves true **anywhere**, not just here |
 | 📓 [`handbook/`](handbook/README.md) | What to **do** -- start here with a ticket in hand; it routes into the discipline | A procedure changes |
 | 🔀 [`harnesses/`](harnesses/README.md) | What each harness actually does, against the capability surface | Those products change, which is often |
-| `.memory/` `.profile/` `.workgroup/` | Local folders, never committed. See **Local folders** below | Freely |
+| ⚙️ [`defaults/`](defaults/README.md) | **The answers** -- what a sensible value *is* for each field, and why. The parameterisation of a bench: stores, levels, tooling, harness pieces, tokens. A folder of its own because it carries **both** a shareable default and this operator's answer for each value, which satisfies neither `templates/`'s invariant nor `config/`'s | An arrangement is decided, a tool is added, or an answer changes |
+| `.profile/` | Local folder, never committed, still in this tree. `.memory/` and `.workgroup/` moved to the workbench home on 2026-09-16 — see **Local folders** below | Freely |
+| 🔒 `~/.workbench` | **Not in this tree.** The [workbench home](#the-workbench-home) -- the private half of the bench, holding each organization's discipline and the operator's live state | An organization is added, or its discipline changes |
 
 **`foundations/` is standalone by rule.** It names no company, repository, tracker, model or harness, and it reaches nothing outside itself -- including the vocabulary, which is why `LANGUAGE.md` is read up front rather than pointed at from the place a term is used. Its areas may reference each other, and that is the point: the agentic side names the engineering practice it rests on instead of quietly reinventing it. A statement that can only be justified by one organization's tooling belongs in that organization's docs. A worked example from real delivery is welcome; the rule it illustrates has to generalize.
 
@@ -90,6 +96,30 @@ The line between `.memory/` and `.workgroup/` is subject. `.memory/` is about **
 **`.profile/` is what lets `foundations/` stay standalone.** The discipline describes work done by anyone; everything true of one particular person goes there instead. A preference that leaked into doctrine would make the doctrine unportable, and that is the failure the folder exists to prevent.
 
 Conventions for `.memory/`: [`handbook/01_LOCAL_MEMORY.md`](handbook/01_LOCAL_MEMORY.md).
+
+**Where they physically live is a separate question from where a session reads them.** As of 2026-09-16 they are no longer all here: `.memory/` and `.workgroup/` are real directories in the [workbench home](#the-workbench-home) at `~/.workbench/<org>/`, and every reader names that path directly — **there is no symlink back into this package, and that was an explicit decision rather than an omission.** The earlier plan to surface them here by symlink is dead. `.profile/` is still a real directory here, awaiting the private operator repository. [`defaults/defaults.json`](defaults/defaults.json) carries the arrangement, and its `status` fields say which half of each row is built — **reading a not-yet-built row as a description of the machine is the mistake the field exists to prevent.**
+
+## The workbench home
+
+**`~/.workbench` -- the private half of this bench.** It is not in this tree and cannot be, which is the entire point.
+
+**It exists because a class of material is neither secret nor publishable**: an organization's engineering discipline, the live state of work against its repositories, and the policy governing autonomous action there. This package is public, so none of it can be committed here -- and it should not simply be *hidden* here either.
+
+**A folder waiting for the right repository is not the same as a folder that cannot be committed, and only the second is what an ignore rule says.** Organization-specific discipline used to sit in this tree, gitignored, which described it as the second when it is the first: finished, reviewable, meant to be committed, just not *here*. There is a sharper reason too -- **an ignore rule in a public repository is itself published**, so a rule naming the organization leaks the exact identifier the folder exists to protect. Ignoring something is not the same as it being absent.
+
+### The scaffolding rule
+
+**Organization-specific knowledge and tooling follows the same scaffolding as the workbench tool, but inside the workbench home.** Same shape, same authoring standard, located where a public repository cannot reach it.
+
+One organization's slice is `~/.workbench/<org>/`, mirroring this package's own top-level areas beneath it -- `<org>/foundations/` today, `<org>/handbook/`, `<org>/tools/`, `<org>/templates/` as each is earned. **Organization first, then the scaffolding**, decided 2026-09-16: this is a multi-owner bench, and area-first (`foundations/<org>/`) assumes a single organization, interleaves owners inside every area, and stops one organization's material being addressable as a unit as soon as the slice grows a second area. The directories are created when the material earns them, never ahead of it.
+
+The operator's live state -- `.memory/`, `.workgroup/` -- was intended to sit **beside** the organization directories rather than inside any one of them, on the reasoning that state about work across everything should not be filed under one owner. **What was actually built on 2026-09-16 puts it inside the organization slice**, at `~/.workbench/<org>/.memory/` and `~/.workbench/<org>/.workgroup/`, by explicit instruction. The original reasoning has not been withdrawn and still applies the moment a second organization is added; this is recorded as an open tension, not as a resolved design.
+
+### Its destination, and its risk
+
+**Destination: an organization-owned fork of this package**, where that organization's slice can be committed openly and shared internally. Mirroring this package's scaffolding is what makes that a lift rather than a reorganization -- the slice already has the shape the fork expects.
+
+**Risk, today: it has no remote and nothing in it is backed up.** It is not a repository at all. Losing that disk loses discipline written for an organization that has not yet received it -- the one thing there that could not be reconstructed by re-observing the machine. Making it a private repository is the fix; which host and repository name carry it is recorded as `unanswerable` in [`defaults/defaults.json`](defaults/defaults.json), because it is a decision about the organization rather than about this package.
 
 ## Purpose
 

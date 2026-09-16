@@ -35,7 +35,12 @@ scan=$(printf '%s\n' "$cmd" | grep -v '^[[:space:]]*#')
 [ -n "$scan" ] || exit 0
 
 printf '%s' "$scan" | grep -Eq '(^|[;&|]|[[:space:]]&&[[:space:]]|\$\()[[:space:]]*(sudo[[:space:]]+)?git([[:space:]]|$)' || exit 0
-printf '%s' "$scan" | grep -Eq '(^|[[:space:]])(commit|push)([[:space:]]|$)' || exit 0
+# `commit`/`push` must sit in SUBCOMMAND POSITION -- immediately after `git`, or after
+# at most two intervening tokens so that `git -C <path> push` still matches. Matching the
+# bare word anywhere fired on `echo "=== commit state ==="`, and a hook that cries wolf on
+# every git command is one the reader learns to skip, which costs more than it saves.
+# Tokens cannot cross `;`, `&` or `|`, so `git log | rg commit` is correctly ignored.
+printf '%s' "$scan" | grep -Eq 'git([[:space:]]+-[^[:space:]]+([[:space:]]+[^-[:space:];&|]+)?)*[[:space:]]+(commit|push)([[:space:]]|$|;)' || exit 0
 
 # Debounce: `git commit && git push` is one landing, not two.
 now=$(date +%s)
@@ -49,6 +54,6 @@ fi
 printf '%s' "$now" > "$DEBOUNCE_FILE" 2>/dev/null
 
 cat <<'JSON'
-{"hookSpecificOutput":{"hookEventName":"PostToolUse","additionalContext":"RUNTIME TRIGGER -- clean_up_hook is now due.\n\nWork just landed (a git commit or push), which is a completion: it changed what is true about the tree and the remote, and made stale any record that described this work as pending. Run the sweep now, in this turn, without being asked.\n\nOne batched pass over EVERY ephemeral store, against a single picture of what just changed:\n1. Name what changed -- a head, a count, a status, a file that now exists, a risk now retired, a question now answered.\n2. Open every store, not only the one you were working in:\n   - .memory/ -- running_context.md, todo_list.md, every topic note\n   - .workgroup/<member>/ -- including PRs/<TICKET>.md and any todo list there\n   - .profile/ -- only where the change altered what his setup actually is\n   All three live in ~/Projects/Agentic_00/Agentic_Engineering_AGENT/.\n3. Apply all three motions: UPDATE what is outdated, CLEAN what is now misleading, DELETE what the change made pointless. The first happens by itself; the other two are the reason this exists.\n4. Close each record against its own source -- a ticket file against the tracker, a PR line against the forge, a \"not built\" against the tree. Never against another record.\n5. Say what you did in ONE line -- updated / cleaned / deleted. One line total, not one per file.\n\nIf nothing in the stores is affected, say so in one line and move on."}}
+{"hookSpecificOutput":{"hookEventName":"PostToolUse","additionalContext":"RUNTIME TRIGGER -- clean_up_hook is now due.\n\nWork just landed (a git commit or push), which is a completion: it changed what is true about the tree and the remote, and made stale any record that described this work as pending. Run the sweep now, in this turn, without being asked.\n\nOne batched pass over EVERY ephemeral store, against a single picture of what just changed:\n1. Name what changed -- a head, a count, a status, a file that now exists, a risk now retired, a question now answered.\n2. Open every store, not only the one you were working in:\n   - .memory/ -- running_context.md, todo_list.md, every topic note\n   - .workgroup/<member>/ -- including PRs/<TICKET>.md and any todo list there\n   - .profile/ -- only where the change altered what his setup actually is\n   They live under TWO roots now: .memory/ and .workgroup/ in the workbench home at ~/.workbench/__SOLUTION__/, and .profile/ still in the workbench tool at ~/Projects/Agentic_00/Agentic_Engineering_AGENT/.\n3. Apply all three motions: UPDATE what is outdated, CLEAN what is now misleading, DELETE what the change made pointless. The first happens by itself; the other two are the reason this exists.\n4. Close each record against its own source -- a ticket file against the tracker, a PR line against the forge, a \"not built\" against the tree. Never against another record.\n5. Say what you did in ONE line -- updated / cleaned / deleted. One line total, not one per file.\n\nIf nothing in the stores is affected, say so in one line and move on."}}
 JSON
 exit 0

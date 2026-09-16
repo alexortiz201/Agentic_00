@@ -9,7 +9,7 @@ One step of a workflow, **as code**. It owns sequencing, state and gates; the ag
 
 1. **Identity.** An *entry* phase mints the run identifier; a *dependent* phase **requires** one and refuses to run without it. Say which it is in the file, with the reason.
 2. **Preconditions.** Load state, verify the workspace, confirm the environment. Exit with a remediation message naming what to run, not just what failed.
-3. **Invocation.** Build a typed request. Never assemble a raw prompt string inline.
+3. **Invocation, with its kind declared.** Build a typed request; never assemble a raw prompt string inline. Say at the call site which of the three kinds the step is -- `deterministic`, `agentic` or `deferral` -- because each carries different obligations. A `deferral` carries one the other two do not: the controller yields rather than executing or calling, so the phase declares **the continuation** -- what resumes the run, on what evidence, and what it does if control never comes back.
 4. **Deadline.** Every invocation carries one. A timeout handler with no timeout set is dead code.
 5. **Result handling.** Parse against a schema. **Degrade to a typed failure value rather than raising** -- a phase that throws loses the state write it owed.
 6. **State writes after every material fact**, immediately, not at the end.

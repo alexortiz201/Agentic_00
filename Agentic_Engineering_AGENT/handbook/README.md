@@ -14,8 +14,10 @@ When a task arrives -- a bug ticket, a feature, a chore, a workflow to build -- 
 | **A workflow to build** | 🛠️ [`06_BUILDING_AN_ADW.md`](06_BUILDING_AN_ADW.md) | 🧩 [composition](../foundations/Agentic_Engineering/06_ADW_COMPOSITION.md) and 🧱 [the primitive you are creating](../foundations/Agentic_Engineering/primitives/README.md) |
 | **A workflow to trust** | 🧪 [`07_VALIDATING_A_WORKFLOW.md`](07_VALIDATING_A_WORKFLOW.md) | 🔬 [verification](../foundations/Agentic_Engineering/04_VERIFICATION.md), and ⚖️ [testing and evidence](../foundations/Software_Engineering/02_TESTING_AND_EVIDENCE.md) |
 | **A workflow you already trust** | 📋 [`08_GATE_ENFORCEMENT_CENSUS.md`](08_GATE_ENFORCEMENT_CENSUS.md) | 🛡️ [gates](../foundations/Agentic_Engineering/08_GATES.md) and 📒 [run history](../foundations/Agentic_Engineering/primitives/run_history.md) |
+| **A subject too large for one actor to read, where the change is broad and partly irreversible** | 🛰️ [`13_ORCHESTRATING_A_SURVEY.md`](13_ORCHESTRATING_A_SURVEY.md) | 🧩 [composition](../foundations/Agentic_Engineering/06_ADW_COMPOSITION.md) § *Several agents against one question*; 🔄 [workflow](../foundations/Agentic_Engineering/02_WORKFLOW.md) § *Parallel work* for the claim rules |
 | **Something that failed** | 🛟 [recovery and handoff](../foundations/Agentic_Engineering/05_RECOVERY_AND_HANDOFF.md) | Repair returns to the phase that *caused* the defect, not the one that found it |
 | **Somewhere to put a file** | 🏗️ [`05_AGENTIC_LAYER_LAYOUT.md`](05_AGENTIC_LAYER_LAYOUT.md) | -- |
+| **A bench to install, or a default to add** | ⚙️ [`14_THE_DEFAULTS_FILE.md`](14_THE_DEFAULTS_FILE.md) | 🧭 [`defaults/README.md`](../defaults/README.md) for **the four layers** -- the live bench, `config/`, `templates/claude_home/` and `defaults/`, and which one a given change belongs in |
 | **A concept and no idea where it is defined** | 🗺️ [`04_ARTIFACT_MAP.md`](04_ARTIFACT_MAP.md) | -- |
 
 ## Working a defect
@@ -48,6 +50,8 @@ The worked example, because it is the most common arrival and every other kind o
 | [`10_OBSERVING_A_PROCESS.md`](10_OBSERVING_A_PROCESS.md) | Record work as it happens, so a workflow can be derived from what occurred rather than from what was recalled |
 | [`11_VERIFYING_IN_A_BROWSER.md`](11_VERIFYING_IN_A_BROWSER.md) | Check a change in the running application — why the browser phase serialises, what to capture, and how to leave nothing behind |
 | 🧵 [`12_TRACING_A_DEFECT.md`](12_TRACING_A_DEFECT.md) | Trace a write from the system of record to the rendered output and name the first boundary that disagrees — for defects that will not reproduce, or whose cause nobody can locate |
+| 🛰️ [`13_ORCHESTRATING_A_SURVEY.md`](13_ORCHESTRATING_A_SURVEY.md) | Several actors survey one subject in parallel, an orchestrator assembles a plan, the operator approves, execution actors act — the stages, the approval gate, and the failures that produced it |
+| ⚙️ [`14_THE_DEFAULTS_FILE.md`](14_THE_DEFAULTS_FILE.md) | [`defaults/defaults.json`](../defaults/README.md) -- the schema for store locations, ADW output levels, required tooling and harness pieces; what an installer does with each field, and how a new value is added without collapsing the default-versus-instance split |
 
 ## The split with `foundations/`
 

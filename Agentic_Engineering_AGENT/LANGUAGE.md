@@ -20,16 +20,29 @@ Terms used throughout and defined nowhere else. They are names, not enums -- not
 |---|---|
 | `agentic layer` | The layer that wraps an application and gives it a programmatic interface -- prompts, commands, workflows, gates, the code that sequences them. Work gets done *to* the application *through* it |
 | `application layer` | The product itself, and the validation ground. Deleting the agentic layer must not take it with it |
-| `ADW` | **Agentic Developer Workflow.** A sequence of contracted phases, each deterministic code or a bounded agent call, that carries work through the lifecycle without a person performing each step |
+| `ADW` | **Agentic Developer Workflow.** A sequence of contracted phases -- each deterministic code, a bounded agent call, or a `deferral` that hands off and waits -- that carries work through the lifecycle without a person performing each step. The three are the step-kind axis below, and a phase names which it is |
 | `Core Four` | The four things resolved at every agent invocation: **context, model, prompt, tools.** Chosen per call rather than configured once |
 | `primitive` | One of the building blocks an ADW is composed from -- command, spec, phase, composition, module, record, gate, state, trigger, hook, pinned reference, design document |
 | `blueprint` | The document stating what a primitive must contain when one is created. It is a requirement list, not a schema: it validates nothing |
 | `software factory` | The composed set of workflows, with the code and agents that run them, for one subject. Its purpose is leverage on a prompt. Distinct from the autonomy rung, which says how much of it has earned the right to run unattended |
 | `workgroup` | A set of components worked on together and often run together, and the directory that holds them. Members may be repositories, services, external APIs or scripts. Distinct from `workspace`, which is the single checkout one run operates in |
+| `workbench tool` | **This package.** The public, portable half of a bench: the vocabulary, the discipline, the handbook, the templates and the answers, with no organization's workflows in it. Named for what it *is* rather than for what it produces -- it was called "the ADW tool" until 2026-09-16, which described one of its outputs and left the thing itself unnamed |
+| `workbench home` | **The private half of the same bench**, also called the **workbench folder**, at `$HOME/.workbench` by default. Holds what is *confidential in public and shared internally*: an organization's discipline and tooling, and the operator's live work state. The two halves are one bench; neither is a subset of the other |
 | `context asset` | Standing constraints a workflow **loads before working** rather than executing -- code conventions, design-system rules, brand voice, the shape a tracker expects. The distinction from a prompt is that a context asset is never the instruction; it is what the instruction has to respect. Distinct from a `pinned reference`, which freezes *external* documentation so it can be cited deterministically |
-| `scratchpad` | An unprocessed capture of a process noticed in real use, written while it is fresh and held until it is decomposed into the pieces it actually contains. Provisional by definition, and **never referenced by a workflow** -- a rough note that acquires a caller has stopped being provisional without anyone deciding that it should |
+| `observation` | A bounded recording of work being performed, opened deliberately and closed with a reason, kept so a workflow can be derived from what happened rather than from what anyone remembers. **This is how a process is captured** -- a note written afterwards is about the work, a recording is made during it, and the order, the dead ends and what could not be seen do not survive the gap |
+| `scratchpad` | The staging area for material that has been captured and has not yet earned a home, held until it is decomposed into the pieces it actually contains. Provisional by definition, and **never referenced by a workflow** -- a rough note that acquires a caller has stopped being provisional without anyone deciding that it should. It is a holding place, **not the capture mechanism**: a process is captured by an `observation` made while it runs, because a note written afterwards cannot recover what the recording holds |
 | `clean_up_hook` | The observing hook that fires at a declared stopping point -- a completion, or a session ending -- reconciling every local store against what is now true. It updates, cleans and deletes; it never authors a new claim |
 | `tear_down_hook` | The hook that releases what a run started -- processes, sessions, containers, fixtures, worktrees. It captures evidence into the records first and then releases unconditionally, and it releases only what the run's own action log says it started |
+
+### `workbench` alone is ambiguous -- always say which half
+
+**Never write "the workbench" unqualified.** It resolves to two different places with opposite visibility, and a sentence that means the private one read as the public one is how organization-specific material gets authored into a public repository. Write `workbench tool` or `workbench home`; the adjective is the whole safeguard.
+
+**The scaffolding rule binds the two halves.** Organization-specific knowledge and tooling **follows the same scaffolding as the workbench tool, but inside the workbench home** -- same shape, same authoring standard, located where a public repository cannot reach it. One organization's slice is `<workbench home>/<org>/`, mirroring the tool's own top-level areas beneath it, so the slice can be lifted whole into that organization's fork of the tool without being rearranged.
+
+**Organization first, then the scaffolding** -- not area first. The tool is a multi-owner bench, and area-first (`foundations/<org>/`) assumes one organization, interleaves owners inside every area, and stops one organization's material being addressable as a unit the moment the slice grows a second area. Decided 2026-09-16.
+
+The path `$HOME/.workbench` is a **default, not a constant**: it is `__WORKBENCH__` in [`defaults/defaults.json`](defaults/defaults.json), and the private host and repository that back it are `unanswerable` there because they are a decision about the organization rather than about this package.
 
 ## Actors -- who performs a step
 
@@ -59,7 +72,9 @@ Prompts, allowlists, branch names and logging hooks are not isolation unless an 
 |---|---|
 | `deterministic` | A command or API call. Code runs it and reads the exit code |
 | `agentic` | Code hands a prompt to an agent and validates the response against a schema |
-| `deferral` | Code invokes an existing external workflow or tool it does not own |
+| `deferral` | The controller hands off to an existing external workflow or tool it does not own, and waits for it |
+
+**A deferral is a third kind, not a variety of the second.** A deterministic step executes and reads an exit code; an agentic step calls and reads a response validated against a schema. A deferral does neither -- the controller **yields and resumes**, which makes **the run's continuation the thing that has to be specified**: what resumes the run, on what evidence, and what the run does if control never comes back. Calling a deferral "a bounded agent call" hides exactly that, and the resumption problem is the reason the kind was written down at all.
 
 `deferral` is frequently omitted from this axis and should not be. Wrapping an existing proven workflow is a legitimate step kind, and the one most likely to be mistaken for "describe what it does" -- which produces duplication with drift built in. **A deferral names its dependency at the call site**, so a reader can see which part is yours and which is borrowed.
 

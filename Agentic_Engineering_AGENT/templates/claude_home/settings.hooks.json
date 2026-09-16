@@ -28,6 +28,12 @@
         "hooks": [
           { "type": "command", "if": "Bash(git *)", "command": "__HOME__/.claude/hooks/cleanup_on_git.sh", "timeout": 15 }
         ]
+      },
+      {
+        "matcher": "TaskUpdate",
+        "hooks": [
+          { "type": "command", "command": "__HOME__/.claude/hooks/reconcile_on_task_done.sh", "timeout": 10 }
+        ]
       }
     ]
   }

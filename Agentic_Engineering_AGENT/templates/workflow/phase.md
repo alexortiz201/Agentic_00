@@ -33,6 +33,11 @@ try {
   //    - Agentic: build a TYPED request from a prompt file. Never assemble a prompt
   //      string inline. Parse the response against a schema; a shape that does not
   //      match is `malformed`, never a default.
+  //    - Deferral: hand off to a workflow this phase does not own, and wait. Neither
+  //      executing nor calling, so the CONTINUATION is what has to be written here:
+  //      what resumes the run, on what evidence, and what it does if control never
+  //      comes back. Gate on the side effect read back independently, never on the
+  //      callee's report -- you do not own its output contract.
   //    - Write state after every material fact, not at the end. A phase that dies
   //      mid-step should leave everything observed so far on disk.
 } catch (e) {

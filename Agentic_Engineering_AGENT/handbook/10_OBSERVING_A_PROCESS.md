@@ -4,6 +4,8 @@ How to record work as it happens so that a workflow can be derived from it. The 
 
 **This is how a workflow gets its content.** [`06_BUILDING_AN_ADW.md`](06_BUILDING_AN_ADW.md) says to encode the workflow the engineer would perform themselves. That file assumes you know what that workflow is. This one is how you find out.
 
+It is the **Capture** stage of [how material becomes a workflow](../foundations/Agentic_Engineering/06_ADW_COMPOSITION.md) -- capture, decompose, compose. Capture is a recording rather than a note written afterwards, because the things the stage exists to collect stop being available the moment the work ends.
+
 ## The rule that makes the recording worth anything
 
 **Do not lead.** A workflow derived from the recorder's suggestions encodes the recorder. If the subject is about to do something, let them do it and write down what they did; answer what is asked and propose nothing unasked.

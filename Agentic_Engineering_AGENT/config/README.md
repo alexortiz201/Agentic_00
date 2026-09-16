@@ -16,6 +16,8 @@ They have **opposite correctness conditions**, which is the whole argument.
 | `CRITICAL_RULES.md` is | parameterised on the state root | the real path, hardcoded |
 | Failure if wrong | an adopter inherits someone else's habits | a restore is not a restore |
 
+**There are four of these, not two, and the other two are the ones people forget.** The live bench at `~/.claude/` is what actually executes -- deliberately not a git repository, and nothing backs it up except this folder. [`../defaults/`](../defaults/README.md) is the answers layer: what a sensible value *is* for each field, with the reason, feeding both the template and this backup. 🧭 [**The four layers**](../defaults/README.md) sets all of them out side by side, with the correctness condition that makes each one wrong in the others' place, and which one you edit for a given change. **Read it before deciding a value belongs here.**
+
 Merging them forces a choice between the template carrying his values — which makes it a leak and a bad template — and the backup carrying placeholders, which makes it not a backup. **A restore that requires you to remember what the values were is not a restore.** Two folders, cross-referenced, is the only arrangement where both are right.
 
 ## What is here
@@ -58,7 +60,7 @@ Everything here is **verbatim from the live bench except four substitutions, and
 
 ### The path question, decided
 
-`CRITICAL_RULES.md` and the hook scripts name the state root as `$HOME/Projects/Agentic_00/Agentic_Engineering_AGENT` — **hardcoded, not tokenised**, unlike the kit's `__STATE_ROOT__`.
+`CRITICAL_RULES.md` and the hook scripts name the state root as `$HOME/.workbench/__SOLUTION__` — **hardcoded, not tokenised**, unlike the kit's `__STATE_ROOT__`. That root covers `.memory/` and `.workgroup/` only; `.profile/` is still at `$HOME/Projects/Agentic_00/Agentic_Engineering_AGENT/.profile` and is named separately wherever it is needed.
 
 That is deliberate and it is the difference between the two folders in miniature. The path carries no username (it is `$HOME`-relative already), names no employer, and reveals nothing; it is simply *where this operator's state lives*, and it is the thing the backup exists to remember. Tokenising it would produce a second copy of the template and no backup at all.
 

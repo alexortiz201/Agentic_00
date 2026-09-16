@@ -18,7 +18,7 @@ The loop it refers to is real but tiny. A check runs. If it fails, its output ro
 
 What it obscures is the part that actually carries the difficulty. The loop is easy; routing a failure back to its producer is a few lines. The hard parts are everywhere else: deciding which workflow a piece of work belongs to, what each phase requires of its predecessor, where a human is genuinely required, what evidence a transition demands, what happens to a run that dies halfway. None of that is a loop, and a vocabulary built around loops has no word for any of it.
 
-The correct framing is the one the lifecycle already gives. **Work enters, a defined workflow runs, results come out.** Each phase is some combination of deterministic code and bounded agent calls. Design the workflow, not the loop.
+The correct framing is the one the lifecycle already gives. **Work enters, a defined workflow runs, results come out.** Each phase is some combination of deterministic code, bounded agent calls, and deferrals to workflows the author does not own. Design the workflow, not the loop.
 
 ## The three actors, and what each is actually good for
 

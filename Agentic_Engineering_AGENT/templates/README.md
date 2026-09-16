@@ -16,9 +16,11 @@ Only what the package already states a use case for gets a template. A template 
 
 **Not a template, and filed outside this folder for that reason:** [`../config/`](../config/README.md) holds the maintainer's own bench with its real values, for restoring it rather than for adopting it. It is the one thing here that would be *wrong* to copy — a template is right when every personal value is a placeholder, and that folder is right when none of them is. Keeping it out of `templates/` is what stops it being picked up by someone reaching for a starting point.
 
+**Also not a template, for a different reason:** [`../defaults/`](../defaults/README.md) holds *the answers* -- what a sensible value is for each field a template asks for, and why. A template is the shape somebody fills in; the answers are what they would otherwise have to guess. 🧭 [**The four layers**](../defaults/README.md) in that README separates all of it -- the live bench, `config/`, this folder's [`claude_home/`](claude_home/README.md) kit, and the answers -- and says which one to edit for a given change.
+
 ## Why `layout/` exists at all
 
-`.profile/`, `.workgroup/` and `.memory/` are **never committed**, which is correct for what they hold and means a fresh clone of this package arrives with all three missing. They are load-bearing: the operating rules read them. So the defaults ship here and are copied in, rather than each adopter inventing three folders from a description.
+`.profile/` is **never committed**, which is correct for what it holds and means a fresh clone of this package arrives without it. It is load-bearing: the operating rules read it. So the default ships here and is copied in, rather than each adopter inventing a folder from a description. `.memory/` and `.workgroup/` are seeded here too, but since 2026-09-16 they are **not** materialised into this package — they belong in the workbench home at `~/.workbench/<org>/`, and the seeds are copied there instead.
 
 ## Why `TEMPLATE_CLAUDE.md` is earned
 

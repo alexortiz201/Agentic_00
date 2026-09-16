@@ -15,6 +15,8 @@ One line per action, appended as it happens. Not what the run *checked* and not 
 | `release` / `release_failed` | What teardown did, and what it could not do |
 | `intervention` | A person changed the run while it was running. Carry **who**, the step, **what was changed**, and **what the run was about to do instead** |
 
+**A `deferral` step writes `agent`, and then a second line for what came back.** This enum is the action vocabulary, not the step-kind axis, and it deliberately stays at six values -- but a deferral is the one step kind whose action is easy to record wrongly. The first line carries what was handed off to and when the controller yielded; the line that closes it carries **the side effect read back independently**, never the callee's account of having produced it, because the callee's output contract is not yours to declare. A deferral whose only closing line is the callee's report has logged a claim, not an action.
+
 ## It earns its place twice
 
 **It is the account a failure needs.** A phase result says where a run ended up; this says how it got there, in order. No conclusion-shaped record can answer that.

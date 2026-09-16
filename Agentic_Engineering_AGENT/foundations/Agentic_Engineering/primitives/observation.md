@@ -25,7 +25,7 @@ The kind is not decoration. **It is the estimate of what it would cost to make t
 |---|---|---|
 | `command` | An invocation with arguments in a working directory | **Verbatim.** Carry the command, the directory and the exit code |
 | `ui` | An interface was driven | By hand. Carry the surface and the intent, because an interface action is often an API call nobody has written yet |
-| `handoff` | Control passed to something that finishes later | Only with the other side's record. Carry a pointer to the entry where the result landed |
+| `handoff` | Control passed to something that finishes later -- the recorded form of a `deferral`, where the recorder yields rather than executing or calling | Only with the other side's record. Carry a pointer to the entry where the result landed, which is the continuation stated as evidence |
 | `prompt` | An actor was asked for something | **No.** The ask does not determine the result, so carry **what actually happened** as well as what was asked |
 | `decision` | A judgement, with no external effect | Not an action. This is where the non-deterministic half of a workflow actually lives |
 

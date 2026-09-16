@@ -46,7 +46,7 @@ One batched pass over every ephemeral store, in this turn:
   - .memory/ -- running_context.md, todo_list.md, every topic note
   - .workgroup/<member>/ -- including PRs/<TICKET>.md and any todo list there
   - .profile/ -- only if the session changed what his setup actually is
-  All three live in ~/Projects/Agentic_00/Agentic_Engineering_AGENT/.
+  They live under TWO roots now: `.memory/` and `.workgroup/` in the workbench home at ~/.workbench/__SOLUTION__/, and `.profile/` still in the workbench tool at ~/Projects/Agentic_00/Agentic_Engineering_AGENT/.
 
 Record, concretely and with identifiers:
   - what is half-done, and where exactly it stopped

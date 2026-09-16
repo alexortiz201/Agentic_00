@@ -1,6 +1,6 @@
 # 🧩 Compose Agentic Developer Workflows
 
-An **ADW (Agentic Developer Workflow)** is executable orchestration combining deterministic code with bounded agent judgment to deliver a defined outcome. A prompt is an instruction; a phase is a contracted unit of work; an ADW can contain one or several phases; a composition reuses those phases or proven ADWs. A skill makes the workflow discoverable and operable--it is not the controller.
+An **ADW (Agentic Developer Workflow)** is executable orchestration combining deterministic code, bounded agent judgment, and deferrals to workflows it does not own, to deliver a defined outcome. A prompt is an instruction; a phase is a contracted unit of work; an ADW can contain one or several phases; a composition reuses those phases or proven ADWs. A skill makes the workflow discoverable and operable--it is not the controller.
 
 Select primitives by kind, and name them consistently within a workflow. These are portable design conventions, not installed commands or claims that every workflow needs every component.
 
@@ -10,7 +10,7 @@ This file is the shape of a composition and the order in which one is authored. 
 
 1. **Define the outcome before the technology.** Preserve the original request; specify trigger, input, target, criteria, non-goals, acceptance owner, and side effects. Decide whether one focused prompt is sufficient.
 2. **Inspect existing primitives.** Locate relevant instructions, prompt/command templates, scripts, tools, types, checks, state and workspace helpers. Trace implementations, not just descriptions. Reuse before scaffolding.
-3. **Draw the sequence and failure routes.** Label every node human judgment, agent judgment, or deterministic code. Known commands, IDs, counters, routing enums, and receipts belong in code. Classification needs an agent only when meaning is ambiguous; validate its output against an allowed set.
+3. **Draw the sequence and failure routes.** Label every node human judgment, agent judgment, deterministic code, or a deferral to something the workflow does not own. Known commands, IDs, counters, routing enums, and receipts belong in code. Classification needs an agent only when meaning is ambiguous; validate its output against an allowed set.
 4. **Salvage before contracting.** Before contracting the chosen design, enumerate the **mechanisms** in every rejected design and classify each one **promote / defer / drop**, with a reason. Record the classification in the design artifact; "nothing to salvage" is a claim that requires justification, not a default.
 5. **Contract each phase.** Define required predecessor artifacts, actor, Core Four (context, model, prompt, tools), cwd, allowed mutations, output schema, limits, checks, and next transitions. Build uses the approved plan; review uses the original criteria AND actual diff/evidence.
 6. **Design gates before prompts.** Define the expected check set and real commands/cwd/timeouts. Assign each gate an ID from the `G0`-`G7` namespace in [gates](08_GATES.md). Specify success, failure, missing-output and interruption cases. Make independent code check artifacts and claims before advancing; agent confidence cannot approve its own transition.
@@ -87,9 +87,13 @@ That is enough to do real work. Everything else is added when something forces i
 
 A workflow is rarely authored from a blank page. It is usually a process that was already performed by hand and is being written down afterwards, and the path from the one to the other has three stages worth naming, because each fails differently.
 
-**Capture.** A note written while the process is still fresh, holding what was actually done -- including the wrong turns, which are the part that decays fastest and the part [step 11](#authoring-process) above says is worth the most. This is a [scratchpad](../../LANGUAGE.md), and being provisional is its defining property rather than a defect in it.
+**Capture.** An [observation recording](primitives/observation.md) opened before the work starts and closed with a reason, holding what was actually done in the order it happened -- including the wrong turns, which are the part that decays fastest and the part [step 11](#authoring-process) above says is worth the most.
 
-**Decompose.** Identify the pieces the note actually contains -- this one a tool, that one a context asset, that one a prompt -- and move each to where it belongs. The work here is *dissolving* the note, not polishing it: a capture that survives decomposition intact was not decomposed, it was filed.
+**This used to be a note written afterwards, and the recording is strictly better evidence.** A note is made *about* the work; a recording is made *during* it. The difference is not thoroughness, it is availability: what the recording holds -- the order, the dead ends, the pauses, what was in front of a decision when it was taken, and what could not be seen at all -- stops existing the moment the work ends, so **a note cannot be made more complete by trying harder, only by having been a recording**. What a note reconstructs afterwards is a clean path that nobody walked. How to run one is [`handbook/10_OBSERVING_A_PROCESS.md`](../../handbook/10_OBSERVING_A_PROCESS.md).
+
+A [scratchpad](../../LANGUAGE.md) remains the home for material that has been captured and not yet earned a place, and being provisional is its defining property rather than a defect in it. It is no longer where the capture *happens*.
+
+**Decompose.** Identify the pieces the recording actually contains -- this one a tool, that one a context asset, that one a prompt -- and move each to where it belongs. Anything not yet placed goes to a scratchpad and stays visible as unfinished. The work here is *dissolving* the capture, not polishing it: a capture that survives decomposition intact was not decomposed, it was filed.
 
 **Compose.** A workflow references those pieces in order, so each improves once and every caller inherits the improvement.
 
@@ -125,13 +129,15 @@ Every step inside a phase resolves to one of three, and the phase says which:
 |---|---|---|
 | **Deterministic** | a command or API call | the exit code |
 | **Agentic** | a prompt handed to an agent through the agent module | the response, validated against a schema |
-| **Deferral** | an existing workflow the author does not own | the side effect, read back independently -- never the report |
+| **Deferral** | an existing workflow the author does not own, which the controller yields to and waits on | the side effect, read back independently -- never the report -- plus the declared continuation that resumes the run |
 
 **The third is the one that gets missed, and it is frequently the majority.** Every earlier statement of this distinction here had two values, because deterministic-versus-agentic is the split that is visible while authoring a single step. Deferral only becomes visible when a workflow is assembled against an ecosystem it did not write, at which point a workflow built around existing tooling can be mostly deferrals with a few original phases threaded between them.
 
 Stating the kind at the call site is the part that earns its keep. A reader of a phase should be able to see which work is the author's and which is borrowed without leaving the file, because the two carry different obligations: the author's steps are gated on what they assert, and a deferral is gated on a side effect precisely because its report is not a contract.
 
-> **Open conflict, recorded rather than resolved.** [`LANGUAGE.md`](../../LANGUAGE.md) defines an ADW as phases that are *"each deterministic code or a bounded agent call"* -- a two-value axis -- and the opening of this file uses the same pairing. The three-kind classification above was derived later, from assembling a workflow against an owned plugin, and it is short by one against the vocabulary rather than the other way round. **Both statements stand until the operator decides.** Retiring the two-value form is a vocabulary change that would ripple through every file that writes to it, which is exactly the kind of half-applied rename the package warns fails silently at the consuming phase.
+**Why a deferral is a third kind and not the second one wearing a different hat.** The other two are both things the controller *performs*: it executes a command and reads an exit code, or it calls an agent it owns and reads a response validated against a schema. A deferral is neither -- the controller **yields control and resumes afterwards** -- so the thing that has to be specified is **the run's continuation**: what resumes it, on what evidence, and what the run does if control never comes back. Collapsing a deferral into "a bounded agent call" hides the resumption problem, and the resumption problem is the whole reason someone bothered to write the kind down.
+
+[`LANGUAGE.md`](../../LANGUAGE.md) carries the same three values, so there is no longer a two-value form standing anywhere against this one.
 
 ## One place names the model and the harness, and it cannot be retrofitted
 
@@ -184,6 +190,22 @@ When two independent actors return opposite verdicts on the same question, the r
 The practical consequence is that **reconciling the depths is the work, and it is what produces the answer** -- not picking a winner, and not averaging two verdicts into a hedge. A synthesis recording only that the actors disagreed has thrown away the finding, in the same way the discard list above disappears unless it is demanded.
 
 It also gives the brief a lever. Where the question is whether a stated mechanism is real, **say at what depth each actor must work**, and require the evidence that proves it worked there -- a trace of the failing input along the path, rather than a reference to the symbol's existence. A depth left unspecified is chosen by whichever actor stopped first.
+
+### The brief's own framing is part of what is under test
+
+The independence argument above protects actors from each other. It does not protect them from the actor that briefed them, and that is the larger exposure: every actor in the exercise received the same framing, so a wrong premise in the brief is not one actor's error but a blind spot the whole spread shares. **Agreement reached under a false premise looks exactly like agreement reached under a true one**, and widening the spread does not separate them, because the premise was never the thing being sampled.
+
+So the brief has to authorize contradicting itself, in terms specific enough to act on: name which instructions are assumptions rather than constraints, and say that returning *"the instruction was wrong, here is the evidence"* is a successful result rather than a refusal. **A survey that cannot overturn its own brief is an expensive echo** -- it can only return the framing it was given, elaborated. The signal that this is working is uncomfortable and should be read as success rather than as insubordination: on a real run of four actors briefed this way, three returned a refutation of an instruction they had been given, and each refutation held on the evidence.
+
+The corresponding obligation on the synthesizing seat is that **an overturned instruction is a finding, not a loose end to tidy away.** It is carried into the assembled output with the evidence that overturned it, in the same way the discard list is, because otherwise the next run is briefed from the same wrong premise and the refutation has to be bought a second time.
+
+### State only constraints you have verified
+
+A brief carries two kinds of statement and they are easy to confuse: the **task**, which the actor is there to perform, and the **constraints**, which it is being told already hold. An actor cannot tell them apart by tone, so it treats both as ground truth and reasons from the constraints without re-deriving them. **A constraint asserted from memory or from a stale reading therefore does not produce a caught error; it produces confident work built on a false floor**, and the actor has no reason to check the one thing that was wrong.
+
+The rule is narrow and mechanical: **anything stated as already-true in a brief is checked against the artifact before the brief is sent**, or it is stated as an open question instead. The failure it prevents is cheap to describe and expensive to hit -- on a real run an actor was told that a stated boundary forbade a class of change, when the tree already contained several instances of exactly that class; the constraint had to be retracted while the actor was working, and everything it had reasoned from it was suspect.
+
+Which gives the second half: **a constraint discovered to be false is retracted to the actor still holding it, explicitly, and the retraction says what it invalidates.** An actor cannot notice that its ground has moved. Where it has already finished, the retraction is applied to its output by the synthesizing seat instead, and recorded -- silently keeping a result derived from a withdrawn premise is how a false premise outlives the run that discovered it.
 
 ## Racing several actors to one answer
 

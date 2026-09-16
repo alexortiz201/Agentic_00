@@ -4,7 +4,10 @@
   "theme": "auto",
   "extraKnownMarketplaces": {
     "__MARKETPLACE_NAME__": {
-      "source": { "source": "github", "repo": "__MARKETPLACE_REPO__" },
+      "source": {
+        "source": "github",
+        "repo": "__MARKETPLACE_REPO__"
+      },
       "autoUpdate": true
     }
   },
@@ -16,20 +19,32 @@
       {
         "matcher": "startup|resume|clear|compact",
         "hooks": [
-          { "type": "command", "command": "__HOME__/.claude/hooks/guard_claude_md.sh", "timeout": 10 }
+          {
+            "type": "command",
+            "command": "__HOME__/.claude/hooks/guard_claude_md.sh",
+            "timeout": 10
+          }
         ]
       },
       {
         "matcher": "startup|clear",
         "hooks": [
-          { "type": "command", "command": "__HOME__/.claude/hooks/boot_memory.sh", "timeout": 10 }
+          {
+            "type": "command",
+            "command": "__HOME__/.claude/hooks/boot_memory.sh",
+            "timeout": 10
+          }
         ]
       }
     ],
     "UserPromptSubmit": [
       {
         "hooks": [
-          { "type": "command", "command": "__HOME__/.claude/hooks/cleanup_on_stop_phrase.sh", "timeout": 10 }
+          {
+            "type": "command",
+            "command": "__HOME__/.claude/hooks/cleanup_on_stop_phrase.sh",
+            "timeout": 10
+          }
         ]
       }
     ],
@@ -37,7 +52,22 @@
       {
         "matcher": "Bash",
         "hooks": [
-          { "type": "command", "if": "Bash(git *)", "command": "__HOME__/.claude/hooks/cleanup_on_git.sh", "timeout": 15 }
+          {
+            "type": "command",
+            "if": "Bash(git *)",
+            "command": "__HOME__/.claude/hooks/cleanup_on_git.sh",
+            "timeout": 15
+          }
+        ]
+      },
+      {
+        "matcher": "TaskUpdate",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "__HOME__/.claude/hooks/reconcile_on_task_done.sh",
+            "timeout": 10
+          }
         ]
       }
     ]

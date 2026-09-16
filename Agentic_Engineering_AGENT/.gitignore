@@ -1,26 +1,26 @@
-# Three local folders, never committed. Each manages a different unique circumstance;
-# see the README's "Local folders" section for which is which.
-# Both spellings of memory are ignored so a folder created under either name cannot leak.
+# ONE local folder is still ignored here. `.memory/` and `.workgroup/` moved to the workbench
+# home at `~/.workbench/<org>/` on 2026-09-16 and are no longer in this tree, so their rules were
+# removed rather than left behind: this file's own lesson (below) is that an ignore rule is not
+# the same as absence, and keeping a rule for a directory that cannot appear describes the tree
+# wrongly. `.profile/` has not moved -- its destination is a separate private operator repository
+# -- so it is still a real directory here and still must never be committed.
 #
 # Anchored with a leading slash on purpose. Unanchored, git matches the name at ANY depth
 # and silently swallowed templates/layout/, whose whole purpose is to be committed and
 # handed to an adopter. The failure was invisible until something checked.
-/.memory/
-/memory/
 /.profile/
-/.workgroup/
 
-# Employer-specific discipline. Authored here, pushed to a separate private repository.
-# Remove this entry in that repository -- it is what keeps the generic package generic.
-#
-# The folder is named for the role rather than for the employer, on purpose: this file IS
-# committed to a public repository, so an ignore rule naming the org would publish the very
-# identifier the folder exists to keep out. Renamed from the org-named form 2026-09-16.
-/foundations/_employer/
+# Employer-specific discipline USED to be ignored here. It is not any more -- it moved to
+# `~/.workbench/<org>/foundations/` on 2026-09-16, so there is nothing to hide and no rule
+# to write. The lesson is worth keeping: an ignore rule in a public repository is itself
+# published, so a rule naming the org leaks the identifier the folder exists to protect.
+# Ignoring something is not the same as it being absent, and only the second is private.
 
 # Agent scratchpad. Declared here rather than globally, for the same reason as above.
+# Unrelated to the moved `.memory/` store -- this is the `<topic>.memory.md` file convention.
 *.memory.md
 
 # Recordings are raw material -- bulky, disposable, and full of workspace paths.
-# What outlives one is what was distilled out of it, which lives in .memory/.
+# What outlives one is what was distilled out of it, which now lives in the workbench home
+# at `~/.workbench/<org>/.memory/`.
 observations/

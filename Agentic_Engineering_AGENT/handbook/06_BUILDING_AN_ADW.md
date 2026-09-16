@@ -14,13 +14,13 @@ One phase per thing you did that had a distinct input, output and failure mode. 
 
 Resist specializing early. Start with the smallest workflow that does something real, and split a phase only when it has two failure modes you need to handle differently.
 
-## 3. Decide what is code and what is an agent
+## 3. Decide what is code, what is an agent, and what is deferred
 
 For each step: **does this require judgment?**
 
 - **No** -> deterministic code. It is faster, free, and does the same thing every time.
 - **Yes** -> an agent, with a bounded prompt and a declared output contract.
-- **It already exists elsewhere** -> call it, and say so at the call site.
+- **It already exists elsewhere** -> a **deferral**: hand off to it, and say so at the call site. The controller yields here rather than executing or calling, so write down what resumes the run and what it does if control never comes back -- and gate on the side effect, never on what the callee says it did.
 
 The test that matters: *if I gave this step to two different people, would they produce the same result?* If yes, it is code.
 
