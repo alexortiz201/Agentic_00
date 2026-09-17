@@ -1,5 +1,7 @@
 # 📖 Agentic Engineering Agent -- the workbench tool
 
+**Open work on this package is in [`TODO.md`](TODO.md).** It tracks changes to the tool itself -- defects, missing components, contract deviations -- and is distinct from any operator's ticket list.
+
 A self-contained package for bounded, observable, and repairable software delivery.
 
 **This package is the workbench tool.** It is the public half of a bench; the private half is the [workbench home](#the-workbench-home) at `~/.workbench`. Both names are canonical and defined in [`LANGUAGE.md`](LANGUAGE.md) -- and **`workbench` on its own is ambiguous**, so always say which half.
