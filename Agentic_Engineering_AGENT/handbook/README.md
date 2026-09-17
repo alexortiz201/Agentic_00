@@ -17,7 +17,9 @@ When a task arrives -- a bug ticket, a feature, a chore, a workflow to build -- 
 | **A subject too large for one actor to read, where the change is broad and partly irreversible** | 🛰️ [`13_ORCHESTRATING_A_SURVEY.md`](13_ORCHESTRATING_A_SURVEY.md) | 🧩 [composition](../foundations/Agentic_Engineering/06_ADW_COMPOSITION.md) § *Several agents against one question*; 🔄 [workflow](../foundations/Agentic_Engineering/02_WORKFLOW.md) § *Parallel work* for the claim rules |
 | **Something that failed** | 🛟 [recovery and handoff](../foundations/Agentic_Engineering/05_RECOVERY_AND_HANDOFF.md) | Repair returns to the phase that *caused* the defect, not the one that found it |
 | **Somewhere to put a file** | 🏗️ [`05_AGENTIC_LAYER_LAYOUT.md`](05_AGENTIC_LAYER_LAYOUT.md) | -- |
+| **The code that calls an agent -- writing it, or judging one that exists** | 🎛️ [`15_THE_AGENT_INVOCATION_MODULE.md`](15_THE_AGENT_INVOCATION_MODULE.md) | 📦 [module](../foundations/Agentic_Engineering/primitives/module.md) for whether it earns a place at all; 🧱 [primitives](../foundations/Agentic_Engineering/primitives/README.md) for the six cases it is proved with |
 | **A bench to install, or a default to add** | ⚙️ [`14_THE_DEFAULTS_FILE.md`](14_THE_DEFAULTS_FILE.md) | 🧭 [`defaults/README.md`](../defaults/README.md) for **the four layers** -- the live bench, `config/`, `templates/claude_home/` and `defaults/`, and which one a given change belongs in |
+| 🎛️ [`15_THE_AGENT_INVOCATION_MODULE.md`](15_THE_AGENT_INVOCATION_MODULE.md) | The adapter between a controller and an agent runtime -- identity, typed request and response, environment allowlist, preflight, input capture, streaming sink, result extraction, error taxonomy, retry policy, tolerant parse, truncation and a run logger; what the module must not decide, and three failures found by reading |
 | **A concept and no idea where it is defined** | 🗺️ [`04_ARTIFACT_MAP.md`](04_ARTIFACT_MAP.md) | -- |
 
 ## Working a defect
