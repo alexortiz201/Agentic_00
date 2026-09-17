@@ -10,6 +10,10 @@ Where nothing consumes a value mechanically, this file is describing a **distinc
 
 **Rule for changing anything here:** a term changes in this file first, then everywhere that writes or reads it, in the same change. Public names, routing enums, CLI help, prompt arguments, types and recipe links move together or not at all.
 
+**Rule for admitting anything here.** A term arrives as a **candidate**, not as an entry. Most candidates come from outside -- a repository, a talk, an article studied deliberately -- and that reading is not background: it is how the vocabulary grows. A candidate is admitted only after it is reconciled against what is already defined, and **the first job of that reconciliation is checking whether the phrase is already carrying a different meaning.** A collision is the common case rather than the rare one, because the short names are few and the ideas that want them are many.
+
+**When two ideas want one phrase, decide by what the code can still tell you.** A term naming a shape is recoverable without the word -- a reader can see a composed pair by reading the composition. A term naming an *absence*, such as a step nobody has written the procedure for yet, is recoverable from nothing, so it keeps the word and the shape gets the other one. Record the discriminator beside the definition; the next reader arrives with the same collision.
+
 ---
 
 ## Named things
@@ -22,7 +26,7 @@ Terms used throughout and defined nowhere else. They are names, not enums -- not
 | `application layer` | The product itself, and the validation ground. Deleting the agentic layer must not take it with it |
 | `ADW` | **Agentic Developer Workflow.** A sequence of contracted phases -- each deterministic code, a bounded agent call, or a `deferral` that hands off and waits -- that carries work through the lifecycle without a person performing each step. The three are the step-kind axis below, and a phase names which it is |
 | `Core Four` | The four things resolved at every agent invocation: **context, model, prompt, tools.** Chosen per call rather than configured once |
-| `primitive` | One of the building blocks an ADW is composed from -- command, spec, phase, composition, module, record, **run history**, gate, state, trigger, hook, pinned reference, design document, **observation** |
+| `primitive` | One of the building blocks an ADW is composed from -- command, spec, phase, composition, module, record, **run history**, gate, state, trigger, hook, pinned reference, design document, **observation**. Each has a blueprint in [`foundations/Agentic_Engineering/primitives/`](foundations/Agentic_Engineering/primitives/README.md) saying what it must contain, and [`handbook/04_ARTIFACT_MAP.md`](handbook/04_ARTIFACT_MAP.md) maps every named concept to the file that defines it |
 | `blueprint` | The document stating what a primitive must contain when one is created. It is a requirement list, not a schema: it validates nothing |
 | `software factory` | The composed set of workflows, with the code and agents that run them, for one subject. Its purpose is leverage on a prompt. Distinct from the autonomy rung, which says how much of it has earned the right to run unattended |
 | `workgroup` | A set of components worked on together and often run together, and the directory that holds them. Members may be repositories, services, external APIs or scripts. Distinct from `workspace`, which is the single checkout one run operates in |
@@ -44,6 +48,12 @@ Terms used throughout and defined nowhere else. They are names, not enums -- not
 **Organization first, then the scaffolding** -- not area first. The tool is a multi-owner bench, and area-first (`foundations/<org>/`) assumes one organization, interleaves owners inside every area, and stops one organization's material being addressable as a unit the moment the slice grows a second area. Decided 2026-09-16.
 
 The path `$HOME/.workbench` is a **default, not a constant**: it is `__WORKBENCH__` in [`defaults/defaults.json`](defaults/defaults.json), and the private host and repository that back it are `unanswerable` there because they are a decision about the organization rather than about this package.
+
+### `higher order prompt` is not a prompt that takes a prompt
+
+**Two ideas reach for the same phrase and only one of them is the term defined above.** A `command` may be parameterized over another command's output -- one writes a spec, the next is handed its path -- which is a `composition`, and it is fully specified at both ends. A `higher order prompt` is the opposite case: the step is a **hole**, because nobody has written the procedure yet. The first is a shape; the second is an admission.
+
+**The discriminator is where the uncertainty sits.** A composition has none: both commands are specified, and the sequence is code. In a higher order prompt the uncertainty is the entire reason the step exists, and the run's job is to record the election that resolves it. Using the phrase for a composed pair costs the vocabulary the only word it has for the unspecified case, which is the one that cannot be recovered by reading the code.
 
 ## Actors -- who performs a step
 

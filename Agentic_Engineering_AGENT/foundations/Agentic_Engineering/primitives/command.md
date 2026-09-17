@@ -23,6 +23,8 @@ Exactly two shapes, and choosing a third means the caller cannot parse it:
 
 State the contract **twice**: once in the instructions, once in the report. Then **write the artifact to a derivable location**, so a caller that fails to parse can still find it.
 
+**This is what makes a [`composition`](composition.md) possible at all.** Phases share no context, so the report is the entire channel between one command and the next -- the run identifier says which run a value belongs to, and the report says what the value is. A command with a vague report is not merely untidy; it is uncomposable, because the phase after it has nothing to receive.
+
 ## Rules
 
 - **One responsibility.** If it does two things, it is two commands.

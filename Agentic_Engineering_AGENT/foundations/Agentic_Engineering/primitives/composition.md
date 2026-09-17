@@ -16,6 +16,6 @@ The same phase failing means different things depending on what follows it. A fa
 
 ## Rules
 
-- **Phases are separate processes.** Fresh start, state re-loaded, no shared memory. That is what makes a phase independently runnable and a failure independently resumable.
+- **Phases are separate processes.** Fresh start, state re-loaded, no shared memory. That is what makes a phase independently runnable and a failure independently resumable. **Exactly two things cross the boundary**: the run identifier, and the declared report of the [`command`](command.md) the previous phase ran. Anything a phase needs beyond those two is a contract that was never written down.
 - **Forward options deliberately.** Passing a flag through unconditionally when the composition means to force it is a silent override.
 - **When compositions differ only in sequence and policy, they are data, not files.** Several near-identical variants is the signal to replace them with a table and one runner.
