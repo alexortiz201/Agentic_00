@@ -79,7 +79,7 @@ Written into [`handbook/05_AGENTIC_LAYER_LAYOUT.md`](handbook/05_AGENTIC_LAYER_L
 
 ## 📚 Documentation
 
-- ✅ **Done 2026-09-17:** `higher order prompt` defined in `LANGUAGE.md`; the `primitive` row completed from 12 entries to the 14 that `primitives/` actually contains (`run history` and `observation` were missing).
+- ✅ **Done 2026-09-17:** `higher order prompt` defined in `LANGUAGE.md`; the `primitive` row completed from 12 entries to the 14 that `primitives/` actually contains (`run history` and `observation` were missing). Extended in `1bc95e2`: a clause separating it from a `command` parameterized over another command's output (the discriminator is where the uncertainty sits), the **admission rule** for candidate terms drawn from outside material, the `primitive` row pointing at the blueprints and the artifact map, and `command.md` / `composition.md` now citing each other -- the run id and the declared report are the only things crossing a phase boundary.
 - **`README.md` still contradicts the package on two counts** — it claims one bundled executable where `tools/observe/observe.ts` is a second, and says four areas where the file it routes to says five. Seven files appear in no routing row.
 - **`README.md:54` points at `.memory/package_cleanup.md`, which was deleted** when it merged into `package_status.md`. **A cold session's first instruction is a dangling reference.** One-line fix, but it edits a committed claim.
 - **`AGENTS.md` restates six of seven commit rules and drops "never append authorship"** — which is precisely the rule a harness default works against.
