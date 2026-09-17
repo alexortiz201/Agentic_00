@@ -14,6 +14,10 @@ runs/<run_id>/
   ...               gate and phase records, evidence, as the run produces them
 ```
 
+**Subdivide by the agent that produced it once a run invokes more than one.** `runs/<run_id>/<agent_name>/` keeps each agent's raw stream, its parsed form and its final object together, so a wrong answer can be traced to the invocation that produced it rather than to the run as a whole. A run with one agent does not need the extra level; a run with six is unreadable without it, and **the agent name is what makes the directory listing a map of what the workflow actually did**.
+
+**Keep the raw stream as well as the parsed result.** The parsed form is what the workflow consumed; the raw stream is the only thing that can answer *why the parse produced that*. Discarding it saves little and removes the one artifact that distinguishes a bad response from a bad parser.
+
 Write **only the records the run actually needs**. Workflow-authoring work adds a design document; defect work adds a reproduction record before build; coaching adds a session record. What each must contain is in [`foundations/Agentic_Engineering/primitives/`](../foundations/Agentic_Engineering/primitives/README.md).
 
 ## Rules

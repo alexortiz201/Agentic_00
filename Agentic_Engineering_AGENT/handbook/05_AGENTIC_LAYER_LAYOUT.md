@@ -47,11 +47,24 @@ A target project may organise differently and still be correct. The criterion is
 
 A layout that delivers those four is a good layout. Record whichever one the target uses.
 
+## The run id is the join key, and the filesystem is the index
+
+**Nothing above needs a database, because the run id appears in every tree that holds part of a run.** The spec is `<task-type>-<run_id>-<description>.md`, the artifacts are `runs/<run_id>/`, the workspace is `trees/<run_id>/`. **That repetition is the mechanism, not redundancy** -- it is what lets a plan, its evidence and the checkout it was built in be found from each other by pattern, with `ls` and a glob.
+
+**A spec therefore carries its run id twice: in the filename and in its own metadata.** The filename makes it findable; the metadata makes the link survive the file being renamed or moved, which a filename alone does not. [`primitives/spec.md`](../foundations/Agentic_Engineering/primitives/spec.md) requires the metadata field for this reason.
+
+**The consequence to design for: whatever the id keys must be minted once, at the entry phase.** A dependent phase that invents its own id produces artifacts nothing else in the run can find, which is why an entry phase mints and every other phase refuses to run without one.
+
+**Choose the key deliberately, because there are two defensible answers and a package should state which it uses.** Keying on the **run** ties artifacts to one execution, so a second attempt at the same subject is cleanly separate. Keying on the **subject** -- a ticket, an issue -- ties every attempt together at the cost of telling two runs apart. **Whichever is chosen, it has to be the same key in every tree**, or the join silently stops working for the trees that disagree.
+
 ## Naming
 
 - **A composition's filename is its phase sequence**, in execution order: `adw_plan_build_test.ts`. Reading the directory tells you what workflows exist without opening anything.
+- **Properties stack onto the sequence as further suffixes**, in a fixed order, so a name carries both what runs and how: `adw_plan_build_iso.ts` is isolated, `adw_sdlc_zte_iso.ts` is the full lifecycle, zero-touch, isolated. **A property that is true of every scaled workflow is still written down** -- it costs three characters and it makes the exception visible, which is the whole point of putting it in the name.
 - **A spec is `<task-type>-<run_id>-<description>.md`.** All three parts, because specs are found by pattern as often as by path.
 - **A command is named for its single responsibility.** If the name needs "and", split it.
+
+**The naming rule for an artifact belongs inside the command that produces it, not in a document about conventions.** A command that writes a spec states the filename pattern in its own text, so the convention is enforced at the point of use by the thing doing the writing. A convention documented only here is one every author has to remember; a convention stated in the producing command is one they cannot miss.
 
 ## What is ours
 
