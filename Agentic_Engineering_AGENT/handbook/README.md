@@ -19,7 +19,6 @@ When a task arrives -- a bug ticket, a feature, a chore, a workflow to build -- 
 | **Somewhere to put a file** | 🏗️ [`05_AGENTIC_LAYER_LAYOUT.md`](05_AGENTIC_LAYER_LAYOUT.md) | -- |
 | **The code that calls an agent -- writing it, or judging one that exists** | 🎛️ [`15_THE_AGENT_INVOCATION_MODULE.md`](15_THE_AGENT_INVOCATION_MODULE.md) | 📦 [module](../foundations/Agentic_Engineering/primitives/module.md) for whether it earns a place at all; 🧱 [primitives](../foundations/Agentic_Engineering/primitives/README.md) for the six cases it is proved with |
 | **A bench to install, or a default to add** | ⚙️ [`14_THE_DEFAULTS_FILE.md`](14_THE_DEFAULTS_FILE.md) | 🧭 [`defaults/README.md`](../defaults/README.md) for **the four layers** -- the live bench, `config/`, `templates/claude_home/` and `defaults/`, and which one a given change belongs in |
-| 🎛️ [`15_THE_AGENT_INVOCATION_MODULE.md`](15_THE_AGENT_INVOCATION_MODULE.md) | The adapter between a controller and an agent runtime -- identity, typed request and response, environment allowlist, preflight, input capture, streaming sink, result extraction, error taxonomy, retry policy, tolerant parse, truncation and a run logger; what the module must not decide, and three failures found by reading |
 | **A concept and no idea where it is defined** | 🗺️ [`04_ARTIFACT_MAP.md`](04_ARTIFACT_MAP.md) | -- |
 
 ## Working a defect
@@ -54,6 +53,7 @@ The worked example, because it is the most common arrival and every other kind o
 | 🧵 [`12_TRACING_A_DEFECT.md`](12_TRACING_A_DEFECT.md) | Trace a write from the system of record to the rendered output and name the first boundary that disagrees — for defects that will not reproduce, or whose cause nobody can locate |
 | 🛰️ [`13_ORCHESTRATING_A_SURVEY.md`](13_ORCHESTRATING_A_SURVEY.md) | Several actors survey one subject in parallel, an orchestrator assembles a plan, the operator approves, execution actors act — the stages, the approval gate, and the failures that produced it |
 | ⚙️ [`14_THE_DEFAULTS_FILE.md`](14_THE_DEFAULTS_FILE.md) | [`defaults/defaults.json`](../defaults/README.md) -- the schema for store locations, ADW output levels, required tooling and harness pieces; what an installer does with each field, and how a new value is added without collapsing the default-versus-instance split |
+| 🎛️ [`15_THE_AGENT_INVOCATION_MODULE.md`](15_THE_AGENT_INVOCATION_MODULE.md) | The adapter between a controller and an agent runtime -- identity, typed request and response, environment allowlist, preflight, input capture, streaming sink, result extraction, error taxonomy, retry policy, tolerant parse, truncation and a run logger; what the module must not decide, and three failures found by reading |
 
 ## The split with `foundations/`
 

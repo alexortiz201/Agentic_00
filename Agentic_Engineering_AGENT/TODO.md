@@ -38,6 +38,24 @@ What is missing is the **component**: a classifier that reads a subject, names i
 
 **The `higher order prompt` is how its cases get written.** Each recorded election — candidates, choice, discriminator — is a case body accumulated from real work. **Do not author the switch before the observations exist**; that is extracting an abstraction from zero occurrences.
 
+## 🪶 Clean up and slim down everything that is not `foundations/`
+
+**Operator instruction, 2026-09-17:** *"foundations is great for deep dive explanation, but everything else in the tool should probably be slim and modular."* That assigns the two halves of the documentation split to concrete places: **`foundations/` is the deep, human-facing half**, and `handbook/`, `primitives/`, `templates/`, `harnesses/`, `config/` and `defaults/` are the slim, agent-facing half.
+
+**Do it one item at a time, not as a sweep.** Each pass takes one file, reduces it to what changes behaviour, moves the argument into `foundations/` if it is worth keeping, and leaves a citation behind. A single large reflow would be unreviewable and would silently rewrite claims while appearing to only reformat.
+
+**Both words are load-bearing.** *Slim* means the file carries only what a reader acts on. *Modular* means it is one responsibility, loadable on its own, so a decision pulls one piece rather than a document covering several topics. A short file mixing three subjects satisfies the first and fails the second.
+
+**The test per sentence:** would an agent about to perform this action behave differently for having read it? If not, it is prose, and prose belongs in `foundations/`.
+
+**Candidates, largest first** -- to be confirmed by measurement when the work is picked up, not assumed from this list.
+
+### Part of the slimming is diagrams instead of words
+
+**Where a document describes a flow, a sequence or a set of layers, a diagram replaces more words than any edit can.** Several things written here as prose or tables are really pictures: the seven-layer stack a running workflow forms, the task-state machine and its `return_to` routing, the trigger's select-claim-dispatch loop with its failure paths, the three step kinds and what each returns, and the four-layer bench arrangement in `defaults/`.
+
+**Constraints on doing it:** the diagram has to be **text-source** so it diffs and cannot go stale silently against a binary; it replaces the prose rather than sitting beside it, or the slimming is not achieved and a second statement is created to drift; and anything a consumer validates stays written as a canonical value in `LANGUAGE.md`, because a picture is not a schema.
+
 ## ✂️ Split agent-facing documentation from human-facing documentation
 
 **Proposed by the operator 2026-09-17.** The two are different artifacts read at different moments, and the package currently mixes them everywhere except `primitives/`.

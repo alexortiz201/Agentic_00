@@ -121,6 +121,24 @@ The test is mechanical. For each passage, ask what would have to be true for it 
 
 **The same conflation inflates a workflow with work it does not do.** Most of those 788 lines restated what a deferred-to workflow already performed. Describing a callee's behaviour in the caller's own document is not composition; it is duplication with drift built in, and the drift is one-directional and silent -- the callee changes, the description does not, and nothing fails. **Name the deferral and state what it is relied upon to produce; never restate how it does it.** What a caller legitimately owns about a deferral is the [side effect it gates on](08_GATES.md), which is a fact about the caller's requirements rather than a copy of the callee's implementation.
 
+## The stack a running workflow forms
+
+Seven layers, each knowing only its neighbours. **The run identity is the only thing that spans all of them**, which is what makes an artifact at the bottom traceable to the request at the top.
+
+| Layer | Owns | Passes down | Returns |
+|---|---|---|---|
+| `trigger` | selection, the claim, dispatch | the run identity and the work item | nothing -- dispatch is detached, so the run outlives the trigger |
+| `queue` | the work item, its state, and its routing | which workflow and which model | a terminal status carrying its evidence |
+| `composition` | identity, order, failure policy | the run identity, and per-phase configuration | an exit status |
+| `phase` | one step, and whether a result ends the run | a typed request | a typed result |
+| agent module | the runtime boundary -- argv, environment, working directory | the invocation | a typed response |
+| `command` | the instruction, and its report contract | -- | the declared report |
+| `run history` | what actually happened | -- | the evidence everything above claims |
+
+**A layer reaching past its neighbour is the defect this table exists to make visible.** The common instances: a phase computing the workspace from its own location on disk rather than receiving it, a command writing to the queue directly, and a composition reading inside a phase instead of taking its result.
+
+**Two of these layers are usually missing at the start, and that is correct.** A workflow begins as a composition over phases; the queue and the trigger are added when work must start without a person, and the growth table above says on what evidence. Adding them early buys a claim protocol for traffic that does not exist.
+
 ## A step is exactly one of three kinds
 
 Every step inside a phase resolves to one of three, and the phase says which:

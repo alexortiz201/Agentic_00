@@ -28,3 +28,4 @@ Keep a changelog of what each version changed. A version number nobody can decod
 - **Write-then-rename**, so a reader never sees half a record.
 - **Closed field sets.** A record that accepts anything is a log.
 - **No secrets**, and no raw payloads -- references to evidence, not the evidence itself.
+- **A terminal record claiming success carries the artifact that proves it**, and is malformed without it -- a commit identifier, a changed-file count, an output path. Enforce it in the schema rather than in the phase that writes it: made a validation rule, "succeeded but produced nothing" becomes unrepresentable, which is strictly cheaper than detecting it later in a gate.
