@@ -11,7 +11,7 @@ Each row is a part that must exist somewhere. **A part missing is not a gap in t
 | # | Part | What it does | Missing it costs |
 |---|---|---|---|
 | 1 | **Identity** | Mint the run identifier once, at the top, and thread it through every call | Artifacts that cannot be grouped, and no way to join a result back to the request |
-| 2 | **Typed request** | One object carrying prompt, model, working directory, permission posture, output path | Arguments drift per call site, and the `Core Four` become implicit |
+| 2 | **Typed request** | One object carrying prompt, requested model and reasoning effort, working directory, permission posture, output path, and routing source | Arguments drift per call site, and the `Core Four` become implicit |
 | 3 | **Typed response** | Output, a success boolean, the runtime's session identifier, and a retry classification -- **all four, separately** | Callers re-derive success by reading prose |
 | 4 | **Environment allowlist** | Build the subprocess environment by naming the variables that are passed, never by inheriting | The agent inherits every credential in the operator's shell |
 | 5 | **Preflight** | Assert the runtime binary exists before building anything | A missing runtime is reported as a failed task |
@@ -26,6 +26,10 @@ Each row is a part that must exist somewhere. **A part missing is not a gap in t
 | 14 | **Run logger** | A logger named by the run identifier, file at debug and console at info | Concurrent runs interleave into one unreadable stream |
 
 **Parts 8 and 10 are the two most often collapsed into the success boolean, and they are the two that decide behaviour.** *Did it finish*, *did it produce a result*, and *is this worth retrying* are three questions, and a single boolean answers none of them well.
+
+**Requested is not effective.** Record the requested model and reasoning effort beside the effective values observed from the harness, plus routing source: `explicit` when the caller made the decision and `fallback` only when it did not. A harness may reject or resolve a request differently; an explicit caller selection must not be silently replaced by downstream automatic routing. This is invocation provenance, not a routing framework.
+
+**A typed agent return is not runtime success.** Validate its schema, then separately validate the harness terminal state and stream integrity. A returned result is absent on cancellation, provider failure, and some malformed streams; a process status alone may not distinguish those cases.
 
 ## What the module must not decide
 

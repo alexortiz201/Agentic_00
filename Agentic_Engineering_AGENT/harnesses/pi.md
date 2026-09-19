@@ -17,7 +17,17 @@ The design thesis: a coding agent needs four tools -- read, write, edit, bash --
 | Distinguishable failure | Partly -- **see the trap below** | `-p` exits `1` on an errored or aborted turn. `--mode json` does not |
 | Retained transcript | Yes | Session files, or the `--mode json` event stream |
 
-### The exit-code trap
+### Stage 1 controlled-invocation adapter
+
+> **Verified 2026-09-18** against Pi v0.85.1 by executed JSON/RPC smoke runs.
+
+The operator Pi configuration contains a non-auto-loaded adapter that an external controller loads explicitly for a fresh, controlled invocation. It registers a terminating, strict-schema `wb_return` tool and records requested model/effort plus `explicit` or `fallback` routing provenance separately from Pi's effective model and thinking level. Its captured return also records cwd, selected tools, discovered context files, prior assistant stop reasons, and prior tool results.
+
+The adapter does **not** invoke Pi, route work, retry, sequence phases, choose authority, manage concurrency, create worktrees, or provide isolation. Those remain controller or environment responsibilities. The controller must retain the raw JSON stream and separately require stream integrity, `agent_settled`, a non-error terminal assistant state, a successful `wb_return` tool result, and schema-valid typed return.
+
+Executed observations: a missing `wb_return` can end with ordinary `stop`; an unavailable model can end with `stopReason: "error"` while JSON-mode process status is zero; RPC abort produces `stopReason: "aborted"`; a signal that terminates the process can leave no terminal event. A strict tool allowlist and context-file suppression were observed in the controlled smoke run, but neither is security isolation.
+
+## The exit-code trap
 
 **`--mode json` exits `0` even when the turn ended in `stopReason: "error"`.** The non-zero exit is only set in the text branch, so a controller that checks the exit code of a JSON-mode run will read failure as success. Inspect the event stream instead. This is source-derived behaviour at the pinned commit and is not documented, so re-check it rather than trusting it forever.
 
